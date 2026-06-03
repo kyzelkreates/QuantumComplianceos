@@ -37,12 +37,16 @@ const RUNS_COMPLETE = [
     desc: 'Global workspace mode switch between Demo Mode (investor/client showcase) and Product Mode (real-user workspace). workspaceMode stored in storage.js SSOT. All demo content labelled. All pages, components, and Copilot respect mode filtering. No demo data deleted without confirmation.' },
   { run: 9,     label: 'Target Assessment Engine',
     desc: 'Passive, authorised target assessment for websites, web apps, SaaS platforms, APIs, and internal systems. Authorisation gate (ownership/permission required). Passive checklist (HTTPS, TLS, headers, auth, encryption, backup, vendor risk, quantum readiness, evidence). Rule-based recommendation and finding engine. Explainable 4-score model (Security, Quantum, Evidence, Compliance). Evidence panel. Report preview with advisory disclaimer. Demo/product mode aware. Defensive use only. No offensive scanning, no exploit tools, no credential testing.' },
+  { run: 10,    label: 'Commercial Tier + Feature Gate Foundation',
+    desc: 'Central plans.js config (Starter, Pro Consultant, Agency, White Label). Feature key registry. Helper functions (getCurrentPlan, canUseFeature, getClientLimitForPlan, isPlanComingSoon, getUpgradePlans). Plan cards UI with active/locked/coming-soon states. activePlanId added to storage.js SSOT. Settings page Plans & Upgrade section. No backend, no payments, no auth. Starter is active by default. Pro/Agency/White Label locked with advisory messages.' },
 ];
 
 const FUTURE_RUNS = [
 
 
-  { run: '10+',   label: 'Supabase Migration (Optional)',
+  { run: '11+',   label: 'Multi-Client Consultant Hub (Run 11)',
+    desc: 'Pro Consultant tier activation — multi-client hub, per-client branding, report history, risk comparison. Requires Run 10 commercial tier foundation.' },
+  { run: 'Future', label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',
     desc: 'Future optional AI API — disabled in this local-first MVP. Would use existing copilotEngine.js interface.' },

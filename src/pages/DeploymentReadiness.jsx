@@ -192,7 +192,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       <PageHeader
         icon="🚀"
         title="Deployment & Demo Readiness"
-        subtitle="Production deployment checklist, demo confidence review, and safety validation — Run 9 complete."
+        subtitle="Production deployment checklist, demo confidence review, and safety validation — Run 10 complete."
         actions={
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             <span style={{
@@ -223,7 +223,7 @@ export default function DeploymentReadiness({ onNavigate }) {
               : `${totalChecks - totalPass} item(s) need attention before final deployment.`}
           </div>
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-            Run 9 complete · Local-first · No backend · No Supabase · RLS not applicable · Defensive use only
+            Run 10 complete · Local-first · No backend · No Supabase · RLS not applicable · Defensive use only
           </div>
         </div>
       </div>
@@ -310,7 +310,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       {/* Future runs */}
       <SectionCard title="Optional Future Runs — Not Yet Built" icon="🗺️">
         <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-          These are noted for planning only. None are implemented in Run 9.
+          These are noted for planning only. None are implemented in Run 10.
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
           {[

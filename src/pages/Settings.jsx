@@ -26,6 +26,7 @@ import {
 import { validateHexColour, sanitiseText } from '../core/validators.js';
 import { DEFENSIVE_DISCLAIMER, PAGES, APP_VERSION, APP_RUN_LEVEL } from '../core/constants.js';
 import { WORKSPACE_MODE, MODE_META } from '../core/workspaceMode.js';
+import PlanCards from '../components/PlanCards.jsx';
 
 // ─── WorkspaceModeBadge ───────────────────────────────────────────────────────
 function WorkspaceModeBadge({ mode, size = 'md' }) {
@@ -461,7 +462,7 @@ export default function Settings({ onNavigate }) {
       <SectionCard title="System Status" icon="📋">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[
-            ['Build',                `Run ${APP_RUN_LEVEL} — Target Assessment Engine`],
+            ['Build',                `Run ${APP_RUN_LEVEL} — Commercial Tier + Feature Gate Foundation`],
             ['Version',              `v${APP_VERSION}`],
             ['Architecture',         'Local-First PWA (React + Vite)'],
             ['Storage',              'Browser localStorage — SSOT via storage.js'],
@@ -492,10 +493,20 @@ export default function Settings({ onNavigate }) {
           })}
         </div>
         <div style={{ marginTop: '14px', padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-md)', fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9
+          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 · 10
           &nbsp;&nbsp;·&nbsp;&nbsp;
-          <strong style={{ color: 'var(--text-secondary)' }}>Up next (not yet built):</strong> Run 10+: Supabase (opt-in) · AI API (opt-in) · Payments (opt-in)
+          <strong style={{ color: 'var(--text-secondary)' }}>Up next (not yet built):</strong> Run 11: Multi-Client Consultant Hub · Future: Supabase (opt-in) · AI API (opt-in) · Payments (opt-in)
         </div>
+      </SectionCard>
+
+      {/* ── Plans & Upgrade ─────────────────────────────────────────────── */}
+      <SectionCard title="Plans &amp; Upgrade" icon="💎">
+        <div style={{ marginBottom: 'var(--space-3)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', lineHeight: 1.7, padding: 'var(--space-2) var(--space-3)', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)' }}>
+          <strong style={{ color: 'var(--text-secondary)' }}>Commercial tier foundation</strong> — Starter / Demo is active.
+          Pro Consultant, Agency, and White Label are coming in future runs.
+          No backend, payments, or external API has been added.
+        </div>
+        <PlanCards activePlanId={state.settings?.activePlanId || 'starter'} />
       </SectionCard>
 
       {/* ── Legal / Disclaimer ────────────────────────────────────────────── */}

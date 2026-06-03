@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run9',
-      buildRun: 'RUN_9_TARGET_ASSESSMENT_ENGINE',
-      latestCompletedRun: 9,
-      latestCompletedRunLabel: 'Run 9 — Target Assessment Engine',
+      version: '1.0.0-run10',
+      buildRun: 'RUN_10_COMMERCIAL_TIER_FOUNDATION',
+      latestCompletedRun: 10,
+      latestCompletedRunLabel: 'Run 10 — Commercial Tier + Feature Gate Foundation',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -134,6 +134,7 @@ export function getInitialState() {
       theme: 'dark',
       demoMode: true,           // legacy — workspaceMode is now SSOT
       workspaceMode: 'demo',    // 'demo' | 'product'  (Run 8.5)
+      activePlanId: 'starter',  // Run 10: commercial tier — default is always 'starter'
       protectRealDataOnDemoLoad: true,
       requireModeSwitchConfirmation: true,
       autosave: true,
@@ -213,6 +214,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_8_CONSULTANT_COPILOT',
   'RUN_8_5_WORKSPACE_MODE',
   'RUN_9_TARGET_ASSESSMENT_ENGINE',
+  'RUN_10_COMMERCIAL_TIER_FOUNDATION',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -226,7 +228,8 @@ const RUN_8_5_MODULE_STATUS = {
   deploymentReadiness:     'complete',
   consultantCopilot:       'complete',
   workspaceMode:           'complete',
-  targetAssessmentEngine:  'complete',
+  targetAssessmentEngine:     'complete',
+  commercialTierFoundation:   'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -240,6 +243,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   consultantCopilot:         true,
   workspaceModeToggle:       true,
   targetAssessmentEngine:    true,
+  commercialTierFoundation:  true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -256,18 +260,18 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 9 || existingMeta.buildRun !== 'RUN_9_TARGET_ASSESSMENT_ENGINE') {
+  if (storedRun < 10 || existingMeta.buildRun !== 'RUN_10_COMMERCIAL_TIER_FOUNDATION') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run9',
-      buildRun: 'RUN_9_TARGET_ASSESSMENT_ENGINE',
-      latestCompletedRun: 9,
-      latestCompletedRunLabel: 'Run 9 — Target Assessment Engine',
+      version: '1.0.0-run10',
+      buildRun: 'RUN_10_COMMERCIAL_TIER_FOUNDATION',
+      latestCompletedRun: 10,
+      latestCompletedRunLabel: 'Run 10 — Commercial Tier + Feature Gate Foundation',
       mode: 'local-first',
       defensiveOnly: true,
-      runLevel: 9,
-      migratedToRun9At: new Date().toISOString(),
+      runLevel: 10,
+      migratedToRun10At: new Date().toISOString(),
     };
   }
 
@@ -353,6 +357,14 @@ export function migrateState(state) {
     };
   }
 
+  // ── 8. Ensure activePlanId exists in settings (Run 10) ─────────────────
+  if (!migrated.settings) {
+    migrated.settings = {};
+  }
+  if (!migrated.settings.activePlanId) {
+    migrated.settings.activePlanId = 'starter';
+  }
+
   return migrated;
 }
 
@@ -375,7 +387,7 @@ export function loadState() {
     // WITHOUT touching user data (assessments, reports, clients, drafts)
     _state = migrateState(merged);
     // Persist the migrated state so next load is already up-to-date
-    if (merged.appMeta?.buildRun !== 'RUN_9_TARGET_ASSESSMENT_ENGINE') {
+    if (merged.appMeta?.buildRun !== 'RUN_10_COMMERCIAL_TIER_FOUNDATION') {
       saveState(_state);
     }
     return _state;
