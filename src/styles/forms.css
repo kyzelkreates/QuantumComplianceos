@@ -1,0 +1,256 @@
+/* ============================================================
+   QUANTUM COMPLIANCE OS™ — forms.css
+   Form fields, inputs, selects, textareas, buttons
+   ============================================================ */
+
+/* ─── Form Layout ─────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form-row--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-row--full {
+  grid-template-columns: 1fr;
+}
+
+/* ─── Form Field ──────────────────────────────────────────────── */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.form-label--required::after {
+  content: '*';
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.form-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: -4px;
+}
+
+.form-error {
+  font-size: var(--text-xs);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ─── Inputs ──────────────────────────────────────────────────── */
+.form-input,
+.form-select,
+.form-textarea {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+  border-color: var(--bg-hover);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  background: var(--bg-surface);
+}
+
+.form-input--error,
+.form-select--error,
+.form-textarea--error {
+  border-color: var(--danger);
+}
+
+.form-input--error:focus,
+.form-select--error:focus,
+.form-textarea--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+.form-select option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ─── Colour Input ────────────────────────────────────────────── */
+.form-colour-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.form-colour-preview {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-default);
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+
+/* ─── Checkbox & Toggle ────────────────────────────────────────── */
+.form-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.form-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.form-checkbox-item:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent);
+}
+
+.form-checkbox-item--selected {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.form-checkbox-item input[type="checkbox"] {
+  display: none;
+}
+
+.form-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.form-toggle__track {
+  width: 40px;
+  height: 22px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  position: relative;
+  transition: background var(--transition-base);
+  flex-shrink: 0;
+}
+
+.form-toggle__track--on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.form-toggle__thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-toggle__track--on .form-toggle__thumb {
+  transform: translateX(18px);
+  background: #fff;
+}
+
+.form-toggle__label {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ─── Form Actions ────────────────────────────────────────────── */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-muted);
+  margin-top: var(--space-2);
+}
+
+.form-actions--right {
+  justify-content: flex-end;
+}
+
+/* ─── Save Indicator ──────────────────────────────────────────── */
+.save-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--success);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

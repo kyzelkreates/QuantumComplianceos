@@ -1,0 +1,110 @@
+{
+  "name": "Quantum Compliance OS™",
+  "short_name": "QC-OS",
+  "description": "Defensive security readiness, post-quantum cryptography exposure assessment, and compliance evidence preparation. Fully local-first. No backend. No account required.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "scope": "/",
+  "lang": "en-GB",
+  "dir": "ltr",
+  "categories": ["security", "productivity", "business", "utilities"],
+  "iarc_rating_id": "",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Open the main readiness dashboard",
+      "url": "/",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Security Assessment",
+      "short_name": "Assessment",
+      "description": "Open the security implementation assessment",
+      "url": "/?page=security-assessment",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Quantum Readiness",
+      "short_name": "Quantum",
+      "description": "Open the quantum readiness assessment",
+      "url": "/?page=quantum-readiness",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Reports",
+      "short_name": "Reports",
+      "description": "Generate and view assessment reports",
+      "url": "/?page=reports",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Consultant Hub",
+      "short_name": "Consultant",
+      "description": "Manage multiple clients in the consultant hub",
+      "url": "/?page=consultant",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
+}

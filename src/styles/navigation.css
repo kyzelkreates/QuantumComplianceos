@@ -1,0 +1,87 @@
+/* ============================================================
+   QUANTUM COMPLIANCE OS™ — navigation.css
+   Navigation-specific styles (tabs, breadcrumbs, page headers)
+   ============================================================ */
+
+/* ─── Page Header ─────────────────────────────────────────────── */
+.page-header {
+  margin-bottom: var(--space-6);
+}
+
+.page-header__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.page-header__title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  line-height: 1.2;
+}
+
+.page-header__icon {
+  font-size: 24px;
+}
+
+.page-header__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.page-header__divider {
+  border: none;
+  border-top: 1px solid var(--border-default);
+  margin-top: var(--space-4);
+}
+
+/* ─── Tab Nav ─────────────────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-default);
+  gap: 0;
+  margin-bottom: var(--space-5);
+  overflow-x: auto;
+}
+
+.tab-nav__item {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: -1px;
+}
+
+.tab-nav__item:hover {
+  color: var(--text-primary);
+}
+
+.tab-nav__item--active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}

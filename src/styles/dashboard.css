@@ -1,0 +1,290 @@
+/* ============================================================
+   QUANTUM COMPLIANCE OS™ — dashboard.css
+   Dashboard-specific layout, stat cards, checklist
+   ============================================================ */
+
+/* ─── Dashboard Grid ──────────────────────────────────────────── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+/* ─── Stat Cards ──────────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  cursor: default;
+}
+
+.stat-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.stat-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.stat-card__icon {
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.stat-card__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+}
+
+.stat-card__value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card__sub {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.stat-card__status {
+  margin-top: auto;
+}
+
+/* ─── Setup Checklist ──────────────────────────────────────────── */
+.checklist-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.checklist-header h3 {
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+
+.checklist-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checklist-progress__bar {
+  width: 100px;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.checklist-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, #0088ff 100%);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.checklist-progress__label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.checklist-item:hover {
+  background: var(--bg-surface);
+  border-color: var(--border-default);
+}
+
+.checklist-item--done {
+  opacity: 0.6;
+}
+
+.checklist-item__check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.checklist-item__check--done {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+.checklist-item__check--pending {
+  background: transparent;
+  border-color: var(--border-default);
+}
+
+.checklist-item__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.checklist-item__label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.checklist-item--done .checklist-item__label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.checklist-item__desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.checklist-item__arrow {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ─── Recent Activity ──────────────────────────────────────────── */
+.activity-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-muted);
+  position: relative;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.activity-item__dot--info     { background: var(--info); }
+.activity-item__dot--success  { background: var(--success); }
+.activity-item__dot--warning  { background: var(--warning); }
+.activity-item__dot--danger   { background: var(--danger); }
+.activity-item__dot--default  { background: var(--text-muted); }
+
+.activity-item__content {
+  flex: 1;
+}
+
+.activity-item__message {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.activity-item__time {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+
+.activity-empty {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ─── Disclaimer Banner ──────────────────────────────────────────── */
+.disclaimer-banner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--info);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.disclaimer-banner__title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--info);
+  margin-bottom: var(--space-2);
+}
+
+.disclaimer-banner__text {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.6;
+}

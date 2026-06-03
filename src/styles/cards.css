@@ -1,0 +1,267 @@
+/* ============================================================
+   QUANTUM COMPLIANCE OS™ — cards.css
+   Section cards, system cards, risk badges, status pills
+   ============================================================ */
+
+/* ─── Section Card ─────────────────────────────────────────────── */
+.section-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.section-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-tertiary);
+}
+
+.section-card__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.section-card__title-icon {
+  font-size: 16px;
+}
+
+.section-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.section-card__body {
+  padding: var(--space-5);
+}
+
+.section-card__body--no-padding {
+  padding: 0;
+}
+
+/* ─── System Inventory Card ─────────────────────────────────────── */
+.system-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+}
+
+.system-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.system-card--archived {
+  opacity: 0.55;
+  border-style: dashed;
+}
+
+.system-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.system-card__name {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.system-card--archived .system-card__name {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.system-card__meta {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.system-card__meta-sep {
+  color: var(--border-default);
+}
+
+.system-card__badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.system-card__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.system-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.system-card__field-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.system-card__field-value {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.system-card__field-value--muted {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.system-card__notes {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-muted);
+  margin-top: var(--space-2);
+}
+
+.system-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-muted);
+  margin-top: var(--space-3);
+}
+
+/* ─── System Card Grid ─────────────────────────────────────────── */
+.system-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ─── Risk Badge ──────────────────────────────────────────────── */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+.risk-badge--critical { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.risk-badge--high     { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+.risk-badge--medium   { background: rgba(234, 179, 8, 0.15);  color: #eab308; }
+.risk-badge--low      { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.risk-badge--informational { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+/* ─── Status Pill ─────────────────────────────────────────────── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-pill__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-pill--not_started    { background: rgba(107, 114, 128, 0.15); color: #6b7280; }
+.status-pill--in_progress    { background: rgba(245, 158, 11, 0.15);  color: #f59e0b; }
+.status-pill--complete       { background: rgba(16, 185, 129, 0.15);  color: #10b981; }
+.status-pill--requires_review{ background: rgba(249, 115, 22, 0.15);  color: #f97316; }
+.status-pill--not_ready      { background: rgba(107, 114, 128, 0.15); color: #6b7280; }
+.status-pill--ready          { background: rgba(16, 185, 129, 0.15);  color: #10b981; }
+.status-pill--archived       { background: rgba(55, 65, 81, 0.5);     color: #6b7280; }
+
+/* ─── Empty State ─────────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.empty-state__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state__message {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 380px;
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+
+/* ─── Tag Chips ────────────────────────────────────────────────── */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.tag--accent {
+  background: var(--accent-dim);
+  border-color: var(--border-accent);
+  color: var(--accent);
+}
