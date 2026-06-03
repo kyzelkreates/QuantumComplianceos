@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '8.5.0';
-export const APP_RUN_LEVEL = 8.5;
+export const APP_VERSION = '9.0.0';
+export const APP_RUN_LEVEL = 9;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -16,6 +16,7 @@ export const DEFENSIVE_DISCLAIMER =
 // ─── Navigation Pages ─────────────────────────────────────────────────────────
 export const PAGES = {
   CONSULTANT: 'consultant',
+  TARGET_ASSESSMENTS: 'target-assessments',
   DASHBOARD: 'dashboard',
   ORGANISATION: 'organisation',
   SYSTEM_INVENTORY: 'system-inventory',
@@ -65,6 +66,13 @@ export const NAV_ITEMS = [
     icon: '⚛️',
     group: 'assessments',
     description: 'Post-quantum exposure and readiness',
+  },
+  {
+    id: PAGES.TARGET_ASSESSMENTS,
+    label: 'Target Assessments',
+    icon: '🎯',
+    group: 'assessments',
+    description: 'Passive, authorised assessment of websites, web apps, and APIs',
   },
   {
     id: PAGES.RECOMMENDATIONS,
@@ -277,6 +285,15 @@ export const ASSESSMENT_STATUSES = {
 
 export const STATUS_LABELS = {
   not_started: 'Not Started',
+  draft: 'Draft',
+  awaiting_authorisation: 'Awaiting Authorisation',
+  ready_for_review: 'Ready for Review',
+  in_review: 'In Review',
+  recommendations_generated: 'Recommendations Generated',
+  evidence_required: 'Evidence Required',
+  report_ready: 'Report Ready',
+  closed: 'Closed',
+  accepted_risk: 'Accepted Risk',
   in_progress: 'In Progress',
   complete: 'Complete',
   requires_review: 'Requires Review',

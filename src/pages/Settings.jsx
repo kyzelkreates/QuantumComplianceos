@@ -461,7 +461,7 @@ export default function Settings({ onNavigate }) {
       <SectionCard title="System Status" icon="📋">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[
-            ['Build',                `Run ${APP_RUN_LEVEL} — Global Demo Mode / Product Mode Toggle`],
+            ['Build',                `Run ${APP_RUN_LEVEL} — Target Assessment Engine`],
             ['Version',              `v${APP_VERSION}`],
             ['Architecture',         'Local-First PWA (React + Vite)'],
             ['Storage',              'Browser localStorage — SSOT via storage.js'],
@@ -492,9 +492,9 @@ export default function Settings({ onNavigate }) {
           })}
         </div>
         <div style={{ marginTop: '14px', padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-md)', fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5
+          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9
           &nbsp;&nbsp;·&nbsp;&nbsp;
-          <strong style={{ color: 'var(--text-secondary)' }}>Up next (not yet built):</strong> Run 9 · Future: Supabase (opt-in) · AI API (opt-in) · Payments (opt-in)
+          <strong style={{ color: 'var(--text-secondary)' }}>Up next (not yet built):</strong> Run 10+: Supabase (opt-in) · AI API (opt-in) · Payments (opt-in)
         </div>
       </SectionCard>
 

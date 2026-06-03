@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run8.5',
-      buildRun: 'RUN_8_5_WORKSPACE_MODE',
-      latestCompletedRun: 8.5,
-      latestCompletedRunLabel: 'Run 8.5 — Global Demo Mode / Product Mode Toggle',
+      version: '1.0.0-run9',
+      buildRun: 'RUN_9_TARGET_ASSESSMENT_ENGINE',
+      latestCompletedRun: 9,
+      latestCompletedRunLabel: 'Run 9 — Target Assessment Engine',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -168,6 +168,20 @@ export function getInitialState() {
         includeCommercialActions: true,
       },
     },
+    // ── Run 9: Target Assessment Engine ─────────────────────────────────────
+    targetAssessments:  [],
+    targetFindings:     [],
+    targetEvidence:     [],
+    targetScores:       [],
+    assessmentSettings: {
+      passiveChecksEnabled:         true,
+      manualEvidenceEnabled:        true,
+      questionnaireEnabled:         true,
+      reportIntegrationEnabled:     true,
+      allowDemoTargets:             true,
+      showBrowserLimitationWarning: true,
+    },
+    demoTargetsLoaded:  false,
   };
 }
 
@@ -198,19 +212,21 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_7_DEPLOYMENT_PACKAGING',
   'RUN_8_CONSULTANT_COPILOT',
   'RUN_8_5_WORKSPACE_MODE',
+  'RUN_9_TARGET_ASSESSMENT_ENGINE',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
-  foundation:           'complete',
-  securityAssessment:   'complete',
-  quantumReadiness:     'complete',
-  reports:              'complete',
-  evidencePack:         'complete',
-  consultantDashboard:  'complete',
-  demoPortfolio:        'complete',
-  deploymentReadiness:  'complete',
-  consultantCopilot:    'complete',
-  workspaceMode:        'complete',
+  foundation:              'complete',
+  securityAssessment:      'complete',
+  quantumReadiness:        'complete',
+  reports:                 'complete',
+  evidencePack:            'complete',
+  consultantDashboard:     'complete',
+  demoPortfolio:           'complete',
+  deploymentReadiness:     'complete',
+  consultantCopilot:       'complete',
+  workspaceMode:           'complete',
+  targetAssessmentEngine:  'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -223,6 +239,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   deploymentPackaging:       true,
   consultantCopilot:         true,
   workspaceModeToggle:       true,
+  targetAssessmentEngine:    true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -235,22 +252,22 @@ export function migrateState(state) {
 
   const migrated = { ...state };
 
-  // ── 1. Upgrade appMeta to Run 8 ─────────────────────────────────────────
+  // ── 1. Upgrade appMeta to Run 9 ─────────────────────────────────────────
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 8.5 || existingMeta.buildRun !== 'RUN_8_5_WORKSPACE_MODE') {
+  if (storedRun < 9 || existingMeta.buildRun !== 'RUN_9_TARGET_ASSESSMENT_ENGINE') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run8.5',
-      buildRun: 'RUN_8_5_WORKSPACE_MODE',
-      latestCompletedRun: 8.5,
-      latestCompletedRunLabel: 'Run 8.5 — Global Demo Mode / Product Mode Toggle',
+      version: '1.0.0-run9',
+      buildRun: 'RUN_9_TARGET_ASSESSMENT_ENGINE',
+      latestCompletedRun: 9,
+      latestCompletedRunLabel: 'Run 9 — Target Assessment Engine',
       mode: 'local-first',
       defensiveOnly: true,
-      runLevel: 8.5,
-      migratedToRun8_5At: new Date().toISOString(),
+      runLevel: 9,
+      migratedToRun9At: new Date().toISOString(),
     };
   }
 
@@ -317,6 +334,25 @@ export function migrateState(state) {
     };
   }
 
+  // ── 7. Ensure targetAssessment fields exist (Run 9) ────────────────────
+  if (!Array.isArray(migrated.targetAssessments)) {
+    migrated.targetAssessments  = [];
+    migrated.targetFindings     = [];
+    migrated.targetEvidence     = [];
+    migrated.targetScores       = [];
+    migrated.demoTargetsLoaded  = false;
+  }
+  if (!migrated.assessmentSettings) {
+    migrated.assessmentSettings = {
+      passiveChecksEnabled:         true,
+      manualEvidenceEnabled:        true,
+      questionnaireEnabled:         true,
+      reportIntegrationEnabled:     true,
+      allowDemoTargets:             true,
+      showBrowserLimitationWarning: true,
+    };
+  }
+
   return migrated;
 }
 
@@ -339,7 +375,7 @@ export function loadState() {
     // WITHOUT touching user data (assessments, reports, clients, drafts)
     _state = migrateState(merged);
     // Persist the migrated state so next load is already up-to-date
-    if (merged.appMeta?.buildRun !== 'RUN_8_5_WORKSPACE_MODE') {
+    if (merged.appMeta?.buildRun !== 'RUN_9_TARGET_ASSESSMENT_ENGINE') {
       saveState(_state);
     }
     return _state;

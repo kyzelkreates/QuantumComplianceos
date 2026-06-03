@@ -35,12 +35,13 @@ const RUNS_COMPLETE = [
     desc: 'Local-first deterministic Consultant Copilot. Executive summary drafts, technical remediation plans, meeting talking points, evidence gap summaries, quantum-readiness explanations. No external AI API required. No offensive tools. Template-driven local logic only.' },
   { run: '8.5', label: 'Global Demo Mode / Product Mode Toggle',
     desc: 'Global workspace mode switch between Demo Mode (investor/client showcase) and Product Mode (real-user workspace). workspaceMode stored in storage.js SSOT. All demo content labelled. All pages, components, and Copilot respect mode filtering. No demo data deleted without confirmation.' },
+  { run: 9,     label: 'Target Assessment Engine',
+    desc: 'Passive, authorised target assessment for websites, web apps, SaaS platforms, APIs, and internal systems. Authorisation gate (ownership/permission required). Passive checklist (HTTPS, TLS, headers, auth, encryption, backup, vendor risk, quantum readiness, evidence). Rule-based recommendation and finding engine. Explainable 4-score model (Security, Quantum, Evidence, Compliance). Evidence panel. Report preview with advisory disclaimer. Demo/product mode aware. Defensive use only. No offensive scanning, no exploit tools, no credential testing.' },
 ];
 
 const FUTURE_RUNS = [
 
-  { run: 9,       label: 'Final Sales Pack + Pricing + Launch QA',
-    desc: 'Polished investor deck export, pricing page, and full QA gate review.' },
+
   { run: '10+',   label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',

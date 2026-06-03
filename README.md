@@ -2,119 +2,198 @@
 
 **Defensive Quantum-Readiness & Security Implementation Assessment Platform**
 
+> Version **v9.0.0** · Run 9 — Target Assessment Engine · Local-first PWA
+
 ---
 
-## Current Build: v8.5.0 · Run 8.5 — Global Demo Mode / Product Mode Toggle
+## What is this?
 
-**Architecture:** Local-first PWA · React + Vite · No backend · No Supabase · No external APIs
+Quantum Compliance OS™ is a local-first, browser-based compliance and security readiness assessment platform for SMEs, consultants, and internal teams.
+
+It helps organisations understand their current security posture, assess quantum-readiness risk, manage compliance gaps, and prepare for post-quantum cryptography migration — all without any backend, database, or external API.
+
+---
+
+## Current Build
+
+| Field | Value |
+|---|---|
+| **Version** | v9.0.0 |
+| **Current Run** | Run 9 — Target Assessment Engine |
+| **Completed Runs** | 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 |
+| **Architecture** | Local-first PWA (React + Vite) |
+| **Storage** | Browser localStorage (storage.js SSOT) |
+| **Backend** | ❌ Not included |
+| **Supabase** | ❌ Not included |
+| **RLS** | ❌ Not applicable — no Supabase/backend |
+| **Real Payments** | ❌ Not included |
+| **External AI APIs** | ❌ Not included |
+| **Offensive Scanning** | ❌ Not included — defensive use only |
 
 ---
 
 ## Completed Runs
 
-| Run | Name | Status |
-|-----|------|--------|
-| 1 | Core Foundation + Storage SSOT + Dashboard + PWA Shell | ✅ Complete |
-| 2 | Security Assessment Engine (47 questions, 12 domains) | ✅ Complete |
-| 3 | Quantum Readiness Engine (HNDL, NIST FIPS 203/204/205) | ✅ Complete |
-| 4 | Reports, Evidence Pack, JSON/CSV Export, Recommendations | ✅ Complete |
-| 5 | Consultant Dashboard, Multi-Client, Onboarding, Landing Page | ✅ Complete |
-| 5.5 | Validation, Hardening, SSOT Enforcement, Mobile Fixes | ✅ Complete |
-| 6 | Demo Portfolio (5 SME clients), Consultant Metrics, Sales Polish | ✅ Complete |
-| 7 | Deployment Packaging, PWA Hardening, SW Update Notifications | ✅ Complete |
-| 8 | Consultant Copilot (8 section generators, local-template, no AI API) | ✅ Complete |
-| **8.5** | **Global Demo Mode / Product Mode Toggle** | ✅ **Complete** |
+| Run | Label | Summary |
+|---|---|---|
+| **1** | Core Foundation | Local-first PWA, storage.js SSOT, organisation profile, system inventory, dashboard, settings, risk taxonomy |
+| **2** | Security Assessment Engine | Scored defensive security assessment (47 questions, 12 domains), risk model, recommendations |
+| **3** | Quantum Readiness Engine | Post-quantum exposure model, HNDL risk scoring, NIST FIPS 203/204/205 alignment |
+| **4** | Reports & Evidence Pack | Report generation, JSON/CSV export, evidence pack builder, print layout |
+| **5** | Consultant Layer | Multi-client workspace, client switcher, risk comparison, onboarding wizard, sales landing page |
+| **5.5** | Validation & Hardening | SSOT enforcement, mobile fix, state recovery, responsive CSS |
+| **6** | Demo Portfolio | 5 realistic SME demo clients (high/medium/low risk), sample reports and evidence packs |
+| **7** | Deployment Packaging | Vercel/static deployment, PWA hardening, SW update notifications, DeploymentReadiness page |
+| **8** | Consultant Copilot | Local-first deterministic copilot — executive summaries, remediation plans, quantum explanations |
+| **8.5** | Workspace Mode Toggle | Global Demo/Product mode switch — all pages, components, and Copilot respect mode filtering |
+| **9** | Target Assessment Engine | Passive, authorised target assessment with authorisation gate, checklist, recommendation engine, scoring, evidence panel, report preview |
 
 ---
 
-## Run 8.5 — What Was Built
+## Run 9 — Target Assessment Engine
 
-Run 8.5 adds a global workspace mode switch between **Demo Mode** and **Product Mode**.
+New in Run 9:
 
-### Demo Mode
-- Shows fictional demo clients (5 SME examples)
-- Sample scores, sample reports, sample evidence pack
-- Sales walkthrough and consultant demo metrics
-- All demo content clearly labelled as fictional
+- **Target Registry** — add and manage assessment targets (websites, web apps, SaaS, APIs, internal systems, cloud environments)
+- **Authorisation Gate** — ownership or written permission must be confirmed before any assessment is generated
+- **Passive Checklist** — structured checks across: HTTPS/TLS, security headers, authentication, encryption, data protection, backup/recovery, vendor risk, quantum readiness, evidence gaps
+- **Recommendation Engine** — rule-based findings generated from checklist answers; each finding includes risk level, business impact, technical explanation, compliance relevance, quantum relevance, recommended fix, evidence required
+- **4-Dimension Scoring** — Security Readiness, Quantum Readiness, Evidence Completeness, Compliance Readiness (all 0–100, advisory, explainable)
+- **Evidence Panel** — attach notes, screenshots, documents, configuration exports, or reports per finding
+- **Report Preview** — print/PDF-ready advisory report with scope, authorisation, scores, findings, evidence, priority action plan, and disclaimer
+- **Demo/Product Mode Aware** — demo targets clearly labelled; hidden in product mode
+- **No offensive scanning** — purely passive, advisory, questionnaire-driven
 
-### Product Mode
-- Hides demo clients from all active product views
-- Real user-entered clients and assessments only
-- Clean product workspace — no demo contamination
-- Empty states prompt real client/data creation
-- Demo data preserved in storage (not deleted) until explicitly cleared
+### What is NOT included
 
-### Settings → Workspace Mode
-- Mode badge (Demo Mode / Product Mode) in TopBar and Settings
-- Switch to Demo Mode / Switch to Product Mode (with confirmation)
-- Load Demo Portfolio, Reset Demo Portfolio
-- Clear Demo Data Permanently (requires confirmation)
-- Create Clean Product Workspace
-- Export Workspace Backup
-
-### Architecture Changes (Run 8.5)
-- `workspaceMode.js` — SSOT mode module (clientIsDemo, filterClientsByMode, MODE_META, etc.)
-- `storage.js` — setWorkspaceMode, enableDemoMode, enableProductMode, getVisibleClients, clearDemoPortfolio, createCleanProductWorkspace, exportWorkspaceBackup
-- `consultantStorage.js` — clientMeta stamping on all new clients + migrateClientMeta on load
-- `Settings.jsx` — full Workspace Mode section with toggle, explanation cards, action buttons, confirmation modals
-- `TopBar.jsx` — live mode badge
-- `AppShell.jsx` — workspaceMode derived from storage.subscribe and threaded to all pages
-- `Dashboard.jsx` — WorkspaceModeBanner
-- `ConsultantDashboard.jsx` — filterClientsByMode, ClientsEmptyState, ConsultantModeBanner, demo badge on client rows, Demo Controls tab
-- `Reports.jsx`, `EvidencePack.jsx`, `Recommendations.jsx`, `ConsultantCopilot.jsx` — mode banners and filtering
-- `Onboarding.jsx` — demo launcher card on final step
-- `LandingPage.jsx` — Load Demo Portfolio CTA wired to enableDemoMode
+- No automated HTTP requests or crawling from the browser
+- No exploit testing, vulnerability exploitation, or payload injection
+- No credential or login testing
+- No brute force tools
+- No port scanning
+- No certificate "guarantee" or compliance certification
+- No external AI APIs
+- No backend, Supabase, or RLS
 
 ---
 
-## Demo Portfolio (5 Fictional SME Clients)
+## Architecture
 
-| Client | Sector | Risk | Sec | Quantum | Overall |
-|--------|--------|------|-----|---------|---------|
-| Meridian Legal Partners LLP | Legal | HIGH | 28 | 15 | 22 |
-| Vantage SaaS Technologies Ltd | Technology | MEDIUM | 62 | 48 | 57 |
-| Apex Managed Services Ltd | Technology | LOW | 88 | 74 | 83 |
-| Helix Health Analytics CIC | Healthcare | HIGH | 52 | 18 | 38 |
-| Clearline Business Services Ltd | Professional Services | MEDIUM | 67 | 42 | 58 |
+```
+quantum-compliance-os/
+  src/
+    core/
+      storage.js                   ← SSOT for ALL state
+      constants.js                 ← PAGES, NAV, APP_VERSION
+      workspaceMode.js             ← Demo/Product mode logic
+      targetAssessmentRules.js     ← Passive checklists, finding templates, demo data
+      targetAssessmentScoring.js   ← Advisory scoring engine (pure functions)
+      targetAssessmentStorage.js   ← SSOT extension — target CRUD, findings, evidence
+      copilotEngine.js             ← Local deterministic Copilot
+      assessmentSchema.js          ← Security assessment questions
+      quantumSchema.js             ← Quantum readiness questions
+      scoringEngine.js             ← Security scoring
+      quantumScoringEngine.js      ← Quantum scoring
+      consultantStorage.js         ← Multi-client consultant layer
+      demoPortfolio.js             ← 5 fictional SME demo clients
+      seedData.js                  ← Default seed data
+      validators.js                ← Input validation
+      riskTaxonomy.js              ← Risk categories
+      reportSchema.js              ← Report structure
+    pages/
+      Dashboard.jsx
+      TargetAssessments.jsx        ← Run 9: Target Assessment Engine
+      SecurityAssessment.jsx
+      QuantumReadiness.jsx
+      Recommendations.jsx
+      Reports.jsx
+      EvidencePack.jsx
+      ConsultantDashboard.jsx
+      ConsultantCopilot.jsx
+      Settings.jsx
+      About.jsx
+      DeploymentReadiness.jsx
+      OrganisationProfile.jsx
+      SystemInventory.jsx
+      Onboarding.jsx
+      LandingPage.jsx
+    components/
+      AppShell.jsx
+      Sidebar.jsx
+      TopBar.jsx
+      SectionCard.jsx
+      PageHeader.jsx
+      StatCard.jsx
+      ActionButton.jsx
+      FormField.jsx
+      EmptyState.jsx
+      RiskBadge.jsx
+      StatusPill.jsx
+```
 
-All demo clients are fictional. All scores are illustrative only.
+---
+
+## Data Model (localStorage via storage.js SSOT)
+
+All state is stored under `qcos_v1_state` in browser localStorage.
+
+Key state fields:
+
+```js
+{
+  appMeta:             { version, buildRun, latestCompletedRun, ... },
+  completedRuns:       [...],
+  moduleStatus:        { ..., targetAssessmentEngine: 'complete' },
+  featureFlags:        { ..., targetAssessmentEngine: true, supabaseEnabled: false, ... },
+  organisation:        { ... },
+  systemProfiles:      [...],
+  assessmentState:     { securityAssessment, quantumReadiness },
+  targetAssessments:   [...],   // Run 9
+  targetFindings:      [...],   // Run 9
+  targetEvidence:      [...],   // Run 9
+  targetScores:        [...],   // Run 9
+  assessmentSettings:  { ... }, // Run 9
+  evidencePack:        { ... },
+  consultantCopilot:   { ... },
+  settings:            { workspaceMode: 'demo' | 'product', ... },
+}
+```
+
+---
+
+## Deploy
+
+**Vercel (recommended):**
+
+```bash
+npm install
+npm run build
+# Push to GitHub → connect to Vercel → auto-deploy
+```
+
+**Local dev:**
+
+```bash
+npm install
+npm run dev
+```
 
 ---
 
 ## Safety Declarations
 
-- **RLS: NOT enabled** — no Supabase, no backend
-- **Backend: NOT included**
-- **Supabase: NOT included**
-- **Real Payments: NOT included**
-- **External AI APIs: NOT included**
-- **Offensive Scanning: NOT included**
-- **Defensive use only** — compliance preparation, post-quantum migration planning, security readiness
-
-This platform does not guarantee compliance, quantum-proof protection, certified security, breach prevention, or legally binding audit results.
-
----
-
-## Future Runs (Not Yet Built)
-
-- **Run 9** — Final Sales Pack + Launch QA
-- Future optional: AI API connector (opt-in)
-- Future optional: Supabase migration (opt-in)
-- Future optional: Authorised TLS/certificate checker
-- Future optional: Team accounts
-- Future optional: Real payments
+- ✅ Defensive use only — no offensive tools, no exploit scanning
+- ✅ No backend — all data stays in browser localStorage
+- ✅ No Supabase — RLS is not applicable (no backend exists)
+- ✅ No external API calls — no AI API, no scanner, no cloud
+- ✅ No real payments — placeholder only
+- ✅ Authorisation gate — assessment generation requires confirmed ownership or written permission
+- ✅ Advisory scores only — no "certified secure" or "guaranteed compliant" claims
+- ✅ All demo data clearly labelled
+- ✅ SSOT enforced — only storage.js and targetAssessmentStorage.js touch localStorage
 
 ---
 
-## Tech Stack
+## Disclaimer
 
-- React 18 + Vite
-- Local-first (localStorage via storage.js SSOT)
-- PWA (service worker, manifest)
-- No backend, no database, no server
-- Deployable to Vercel/Netlify/GitHub Pages
-
----
-
-*Quantum Compliance OS™ — Defensive Quantum-Readiness & Security Implementation Assessment Platform*
-*Run 8.5 Complete. Ready for Run 9.*
+This platform is for defensive security readiness, compliance preparation, and post-quantum migration planning only. It does not perform offensive testing, unauthorised scanning, exploitation, or guarantee compliance. All assessments should be reviewed by qualified security professionals before operational decisions are made.
