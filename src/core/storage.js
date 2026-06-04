@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run11',
-      buildRun: 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
-      latestCompletedRun: 11,
-      latestCompletedRunLabel: 'Run 11 — Multi-Client Consultant Hub',
+      version: '1.0.0-run12',
+      buildRun: 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
+      latestCompletedRun: 12,
+      latestCompletedRunLabel: 'Run 12 — Reports, Evidence History + Risk Comparison',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -216,6 +216,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_9_TARGET_ASSESSMENT_ENGINE',
   'RUN_10_COMMERCIAL_TIER_FOUNDATION',
   'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
+  'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -232,6 +233,7 @@ const RUN_8_5_MODULE_STATUS = {
   targetAssessmentEngine:     'complete',
   commercialTierFoundation:   'complete',
   multiClientConsultantHub:   'complete',
+  reportHistoryEvidenceRisk:  'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -247,6 +249,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   targetAssessmentEngine:    true,
   commercialTierFoundation:  true,
   multiClientConsultantHub:  true,
+  reportHistoryEvidenceRisk:  true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -263,18 +266,18 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 11 || existingMeta.buildRun !== 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB') {
+  if (storedRun < 12 || existingMeta.buildRun !== 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run11',
-      buildRun: 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
-      latestCompletedRun: 11,
-      latestCompletedRunLabel: 'Run 11 — Multi-Client Consultant Hub',
+      version: '1.0.0-run12',
+      buildRun: 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
+      latestCompletedRun: 12,
+      latestCompletedRunLabel: 'Run 12 — Reports, Evidence History + Risk Comparison',
       mode: 'local-first',
       defensiveOnly: true,
-      runLevel: 11,
-      migratedToRun11At: new Date().toISOString(),
+      runLevel: 12,
+      migratedToRun12At: new Date().toISOString(),
     };
   }
 

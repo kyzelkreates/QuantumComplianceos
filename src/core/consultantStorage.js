@@ -77,7 +77,7 @@ export const COMMERCIAL_TIERS = [
 // ─── Default Consultant Workspace ─────────────────────────────────────────────
 export function getInitialConsultantState() {
   return {
-    version:          '11.0.0',
+    version:          '12.0.0',
     createdAt:        new Date().toISOString(),
     lastUpdated:      new Date().toISOString(),
     consultantName:   '',
@@ -96,6 +96,10 @@ export function getInitialConsultantState() {
       accentColour: '#00d4ff',
     },
     notifications: [],
+    // Run 12 — Report History, Evidence Archive, Snapshots
+    reports:       [],   // per-client report history records
+    evidenceItems: [],   // per-client evidence archive records
+    snapshots:     [],   // per-client assessment snapshots
   };
 }
 
@@ -130,6 +134,10 @@ export function loadConsultantState() {
     if (Array.isArray(merged.clients)) {
       merged.clients = merged.clients.map(migrateClientMeta);
     }
+    // Run 12 migration: ensure reports/evidenceItems/snapshots arrays exist
+    if (!Array.isArray(merged.reports))       merged.reports       = [];
+    if (!Array.isArray(merged.evidenceItems)) merged.evidenceItems = [];
+    if (!Array.isArray(merged.snapshots))     merged.snapshots     = [];
     return merged;
   } catch {
     const fresh = getInitialConsultantState();
@@ -302,6 +310,73 @@ export function clearDemoHubClients(demoHubClients) {
 /**
  * Return only demo hub clients (isDemo=true + matching prefix) from current state.
  */
+// ─── Run 12: Report / Evidence / Snapshot CRUD ──────────────────────────────
+export function addReportRecord(report) {
+  setConsultantState((s) => ({
+    ...s,
+    reports: [...(s.reports || []), report],
+  }));
+}
+
+export function updateReportRecord(reportId, patch) {
+  setConsultantState((s) => ({
+    ...s,
+    reports: (s.reports || []).map((r) =>
+      r.id === reportId ? { ...r, ...patch, updatedAt: new Date().toISOString().slice(0, 10) } : r
+    ),
+  }));
+}
+
+export function addEvidenceRecord(item) {
+  setConsultantState((s) => ({
+    ...s,
+    evidenceItems: [...(s.evidenceItems || []), item],
+  }));
+}
+
+export function updateEvidenceRecord(itemId, patch) {
+  setConsultantState((s) => ({
+    ...s,
+    evidenceItems: (s.evidenceItems || []).map((e) =>
+      e.id === itemId ? { ...e, ...patch, lastUpdated: new Date().toISOString().slice(0, 10) } : e
+    ),
+  }));
+}
+
+export function addSnapshotRecord(snapshot) {
+  setConsultantState((s) => ({
+    ...s,
+    snapshots: [...(s.snapshots || []), snapshot],
+  }));
+}
+
+export function loadDemoReportHistory(demoReports, demoEvidence, demoSnapshots) {
+  setConsultantState((s) => {
+    const existingRids = new Set((s.reports       || []).map((r)  => r.id));
+    const existingEids = new Set((s.evidenceItems || []).map((e)  => e.id));
+    const existingSids = new Set((s.snapshots     || []).map((sn) => sn.id));
+    return {
+      ...s,
+      reports:       [...(s.reports       || []), ...demoReports.filter((r)  => !existingRids.has(r.id))],
+      evidenceItems: [...(s.evidenceItems || []), ...demoEvidence.filter((e)  => !existingEids.has(e.id))],
+      snapshots:     [...(s.snapshots     || []), ...demoSnapshots.filter((sn) => !existingSids.has(sn.id))],
+    };
+  });
+}
+
+export function clearDemoReportHistory(demoReportIds, demoEvidenceIds, demoSnapshotIds) {
+  setConsultantState((s) => ({
+    ...s,
+    reports:       (s.reports       || []).filter((r)  => !demoReportIds.has(r.id)),
+    evidenceItems: (s.evidenceItems || []).filter((e)  => !demoEvidenceIds.has(e.id)),
+    snapshots:     (s.snapshots     || []).filter((sn) => !demoSnapshotIds.has(sn.id)),
+  }));
+}
+
+export function getReportsState()       { return getConsultantState().reports       || []; }
+export function getEvidenceItemsState() { return getConsultantState().evidenceItems || []; }
+export function getSnapshotsState()     { return getConsultantState().snapshots     || []; }
+
 export function getDemoHubClients() {
   return (getConsultantState().clients || []).filter((c) => c.isDemo === true);
 }

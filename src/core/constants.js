@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '11.0.0';
-export const APP_RUN_LEVEL = 11;
+export const APP_VERSION = '12.0.0';
+export const APP_RUN_LEVEL = 12;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
