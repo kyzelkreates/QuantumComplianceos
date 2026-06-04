@@ -363,7 +363,7 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
           <strong>This is not a security certification. No compliance guarantee is made or implied.</strong>
         </p>
         <p style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px' }}>
-          Quantum Compliance OS™ v10.0.0 · Local-First · No Backend · No Supabase · RLS Not Applicable
+          Quantum Compliance OS™ v11.0.0 · Local-First · No Backend · No Supabase · RLS Not Applicable
         </p>
       </footer>
     </div>

@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '10.0.0';
-export const APP_RUN_LEVEL = 10;
+export const APP_VERSION = '11.0.0';
+export const APP_RUN_LEVEL = 11;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -15,6 +15,7 @@ export const DEFENSIVE_DISCLAIMER =
 
 // ─── Navigation Pages ─────────────────────────────────────────────────────────
 export const PAGES = {
+  CLIENT_HUB: 'client-hub',
   CONSULTANT: 'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
   DASHBOARD: 'dashboard',
@@ -96,9 +97,16 @@ export const NAV_ITEMS = [
     description: 'Compliance evidence preparation',
   },
   {
+    id: PAGES.CLIENT_HUB,
+    label: 'Client Hub',
+    icon: '🏢',
+    group: 'consultant',
+    description: 'Multi-Client Consultant Hub — manage client records, risk, scores, evidence',
+  },
+  {
     id: PAGES.CONSULTANT,
     label: 'Consultant Hub',
-    icon: '🏢',
+    icon: '👥',
     group: 'system',
     description: 'Multi-client management, tiers, and deployment checklist',
   },

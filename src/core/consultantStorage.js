@@ -77,7 +77,7 @@ export const COMMERCIAL_TIERS = [
 // ─── Default Consultant Workspace ─────────────────────────────────────────────
 export function getInitialConsultantState() {
   return {
-    version:          '5.0.0',
+    version:          '11.0.0',
     createdAt:        new Date().toISOString(),
     lastUpdated:      new Date().toISOString(),
     consultantName:   '',
@@ -195,20 +195,30 @@ export function deleteClientState(clientId) {
 export function createClient(payload) {
   const now = new Date().toISOString();
   const client = {
-    id:          payload.id || `client_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-    name:        payload.name || 'New Client',
-    sector:      payload.sector || '',
-    contactName: payload.contactName || '',
-    contactEmail:payload.contactEmail || '',
-    notes:       payload.notes || '',
-    tags:        payload.tags || [],
-    branding:    payload.branding || null,  // per-client white-label
-    archived:    false,
-    createdAt:   now,
-    updatedAt:   now,
-    lastActivity:now,
+    id:                    payload.id || `client_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+    name:                  payload.name || 'New Client',
+    sector:                payload.sector || '',
+    contactName:           payload.contactName || '',
+    contactEmail:          payload.contactEmail || '',
+    notes:                 payload.notes || '',
+    tags:                  payload.tags || [],
+    branding:              payload.branding || null,  // per-client white-label
+    archived:              false,
+    createdAt:             payload.createdAt || now,
+    updatedAt:             now,
+    lastActivity:          now,
     // Run 8.5 — workspace mode metadata
-    clientMeta:  payload.clientMeta || buildRealClientMeta(),
+    clientMeta:            payload.clientMeta || buildRealClientMeta(),
+    // Run 11 — Multi-Client Hub extended fields
+    riskLevel:             payload.riskLevel             || 'unknown',      // high | medium | low | unknown
+    quantumReadinessScore: payload.quantumReadinessScore != null ? Number(payload.quantumReadinessScore) : null,
+    securityScore:         payload.securityScore         != null ? Number(payload.securityScore)         : null,
+    evidenceStatus:        payload.evidenceStatus        || 'missing',      // complete | partial | incomplete | missing
+    assessmentStatus:      payload.assessmentStatus      || 'not-started',  // not-started | in-progress | review-needed | complete
+    lastAssessmentDate:    payload.lastAssessmentDate    || null,
+    reportCount:           payload.reportCount           != null ? Number(payload.reportCount) : 0,
+    isDemo:                payload.isDemo                ?? false,
+    status:                payload.archived ? 'archived' : (payload.status || 'active'),
   };
 
   setConsultantState((s) => ({
@@ -222,9 +232,15 @@ export function createClient(payload) {
 export function updateClient(clientId, payload) {
   setConsultantState((s) => ({
     ...s,
-    clients: s.clients.map((c) =>
-      c.id === clientId ? { ...c, ...payload, updatedAt: new Date().toISOString() } : c
-    ),
+    clients: s.clients.map((c) => {
+      if (c.id !== clientId) return c;
+      const updated = { ...c, ...payload, updatedAt: new Date().toISOString() };
+      // Keep status in sync with archived flag
+      if ('archived' in payload) {
+        updated.status = payload.archived ? 'archived' : 'active';
+      }
+      return updated;
+    }),
   }));
 }
 
@@ -232,7 +248,7 @@ export function archiveClient(clientId) {
   setConsultantState((s) => ({
     ...s,
     clients: s.clients.map((c) =>
-      c.id === clientId ? { ...c, archived: true, updatedAt: new Date().toISOString() } : c
+      c.id === clientId ? { ...c, archived: true, status: 'archived', updatedAt: new Date().toISOString() } : c
     ),
     activeClientId: s.activeClientId === clientId ? null : s.activeClientId,
   }));
@@ -242,7 +258,7 @@ export function restoreClient(clientId) {
   setConsultantState((s) => ({
     ...s,
     clients: s.clients.map((c) =>
-      c.id === clientId ? { ...c, archived: false, updatedAt: new Date().toISOString() } : c
+      c.id === clientId ? { ...c, archived: false, status: 'active', updatedAt: new Date().toISOString() } : c
     ),
   }));
 }
@@ -254,6 +270,40 @@ export function deleteClientPermanently(clientId) {
     clients: s.clients.filter((c) => c.id !== clientId),
     activeClientId: s.activeClientId === clientId ? null : s.activeClientId,
   }));
+}
+
+// ─── Run 11: Demo Hub Client Helpers ────────────────────────────────────────────
+/**
+ * Load the 5 Run 11 demo hub clients into the consultant workspace.
+ * Safe — will not duplicate existing clients by id.
+ * Requires demoHubClients array from clientHubSeedData.js.
+ */
+export function loadDemoHubClients(demoHubClients) {
+  setConsultantState((s) => {
+    const existingIds = new Set((s.clients || []).map((c) => c.id));
+    const toAdd = demoHubClients.filter((c) => !existingIds.has(c.id));
+    if (toAdd.length === 0) return s;
+    return { ...s, clients: [...s.clients, ...toAdd] };
+  });
+}
+
+/**
+ * Clear all demo hub clients (those with isDemo: true and Run 11 demo IDs).
+ */
+export function clearDemoHubClients(demoHubClients) {
+  const demoIds = new Set(demoHubClients.map((c) => c.id));
+  setConsultantState((s) => ({
+    ...s,
+    clients: (s.clients || []).filter((c) => !demoIds.has(c.id)),
+    activeClientId: demoIds.has(s.activeClientId) ? null : s.activeClientId,
+  }));
+}
+
+/**
+ * Return only demo hub clients (isDemo=true + matching prefix) from current state.
+ */
+export function getDemoHubClients() {
+  return (getConsultantState().clients || []).filter((c) => c.isDemo === true);
 }
 
 // ─── Active Client Switching ──────────────────────────────────────────────────

@@ -39,13 +39,15 @@ const RUNS_COMPLETE = [
     desc: 'Passive, authorised target assessment for websites, web apps, SaaS platforms, APIs, and internal systems. Authorisation gate (ownership/permission required). Passive checklist (HTTPS, TLS, headers, auth, encryption, backup, vendor risk, quantum readiness, evidence). Rule-based recommendation and finding engine. Explainable 4-score model (Security, Quantum, Evidence, Compliance). Evidence panel. Report preview with advisory disclaimer. Demo/product mode aware. Defensive use only. No offensive scanning, no exploit tools, no credential testing.' },
   { run: 10,    label: 'Commercial Tier + Feature Gate Foundation',
     desc: 'Central plans.js config (Starter, Pro Consultant, Agency, White Label). Feature key registry. Helper functions (getCurrentPlan, canUseFeature, getClientLimitForPlan, isPlanComingSoon, getUpgradePlans). Plan cards UI with active/locked/coming-soon states. activePlanId added to storage.js SSOT. Settings page Plans & Upgrade section. No backend, no payments, no auth. Starter is active by default. Pro/Agency/White Label locked with advisory messages.' },
+  { run: 11,    label: 'Multi-Client Consultant Hub',
+    desc: 'ClientHub.jsx — full multi-client management hub. clientHubSeedData.js — 5 fictional demo clients (Acme Manufacturing/high, Northbridge Finance/medium, Greenline Health/high, SecurePath Logistics/low, CivicCloud Services/review-needed). Client data model extended with riskLevel, quantumReadinessScore, securityScore, evidenceStatus, assessmentStatus, lastAssessmentDate, reportCount, isDemo, status. consultantStorage.js extended with loadDemoHubClients, clearDemoHubClients, getDemoHubClients. Add/Edit/Archive/Restore flows. Search, filter (All/Active/Archived/High Risk/Needs Review/Evidence Gaps), sort. Client workspace detail panel. Plan limit enforcement from plans.js (Run 10). Metrics row (8 KPIs). Future placeholders for Run 12 report history and risk comparison. No backend. No Supabase. No payments. No AI APIs.' },
 ];
 
 const FUTURE_RUNS = [
 
 
-  { run: '11+',   label: 'Multi-Client Consultant Hub (Run 11)',
-    desc: 'Pro Consultant tier activation — multi-client hub, per-client branding, report history, risk comparison. Requires Run 10 commercial tier foundation.' },
+  { run: '12',    label: 'Reports, Evidence History + Risk Comparison (Run 12)',
+    desc: 'Per-client report history, risk comparison dashboard, evidence archive, and comparative quantum-readiness scoring. Builds on Run 11 multi-client hub.' },
   { run: 'Future', label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',

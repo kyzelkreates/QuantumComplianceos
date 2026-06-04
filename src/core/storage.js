@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run10',
-      buildRun: 'RUN_10_COMMERCIAL_TIER_FOUNDATION',
-      latestCompletedRun: 10,
-      latestCompletedRunLabel: 'Run 10 — Commercial Tier + Feature Gate Foundation',
+      version: '1.0.0-run11',
+      buildRun: 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
+      latestCompletedRun: 11,
+      latestCompletedRunLabel: 'Run 11 — Multi-Client Consultant Hub',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -215,6 +215,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_8_5_WORKSPACE_MODE',
   'RUN_9_TARGET_ASSESSMENT_ENGINE',
   'RUN_10_COMMERCIAL_TIER_FOUNDATION',
+  'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -230,6 +231,7 @@ const RUN_8_5_MODULE_STATUS = {
   workspaceMode:           'complete',
   targetAssessmentEngine:     'complete',
   commercialTierFoundation:   'complete',
+  multiClientConsultantHub:   'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -244,6 +246,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   workspaceModeToggle:       true,
   targetAssessmentEngine:    true,
   commercialTierFoundation:  true,
+  multiClientConsultantHub:  true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -260,18 +263,18 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 10 || existingMeta.buildRun !== 'RUN_10_COMMERCIAL_TIER_FOUNDATION') {
+  if (storedRun < 11 || existingMeta.buildRun !== 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run10',
-      buildRun: 'RUN_10_COMMERCIAL_TIER_FOUNDATION',
-      latestCompletedRun: 10,
-      latestCompletedRunLabel: 'Run 10 — Commercial Tier + Feature Gate Foundation',
+      version: '1.0.0-run11',
+      buildRun: 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
+      latestCompletedRun: 11,
+      latestCompletedRunLabel: 'Run 11 — Multi-Client Consultant Hub',
       mode: 'local-first',
       defensiveOnly: true,
-      runLevel: 10,
-      migratedToRun10At: new Date().toISOString(),
+      runLevel: 11,
+      migratedToRun11At: new Date().toISOString(),
     };
   }
 
@@ -387,7 +390,7 @@ export function loadState() {
     // WITHOUT touching user data (assessments, reports, clients, drafts)
     _state = migrateState(merged);
     // Persist the migrated state so next load is already up-to-date
-    if (merged.appMeta?.buildRun !== 'RUN_10_COMMERCIAL_TIER_FOUNDATION') {
+    if (merged.appMeta?.buildRun !== 'RUN_11_MULTI_CLIENT_CONSULTANT_HUB') {
       saveState(_state);
     }
     return _state;
