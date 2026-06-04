@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '14.0.0';
-export const APP_RUN_LEVEL = 14;
+export const APP_VERSION = '15.0.0';
+export const APP_RUN_LEVEL = 15;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -17,7 +17,8 @@ export const DEFENSIVE_DISCLAIMER =
 export const PAGES = {
   CLIENT_HUB:       'client-hub',
   AGENCY_SETTINGS:   'agency-settings',
-  PRODUCT_MODE:      'product-mode',
+  PRODUCT_MODE:          'product-mode',
+  BACKEND_CONNECTORS:    'backend-connectors',
   CONSULTANT:       'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
   DASHBOARD: 'dashboard',
@@ -118,6 +119,13 @@ export const NAV_ITEMS = [
     icon: '🔀',
     group: 'system',
     description: 'Demo/Live toggle, data provider architecture, and 4P3X API Config Guard™',
+  },
+  {
+    id: PAGES.BACKEND_CONNECTORS,
+    label: 'Backend Connectors',
+    icon: '🔌',
+    group: 'system',
+    description: 'Supabase/Firebase config, sync control, and backend connection status',
   },
   {
     id: PAGES.CONSULTANT,

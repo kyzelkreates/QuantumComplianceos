@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run14',
-      buildRun: 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
-      latestCompletedRun: 14,
-      latestCompletedRunLabel: 'Run 14 — Demo/Live Toggle + Data Provider Architecture',
+      version: '1.0.0-run15',
+      buildRun: 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
+      latestCompletedRun: 15,
+      latestCompletedRunLabel: 'Run 15 — Backend Connectors + Live Sync Layer',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -175,6 +175,10 @@ export function getInitialState() {
     targetAssessments:  [],
     targetFindings:     [],
     targetEvidence:     [],
+    // ── Run 15: Backend Connector + Sync state ──────────────────────────────
+    backendSettings: null,   // null = use getDefaultBackendSettings() from backendSync.js
+    syncSettings:    null,   // null = use getDefaultSyncSettings() from backendSync.js
+    syncQueue:       [],     // local sync queue — items waiting for backend push
     targetScores:       [],
     assessmentSettings: {
       passiveChecksEnabled:         true,
@@ -221,6 +225,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
   'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
   'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
+  'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -240,6 +245,7 @@ const RUN_8_5_MODULE_STATUS = {
   reportHistoryEvidenceRisk:  'complete',
   agencyWhiteLabelSettings:   'complete',
   demoLiveToggleDataProvider: 'complete',
+  backendConnectorsLiveSync:  'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -258,6 +264,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   reportHistoryEvidenceRisk:  true,
   agencyWhiteLabelSettings:   true,
   demoLiveToggleDataProvider: true,
+  backendConnectorsLiveSync:  true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -274,14 +281,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 14 || existingMeta.buildRun !== 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER') {
+  if (storedRun < 15 || existingMeta.buildRun !== 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run14',
-      buildRun: 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
-      latestCompletedRun: 14,
-      latestCompletedRunLabel: 'Run 14 — Demo/Live Toggle + Data Provider Architecture',
+      version: '1.0.0-run15',
+      buildRun: 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
+      latestCompletedRun: 15,
+      latestCompletedRunLabel: 'Run 15 — Backend Connectors + Live Sync Layer',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
@@ -381,12 +388,22 @@ export function migrateState(state) {
 
   // ── 9. Ensure productMode + activeDataProvider exist in settings (Run 14) ─
   if (!migrated.settings.productMode) {
-    // Preserve existing workspaceMode for backward compat
     const wm = migrated.settings.workspaceMode;
     migrated.settings.productMode = wm === 'product' ? 'live-local' : 'demo';
   }
   if (!migrated.settings.activeDataProvider) {
     migrated.settings.activeDataProvider = 'localStorage';
+  }
+
+  // ── 10. Ensure backendSettings + syncSettings + syncQueue exist (Run 15) ─
+  if (migrated.backendSettings === undefined) {
+    migrated.backendSettings = null;  // null = use defaults from backendSync.js
+  }
+  if (migrated.syncSettings === undefined) {
+    migrated.syncSettings = null;     // null = use defaults from backendSync.js
+  }
+  if (!Array.isArray(migrated.syncQueue)) {
+    migrated.syncQueue = [];
   }
 
   return migrated;
