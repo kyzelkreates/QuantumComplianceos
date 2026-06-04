@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run13',
-      buildRun: 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
-      latestCompletedRun: 13,
-      latestCompletedRunLabel: 'Run 13 — Agency + White Label Settings',
+      version: '1.0.0-run14',
+      buildRun: 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
+      latestCompletedRun: 14,
+      latestCompletedRunLabel: 'Run 14 — Demo/Live Toggle + Data Provider Architecture',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -135,6 +135,8 @@ export function getInitialState() {
       demoMode: true,           // legacy — workspaceMode is now SSOT
       workspaceMode: 'demo',    // 'demo' | 'product'  (Run 8.5)
       activePlanId: 'starter',  // Run 10: commercial tier — default is always 'starter'
+      productMode: 'demo',      // Run 14: product mode — 'demo' | 'live-local' | 'live-backend-ready'
+      activeDataProvider: 'localStorage',  // Run 14: only localStorage is active
       protectRealDataOnDemoLoad: true,
       requireModeSwitchConfirmation: true,
       autosave: true,
@@ -218,6 +220,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
   'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
   'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
+  'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -236,6 +239,7 @@ const RUN_8_5_MODULE_STATUS = {
   multiClientConsultantHub:   'complete',
   reportHistoryEvidenceRisk:  'complete',
   agencyWhiteLabelSettings:   'complete',
+  demoLiveToggleDataProvider: 'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -253,6 +257,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   multiClientConsultantHub:  true,
   reportHistoryEvidenceRisk:  true,
   agencyWhiteLabelSettings:   true,
+  demoLiveToggleDataProvider: true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -269,14 +274,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 13 || existingMeta.buildRun !== 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS') {
+  if (storedRun < 14 || existingMeta.buildRun !== 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run13',
-      buildRun: 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
-      latestCompletedRun: 13,
-      latestCompletedRunLabel: 'Run 13 — Agency + White Label Settings',
+      version: '1.0.0-run14',
+      buildRun: 'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
+      latestCompletedRun: 14,
+      latestCompletedRunLabel: 'Run 14 — Demo/Live Toggle + Data Provider Architecture',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
@@ -372,6 +377,16 @@ export function migrateState(state) {
   }
   if (!migrated.settings.activePlanId) {
     migrated.settings.activePlanId = 'starter';
+  }
+
+  // ── 9. Ensure productMode + activeDataProvider exist in settings (Run 14) ─
+  if (!migrated.settings.productMode) {
+    // Preserve existing workspaceMode for backward compat
+    const wm = migrated.settings.workspaceMode;
+    migrated.settings.productMode = wm === 'product' ? 'live-local' : 'demo';
+  }
+  if (!migrated.settings.activeDataProvider) {
+    migrated.settings.activeDataProvider = 'localStorage';
   }
 
   return migrated;
@@ -1571,6 +1586,19 @@ export function clearDemoPortfolio(saveClientStateFn, setConsultantStateFn, dele
 
   addActivityLog({ type: 'demo_portfolio_cleared', message: 'Demo portfolio permanently cleared from local storage.' });
 }
+
+// ─── Run 14: Visible record helpers (delegate to dataProviders.js) ─────────────
+/**
+ * getVisibleClientsForMode — returns clients visible in current product mode.
+ * Uses existing filterClientsByMode from workspaceMode.js.
+ */
+export function getVisibleClientsForMode() {
+  const s = getState();
+  const clients = s.clients || [];
+  const wm = s.settings?.workspaceMode || 'demo';
+  return filterClientsByMode(clients, wm, { includeArchived: false });
+}
+
 
 /**
  * exportWorkspaceBackup — exports the full local workspace as JSON backup.

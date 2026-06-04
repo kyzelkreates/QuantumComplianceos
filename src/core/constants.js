@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '13.0.0';
-export const APP_RUN_LEVEL = 13;
+export const APP_VERSION = '14.0.0';
+export const APP_RUN_LEVEL = 14;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -16,7 +16,8 @@ export const DEFENSIVE_DISCLAIMER =
 // ─── Navigation Pages ─────────────────────────────────────────────────────────
 export const PAGES = {
   CLIENT_HUB:       'client-hub',
-  AGENCY_SETTINGS:  'agency-settings',
+  AGENCY_SETTINGS:   'agency-settings',
+  PRODUCT_MODE:      'product-mode',
   CONSULTANT:       'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
   DASHBOARD: 'dashboard',
@@ -110,6 +111,13 @@ export const NAV_ITEMS = [
     icon: '🏢',
     group: 'system',
     description: 'Agency profile, branding, white-label settings, and portfolio analytics',
+  },
+  {
+    id: PAGES.PRODUCT_MODE,
+    label: 'Product Mode & Providers',
+    icon: '🔀',
+    group: 'system',
+    description: 'Demo/Live toggle, data provider architecture, and 4P3X API Config Guard™',
   },
   {
     id: PAGES.CONSULTANT,

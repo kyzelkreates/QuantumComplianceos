@@ -28,6 +28,7 @@ import ConsultantCopilot  from '../pages/ConsultantCopilot.jsx';
 import TargetAssessments  from '../pages/TargetAssessments.jsx';
 import ClientHub          from '../pages/ClientHub.jsx';
 import AgencySettings     from '../pages/AgencySettings.jsx';
+import ProductModeSettings from '../pages/ProductModeSettings.jsx';
 
 function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
   const modeProps = { workspaceMode, onNavigate };
@@ -48,6 +49,7 @@ function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
     case PAGES.TARGET_ASSESSMENTS:  return <TargetAssessments   {...modeProps} />;
     case PAGES.CLIENT_HUB:          return <ClientHub           {...modeProps} onNavigate={onNavigate} />;
     case PAGES.AGENCY_SETTINGS:     return <AgencySettings      {...modeProps} />;
+    case PAGES.PRODUCT_MODE:        return <ProductModeSettings {...modeProps} />;
     default:                        return <Dashboard           {...modeProps} />;
   }
 }

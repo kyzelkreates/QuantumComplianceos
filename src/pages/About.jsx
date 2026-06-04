@@ -44,14 +44,16 @@ const RUNS_COMPLETE = [
   { run: 12,    label: 'Reports, Evidence History + Risk Comparison',
     desc: 'reportHistoryData.js (7 reports, 12 evidence items, 6 snapshots). reportHistoryHelpers.js (pure helpers). consultantStorage.js extended with reports[], evidenceItems[], snapshots[] + CRUD. ClientHub.jsx extended: ReportHistoryPanel, EvidenceArchivePanel, SnapshotTimelinePanel, RiskComparisonDashboard, UrgentActionsPanel, MissingEvidencePanel, quick-nav buttons. Local/demo-safe. No backend. No AI APIs.' },
   { run: 13,    label: 'Agency + White Label Settings',
-    desc: 'agencyHelpers.js — pure helpers (getAgencyPortfolioSummary, getAgencyTierStatus, getWhiteLabelPreviewSettings, getDefaultAgencySettings, getDefaultWhiteLabelSettings, getArchivedClientCount, etc). AgencySettings.jsx — full 10-section settings page: Agency Profile, Agency Branding Controls, White Label Settings, Report Branding Preview, Portfolio Analytics Preview, Client Archive Management, Custom Domain Placeholder, Onboarding Wizard Placeholder, SLA/Support Placeholder, Agency Feature Gates. consultantStorage.js extended with agencySettings + whiteLabelSettings state keys. constants.js: PAGES.AGENCY_SETTINGS, Agency & White Label nav item, v13.0.0. AppShell.jsx: AgencySettings import + case. All settings local/demo-safe. No backend. No real custom domain. No real SLA. No AI APIs. Kyzel Kreates™ / 4P3X Intelligent AI™ ownership always preserved in internal areas.' },
+    desc: 'agencyHelpers.js — pure helpers. AgencySettings.jsx — 10-section page: Agency Profile, Branding Controls, White Label Settings, Report Branding Preview, Portfolio Analytics Preview, Client Archive Management, Custom Domain Placeholder, Onboarding Wizard Placeholder, SLA/Support Placeholder, Agency Feature Gates. consultantStorage.js: agencySettings + whiteLabelSettings. constants.js: PAGES.AGENCY_SETTINGS. All local/demo-safe. No backend. Kyzel Kreates™ / 4P3X Intelligent AI™ ownership preserved.' },
+  { run: 14,    label: 'Demo/Live Toggle + Data Provider Architecture',
+    desc: 'dataProviders.js — data provider registry (localStorage active; supabase/firebase/aws/customApi as placeholders), PRODUCT_MODE model, helpers (getProductModeFromState, isDemoProductMode, filterRecordsByProductMode, getDataSeparationStatus, validateDemoLiveSeparation, getModeStatusMessage, getProviderReadinessSummary, API_CONFIG_GUARD). ProductModeSettings.jsx — 6-section page: Mode Banner, Product Mode Panel, Data Provider Readiness, Data Separation Diagnostics, 4P3X API Config Guard™, Backend Future Notice. storage.js: productMode + activeDataProvider in settings + migration step 9. PAGES.PRODUCT_MODE nav. Mode switching reuses Run 8.5 setWorkspaceMode. No backend. No credentials. No external APIs.' },
 ];
 
 const FUTURE_RUNS = [
 
 
-  { run: '14',    label: 'Demo/Live Toggle + Data Provider Architecture (Run 14)',
-    desc: 'Formal demo/live toggle architecture, data provider abstraction layer, live data isolation, Supabase opt-in scaffolding preparation.' },
+  { run: '15',    label: 'Backend Connectors + Live Sync Layer (Run 15)',
+    desc: 'Supabase connector, live sync queue, conflict resolution foundation, RLS, Auth scaffold, and first real backend provider connection.' },
   { run: 'Future', label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',
