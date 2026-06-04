@@ -30,6 +30,7 @@ import ClientHub          from '../pages/ClientHub.jsx';
 import AgencySettings     from '../pages/AgencySettings.jsx';
 import ProductModeSettings    from '../pages/ProductModeSettings.jsx';
 import BackendConnectorSettings from '../pages/BackendConnectorSettings.jsx';
+import AISettings               from '../pages/AISettings.jsx';
 
 function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
   const modeProps = { workspaceMode, onNavigate };
@@ -52,6 +53,7 @@ function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
     case PAGES.AGENCY_SETTINGS:     return <AgencySettings      {...modeProps} />;
     case PAGES.PRODUCT_MODE:           return <ProductModeSettings       {...modeProps} />;
     case PAGES.BACKEND_CONNECTORS:     return <BackendConnectorSettings  />;
+    case PAGES.AI_SETTINGS:            return <AISettings               />;
     default:                        return <Dashboard           {...modeProps} />;
   }
 }

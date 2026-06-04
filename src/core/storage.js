@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run15',
-      buildRun: 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
-      latestCompletedRun: 15,
-      latestCompletedRunLabel: 'Run 15 — Backend Connectors + Live Sync Layer',
+      version: '1.0.0-run16',
+      buildRun: 'RUN_16_BUILT_IN_AI_AGENTS',
+      latestCompletedRun: 16,
+      latestCompletedRunLabel: 'Run 16 — Built-In AI Agents + Open-Source AI Provider Options',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -179,6 +179,10 @@ export function getInitialState() {
     backendSettings: null,   // null = use getDefaultBackendSettings() from backendSync.js
     syncSettings:    null,   // null = use getDefaultSyncSettings() from backendSync.js
     syncQueue:       [],     // local sync queue — items waiting for backend push
+    // ── Run 16: AI Agents + Provider state ───────────────────────────────────
+    aiSettings:      null,   // null = use getDefaultAISettings() from aiAgents.js
+    aiProviders:     {},     // provider config overrides (base registry in aiAgents.js)
+    aiAgentSessions: [],     // local agent session log
     targetScores:       [],
     assessmentSettings: {
       passiveChecksEnabled:         true,
@@ -226,6 +230,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
   'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
   'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
+  'RUN_16_BUILT_IN_AI_AGENTS',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -246,6 +251,7 @@ const RUN_8_5_MODULE_STATUS = {
   agencyWhiteLabelSettings:   'complete',
   demoLiveToggleDataProvider: 'complete',
   backendConnectorsLiveSync:  'complete',
+  builtInAIAgents:            'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -265,6 +271,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   agencyWhiteLabelSettings:   true,
   demoLiveToggleDataProvider: true,
   backendConnectorsLiveSync:  true,
+  builtInAIAgents:            true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -281,14 +288,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 15 || existingMeta.buildRun !== 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC') {
+  if (storedRun < 16 || existingMeta.buildRun !== 'RUN_16_BUILT_IN_AI_AGENTS') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run15',
-      buildRun: 'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
-      latestCompletedRun: 15,
-      latestCompletedRunLabel: 'Run 15 — Backend Connectors + Live Sync Layer',
+      version: '1.0.0-run16',
+      buildRun: 'RUN_16_BUILT_IN_AI_AGENTS',
+      latestCompletedRun: 16,
+      latestCompletedRunLabel: 'Run 16 — Built-In AI Agents + Open-Source AI Provider Options',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
@@ -397,13 +404,24 @@ export function migrateState(state) {
 
   // ── 10. Ensure backendSettings + syncSettings + syncQueue exist (Run 15) ─
   if (migrated.backendSettings === undefined) {
-    migrated.backendSettings = null;  // null = use defaults from backendSync.js
+    migrated.backendSettings = null;
   }
   if (migrated.syncSettings === undefined) {
-    migrated.syncSettings = null;     // null = use defaults from backendSync.js
+    migrated.syncSettings = null;
   }
   if (!Array.isArray(migrated.syncQueue)) {
     migrated.syncQueue = [];
+  }
+
+  // ── 11. Ensure aiSettings + aiProviders + aiAgentSessions exist (Run 16) ─
+  if (migrated.aiSettings === undefined) {
+    migrated.aiSettings = null;      // null = use defaults from aiAgents.js
+  }
+  if (!migrated.aiProviders || typeof migrated.aiProviders !== 'object') {
+    migrated.aiProviders = {};
+  }
+  if (!Array.isArray(migrated.aiAgentSessions)) {
+    migrated.aiAgentSessions = [];
   }
 
   return migrated;
