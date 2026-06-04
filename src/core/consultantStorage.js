@@ -77,7 +77,7 @@ export const COMMERCIAL_TIERS = [
 // ─── Default Consultant Workspace ─────────────────────────────────────────────
 export function getInitialConsultantState() {
   return {
-    version:          '12.0.0',
+    version:          '13.0.0',
     createdAt:        new Date().toISOString(),
     lastUpdated:      new Date().toISOString(),
     consultantName:   '',
@@ -100,6 +100,9 @@ export function getInitialConsultantState() {
     reports:       [],   // per-client report history records
     evidenceItems: [],   // per-client evidence archive records
     snapshots:     [],   // per-client assessment snapshots
+    // Run 13 — Agency + White Label Settings
+    agencySettings:      null,   // populated on first save; null = use defaults from agencyHelpers.js
+    whiteLabelSettings:  null,   // populated on first save; null = use defaults from agencyHelpers.js
   };
 }
 
@@ -138,6 +141,9 @@ export function loadConsultantState() {
     if (!Array.isArray(merged.reports))       merged.reports       = [];
     if (!Array.isArray(merged.evidenceItems)) merged.evidenceItems = [];
     if (!Array.isArray(merged.snapshots))     merged.snapshots     = [];
+    // Run 13 migration: ensure agencySettings + whiteLabelSettings exist (null = use defaults)
+    if (merged.agencySettings     === undefined) merged.agencySettings     = null;
+    if (merged.whiteLabelSettings === undefined) merged.whiteLabelSettings = null;
     return merged;
   } catch {
     const fresh = getInitialConsultantState();
@@ -376,6 +382,7 @@ export function clearDemoReportHistory(demoReportIds, demoEvidenceIds, demoSnaps
 export function getReportsState()       { return getConsultantState().reports       || []; }
 export function getEvidenceItemsState() { return getConsultantState().evidenceItems || []; }
 export function getSnapshotsState()     { return getConsultantState().snapshots     || []; }
+export function getClientsFromState()   { return getConsultantState().clients       || []; }
 
 export function getDemoHubClients() {
   return (getConsultantState().clients || []).filter((c) => c.isDemo === true);

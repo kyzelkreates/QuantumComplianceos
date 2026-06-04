@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '12.0.0';
-export const APP_RUN_LEVEL = 12;
+export const APP_VERSION = '13.0.0';
+export const APP_RUN_LEVEL = 13;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -15,8 +15,9 @@ export const DEFENSIVE_DISCLAIMER =
 
 // ─── Navigation Pages ─────────────────────────────────────────────────────────
 export const PAGES = {
-  CLIENT_HUB: 'client-hub',
-  CONSULTANT: 'consultant',
+  CLIENT_HUB:       'client-hub',
+  AGENCY_SETTINGS:  'agency-settings',
+  CONSULTANT:       'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
   DASHBOARD: 'dashboard',
   ORGANISATION: 'organisation',
@@ -102,6 +103,13 @@ export const NAV_ITEMS = [
     icon: '🏢',
     group: 'consultant',
     description: 'Multi-Client Consultant Hub — manage client records, risk, scores, evidence',
+  },
+  {
+    id: PAGES.AGENCY_SETTINGS,
+    label: 'Agency & White Label',
+    icon: '🏢',
+    group: 'system',
+    description: 'Agency profile, branding, white-label settings, and portfolio analytics',
   },
   {
     id: PAGES.CONSULTANT,

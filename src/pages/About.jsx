@@ -42,14 +42,16 @@ const RUNS_COMPLETE = [
   { run: 11,    label: 'Multi-Client Consultant Hub',
     desc: 'ClientHub.jsx — full multi-client management hub. clientHubSeedData.js — 5 fictional demo clients (Acme Manufacturing/high, Northbridge Finance/medium, Greenline Health/high, SecurePath Logistics/low, CivicCloud Services/review-needed). Client data model extended with riskLevel, quantumReadinessScore, securityScore, evidenceStatus, assessmentStatus, lastAssessmentDate, reportCount, isDemo, status. consultantStorage.js extended with loadDemoHubClients, clearDemoHubClients, getDemoHubClients. Add/Edit/Archive/Restore flows. Search, filter, sort. Client workspace. Plan limit enforcement. 8-metric overview. No backend. No Supabase. No payments. No AI APIs.' },
   { run: 12,    label: 'Reports, Evidence History + Risk Comparison',
-    desc: 'reportHistoryData.js — 7 demo reports, 12 demo evidence items, 6 demo snapshots linked to Run 11 clients. reportHistoryHelpers.js — pure helpers (getReportsByClientId, getEvidenceByClientId, getSnapshotsByClientId, getPriorityActionsForClient, getPortfolioRiskSummary, compareClientsByRisk, getClientsNeedingReview, getClientsWithMissingEvidence, etc). consultantStorage.js extended with reports[], evidenceItems[], snapshots[] arrays + CRUD functions + loadDemoReportHistory/clearDemoReportHistory. ClientHub.jsx extended: ReportHistoryPanel, EvidenceArchivePanel, SnapshotTimelinePanel in client workspace; RiskComparisonDashboard, UrgentActionsPanel, MissingEvidencePanel as new views; Risk Comparison / Urgent Actions / Missing Evidence quick-nav buttons. All data local/demo-safe. No backend. No AI APIs.' },
+    desc: 'reportHistoryData.js (7 reports, 12 evidence items, 6 snapshots). reportHistoryHelpers.js (pure helpers). consultantStorage.js extended with reports[], evidenceItems[], snapshots[] + CRUD. ClientHub.jsx extended: ReportHistoryPanel, EvidenceArchivePanel, SnapshotTimelinePanel, RiskComparisonDashboard, UrgentActionsPanel, MissingEvidencePanel, quick-nav buttons. Local/demo-safe. No backend. No AI APIs.' },
+  { run: 13,    label: 'Agency + White Label Settings',
+    desc: 'agencyHelpers.js — pure helpers (getAgencyPortfolioSummary, getAgencyTierStatus, getWhiteLabelPreviewSettings, getDefaultAgencySettings, getDefaultWhiteLabelSettings, getArchivedClientCount, etc). AgencySettings.jsx — full 10-section settings page: Agency Profile, Agency Branding Controls, White Label Settings, Report Branding Preview, Portfolio Analytics Preview, Client Archive Management, Custom Domain Placeholder, Onboarding Wizard Placeholder, SLA/Support Placeholder, Agency Feature Gates. consultantStorage.js extended with agencySettings + whiteLabelSettings state keys. constants.js: PAGES.AGENCY_SETTINGS, Agency & White Label nav item, v13.0.0. AppShell.jsx: AgencySettings import + case. All settings local/demo-safe. No backend. No real custom domain. No real SLA. No AI APIs. Kyzel Kreates™ / 4P3X Intelligent AI™ ownership always preserved in internal areas.' },
 ];
 
 const FUTURE_RUNS = [
 
 
-  { run: '13',    label: 'Agency + White Label Settings (Run 13)',
-    desc: 'Agency tier activation — white-label report templates, agency branding, multi-consultant settings, client-facing portal foundation.' },
+  { run: '14',    label: 'Demo/Live Toggle + Data Provider Architecture (Run 14)',
+    desc: 'Formal demo/live toggle architecture, data provider abstraction layer, live data isolation, Supabase opt-in scaffolding preparation.' },
   { run: 'Future', label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',

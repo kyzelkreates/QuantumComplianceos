@@ -27,6 +27,7 @@ import DeploymentReadiness from '../pages/DeploymentReadiness.jsx';
 import ConsultantCopilot  from '../pages/ConsultantCopilot.jsx';
 import TargetAssessments  from '../pages/TargetAssessments.jsx';
 import ClientHub          from '../pages/ClientHub.jsx';
+import AgencySettings     from '../pages/AgencySettings.jsx';
 
 function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
   const modeProps = { workspaceMode, onNavigate };
@@ -46,6 +47,7 @@ function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
     case PAGES.COPILOT:             return <ConsultantCopilot   {...modeProps} />;
     case PAGES.TARGET_ASSESSMENTS:  return <TargetAssessments   {...modeProps} />;
     case PAGES.CLIENT_HUB:          return <ClientHub           {...modeProps} onNavigate={onNavigate} />;
+    case PAGES.AGENCY_SETTINGS:     return <AgencySettings      {...modeProps} />;
     default:                        return <Dashboard           {...modeProps} />;
   }
 }

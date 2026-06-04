@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run12',
-      buildRun: 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
-      latestCompletedRun: 12,
-      latestCompletedRunLabel: 'Run 12 — Reports, Evidence History + Risk Comparison',
+      version: '1.0.0-run13',
+      buildRun: 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
+      latestCompletedRun: 13,
+      latestCompletedRunLabel: 'Run 13 — Agency + White Label Settings',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -217,6 +217,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_10_COMMERCIAL_TIER_FOUNDATION',
   'RUN_11_MULTI_CLIENT_CONSULTANT_HUB',
   'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
+  'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -234,6 +235,7 @@ const RUN_8_5_MODULE_STATUS = {
   commercialTierFoundation:   'complete',
   multiClientConsultantHub:   'complete',
   reportHistoryEvidenceRisk:  'complete',
+  agencyWhiteLabelSettings:   'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -250,6 +252,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   commercialTierFoundation:  true,
   multiClientConsultantHub:  true,
   reportHistoryEvidenceRisk:  true,
+  agencyWhiteLabelSettings:   true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -266,18 +269,18 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 12 || existingMeta.buildRun !== 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON') {
+  if (storedRun < 13 || existingMeta.buildRun !== 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run12',
-      buildRun: 'RUN_12_REPORTS_EVIDENCE_HISTORY_RISK_COMPARISON',
-      latestCompletedRun: 12,
-      latestCompletedRunLabel: 'Run 12 — Reports, Evidence History + Risk Comparison',
+      version: '1.0.0-run13',
+      buildRun: 'RUN_13_AGENCY_WHITE_LABEL_SETTINGS',
+      latestCompletedRun: 13,
+      latestCompletedRunLabel: 'Run 13 — Agency + White Label Settings',
       mode: 'local-first',
       defensiveOnly: true,
-      runLevel: 12,
-      migratedToRun12At: new Date().toISOString(),
+      runLevel: 13,
+      migratedToRun13At: new Date().toISOString(),
     };
   }
 
