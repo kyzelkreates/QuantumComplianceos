@@ -69,7 +69,8 @@ function WorkspaceModeBanner({ workspaceMode, isDemo, onNavigate }) {
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
         <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--success)', flexShrink: 0, display: 'inline-block' }} aria-hidden="true" />
         <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-          <strong style={{ color: 'var(--success)' }}>Product Mode</strong> — Real client workspace. Demo data is hidden.
+          <strong style={{ color: 'var(--success)' }}>Product Mode</strong> — Real client workspace. Demo data is hidden.{' '}
+          No real data yet? Configure a backend in <strong>Settings → Backend Config</strong>.
         </span>
       </div>
       {onNavigate && (

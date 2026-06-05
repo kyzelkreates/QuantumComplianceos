@@ -608,7 +608,38 @@ function ClientForm({ initial, onSave, onCancel, title }) {
 }
 
 // ─── Empty state ──────────────────────────────────────────────────────────────
-function EmptyClients({ onAdd, onLoadDemo }) {
+function EmptyClients({ onAdd, onLoadDemo, isProductMode = false }) {
+  if (isProductMode) {
+    return (
+      <div style={{
+        textAlign: 'center', padding: '48px 24px',
+        background: 'var(--bg-secondary)', border: '1px dashed var(--border-default)',
+        borderRadius: 'var(--radius-lg)',
+      }}>
+        <div style={{ fontSize: 40, marginBottom: 12 }}>💾</div>
+        <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 8, color: 'var(--text-secondary)' }}>
+          No live clients yet
+        </div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 6, maxWidth: 420, margin: '0 auto 8px', lineHeight: 1.7 }}>
+          Demo records are hidden while Product Mode is active.
+          Add a real client record to begin live operation.
+        </div>
+        <div style={{
+          margin: '12px auto 20px', maxWidth: 440, padding: '10px 14px',
+          background: 'rgba(0,212,255,0.05)', border: '1px solid rgba(0,212,255,0.2)',
+          borderRadius: 'var(--radius-md)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7, textAlign: 'left',
+        }}>
+          <strong style={{ color: 'var(--accent)' }}>ℹ Live/Local Mode</strong><br />
+          Records created here are stored locally in your browser.
+          They are labelled <em>live/local pending backend sync</em> until a backend provider is connected and tested.
+          Connect Supabase or another backend via <strong>Settings → Backend Config</strong> to enable real multi-user operation.
+        </div>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <ActionButton variant="primary" onClick={onAdd}>+ Add Real Client</ActionButton>
+        </div>
+      </div>
+    );
+  }
   return (
     <div style={{
       textAlign: 'center', padding: '48px 24px',
@@ -1617,7 +1648,7 @@ export default function ClientHub({ workspaceMode, onNavigate }) {
 
       {/* ── Client list ──────────────────────────────────────────────────── */}
       {allClients.length === 0 ? (
-        <EmptyClients onAdd={() => setView(VIEW.ADD)} onLoadDemo={handleLoadDemo} />
+        <EmptyClients onAdd={() => setView(VIEW.ADD)} onLoadDemo={handleLoadDemo} isProductMode={isProduct} />
       ) : visibleClients.length === 0 ? (
         <div style={{
           textAlign: 'center', padding: '40px 24px',
@@ -1651,9 +1682,10 @@ export default function ClientHub({ workspaceMode, onNavigate }) {
       }}>
         <strong style={{ color: 'var(--text-secondary)' }}>Quantum Compliance OS™</strong> ·
         Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™ ·
-        Local-first · No backend · No Supabase · RLS not applicable ·
-        All client data stored in browser localStorage via consultantStorage.js ·
-        Demo Mode shows the product. Live Mode runs the product. Backend connection will scale this consultant hub into a live SaaS platform in a future run.
+        Local-first · localStorage SSOT · Demo Mode shows the product · Product Mode runs the product.
+        Records created in Product Mode are labelled live/local pending backend sync until a backend provider is connected.
+        Connect Supabase via Settings → Backend Config to enable real multi-user sync.
+        Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™
       </div>
     </div>
   );

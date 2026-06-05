@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run23',
-      buildRun: 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
-      latestCompletedRun: 23,
-      latestCompletedRunLabel: 'Run 23 (8.6) — Product Mode Backend Provider Configuration',
+      version: '1.0.0-run24',
+      buildRun: 'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
+      latestCompletedRun: 24,
+      latestCompletedRunLabel: 'Run 24 — Live Product Backend + API Readiness Hardening',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -238,6 +238,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_21_PDF_REPORT_TEMPLATE_POLISH',
   'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
   'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
+  'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -265,6 +266,7 @@ const RUN_8_5_MODULE_STATUS = {
   pdfReportTemplatePolish:    'complete',
   publicLandingInvestorDemo:  'complete',
   productModeBackendConfig:   'complete',
+  liveBackendReadinessHardening: 'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -291,6 +293,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   pdfReportTemplatePolish:    true,
   publicLandingInvestorDemo:  true,
   productModeBackendConfig:   true,
+  liveBackendReadinessHardening: true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -307,14 +310,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 23 || existingMeta.buildRun !== 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG') {
+  if (storedRun < 24 || existingMeta.buildRun !== 'RUN_24_LIVE_BACKEND_READINESS_HARDENING') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run23',
-      buildRun: 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
-      latestCompletedRun: 23,
-      latestCompletedRunLabel: 'Run 23 (8.6) — Product Mode Backend Provider Configuration',
+      version: '1.0.0-run24',
+      buildRun: 'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
+      latestCompletedRun: 24,
+      latestCompletedRunLabel: 'Run 24 — Live Product Backend + API Readiness Hardening',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

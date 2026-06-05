@@ -462,7 +462,7 @@ export default function Settings({ onNavigate }) {
       <SectionCard title="System Status" icon="📋">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[
-            ['Build',                `Run ${APP_RUN_LEVEL} — Product Mode Backend Provider Configuration (8.6)`],
+            ['Build',                `Run ${APP_RUN_LEVEL} — Live Product Backend + API Readiness Hardening`],
             ['Version',              `v${APP_VERSION}`],
             ['Architecture',         'Local-First PWA (React + Vite)'],
             ['Storage',              'Browser localStorage — SSOT via storage.js'],
@@ -493,7 +493,7 @@ export default function Settings({ onNavigate }) {
           })}
         </div>
         <div style={{ marginTop: '14px', padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-md)', fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 · 10 · 11 · 12 · 13 · 14–17 · 19–23
+          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 · 10 · 11 · 12 · 13 · 14–17 · 19–24
           &nbsp;&nbsp;·&nbsp;&nbsp;
           <strong style={{ color: 'var(--text-secondary)' }}>Up next (optional):</strong> Run 18: Stripe Billing · Run 19: Auth + Team Roles · Run 20: Production Supabase · Run 21: PDF Export · Run 22: Public Landing
         </div>
@@ -505,6 +505,7 @@ export default function Settings({ onNavigate }) {
           <strong style={{ color: 'var(--text-secondary)' }}>Commercial tier foundation</strong> — Starter / Demo is active.
           Pro Consultant, Agency, and White Label are coming in future runs.
           No backend, payments, or external API has been added.
+                Live mode prepares Quantum Compliance OS™ for real client data. To run as a real product, connect a backend such as Supabase, configure authentication, storage, database tables, RLS policies, and any required APIs. Until a backend test passes, the app must not be treated as production-connected. Supabase is the recommended first backend — full SQL schema in Run 24.
         </div>
         <PlanCards activePlanId={state.settings?.activePlanId || 'starter'} />
       </SectionCard>
@@ -516,6 +517,7 @@ export default function Settings({ onNavigate }) {
           {DEFENSIVE_DISCLAIMER}
           <div style={{ marginTop: '10px', fontSize: '11px', color: 'var(--text-muted)', borderTop: '1px solid var(--border-muted)', paddingTop: '10px' }}>
             All data is stored exclusively in this browser&apos;s local storage. No cloud sync. No backend. No external transmission.
+              Supabase is the recommended first backend for live operation — configure via the Backend Config panel. Run 24 will add the full Supabase SQL schema + RLS policies.
             Data is cleared if browser storage is cleared or private browsing mode is used.
           </div>
         </div>
@@ -570,7 +572,7 @@ export default function Settings({ onNavigate }) {
             { label: 'Demo Mode',              value: state.settings?.workspaceMode === 'demo' ? '🎯 Active' : '— Off',                  colour: state.settings?.workspaceMode === 'demo' ? '#f59e0b' : 'var(--text-muted)' },
             { label: 'Live Local Mode',        value: state.settings?.workspaceMode === 'product' ? '💾 Active' : '— Off',                colour: state.settings?.workspaceMode === 'product' ? '#00d4ff' : 'var(--text-muted)' },
             { label: 'Active Plan',            value: state.settings?.activePlanId || 'starter',                                          colour: 'var(--accent)' },
-            { label: 'Backend Configured',     value: state.backendSettings ? '⚙ Config saved' : '— Not configured (LocalStorage active)', colour: state.backendSettings ? '#10b981' : 'var(--text-muted)' },
+            { label: 'Backend Configured',     value: state.backendConfig || state.backendSettings ? '⚙ Config saved' : '— Not configured (LocalStorage active)', colour: state.backendConfig || state.backendSettings ? '#10b981' : 'var(--text-muted)' },
             { label: 'Plan System',            value: 'Configured — plans.js + PlanCards',                                                colour: '#10b981' },
             { label: 'Multi-Client Hub',       value: 'ClientHub.jsx — client data isolated by clientId',                                  colour: '#10b981' },
             { label: 'Report History',         value: 'Available — filtered per client (Run 12)',                                          colour: '#10b981' },

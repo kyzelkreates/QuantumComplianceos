@@ -280,8 +280,10 @@ export default function AISettings() {
           </div>
           <div style={{ fontSize:12, color:'var(--text-muted)' }}>
             {activeProvId === AI_PROVIDER_ID.MOCK
-              ? 'Demo / Mock AI is active. Safe local responses without external API calls. All providers fall back to mock in Run 16.'
-              : `${AI_PROVIDERS[activeProvId]?.name} is set as active. Note: All providers return mock responses in Run 16 — real SDK calls in a future run.`}
+              ? 'Demo / Mock AI is active. Safe local responses without external API calls. All providers fall back to mock in this run.'
+              : state.settings?.workspaceMode !== 'demo'
+                ? `${AI_PROVIDERS[activeProvId]?.name} is set as active. Note: All providers return mock/advisory responses in this run — real SDK calls in a future run. AI guidance is advisory only.`
+                : `${AI_PROVIDERS[activeProvId]?.name} is set as active. Note: All providers return mock responses in this run — real SDK calls in a future run.`}
           </div>
         </div>
         <Pill status="safe" label="Safe mode" />
@@ -312,7 +314,15 @@ export default function AISettings() {
         <div style={{ fontSize:11, color:'var(--text-muted)', lineHeight:1.7, padding:'7px 10px',
           background:'rgba(0,212,255,0.04)', border:'1px solid rgba(0,212,255,0.1)', borderRadius:'var(--radius-sm)' }}>
           <strong style={{ color:'var(--accent)' }}>Run 16 note:</strong>{' '}
-          All AI providers return mock/demo responses in Run 16. Real SDK calls (OpenAI, Ollama, Groq, etc.)
+          {state.settings?.workspaceMode !== 'demo' && (
+            <div style={{ padding: '8px 12px', marginBottom: 8, background: 'rgba(0,212,255,0.05)', border: '1px solid rgba(0,212,255,0.2)', borderRadius: 'var(--radius-sm)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              💾 <strong style={{ color: 'var(--accent)' }}>Product Mode active</strong> — Demo AI outputs are hidden.
+              Connect an approved AI API or local model endpoint (Ollama, LM Studio, OpenRouter, Groq, etc.)
+              via the provider settings below to generate live AI guidance.
+              AI guidance is advisory only — human consultant review required.
+            </div>
+          )}
+          All AI providers return mock/advisory responses in this run. Real SDK calls (OpenAI, Ollama, Groq, etc.)
           are implemented in a future run when the provider API layer is connected.
           Demo / Mock AI is always active as the default and fallback.
         </div>

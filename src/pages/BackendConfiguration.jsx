@@ -933,6 +933,110 @@ export default function BackendConfiguration() {
         </SectionCard>
       )}
 
+
+      {/* ── Backend-Ready Data Mapping Panel ────────────────────────────── */}
+      <SectionCard title="Backend-Ready Data Mapping" icon="🗂">
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 12, padding: '8px 12px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.15)', borderRadius: 'var(--radius-sm)' }}>
+          Informational only. Run 24 will create the full Supabase SQL schema + RLS policies.
+          This panel shows how current local data maps to future backend tables.
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
+            <thead>
+              <tr style={{ background: 'var(--bg-tertiary)' }}>
+                {['Local / SSOT Key', 'Future Backend Table', 'Sync Status', 'Notes'].map((h) => (
+                  <th key={h} style={{ padding: '7px 12px', textAlign: 'left', color: 'var(--text-muted)', fontWeight: 700, borderBottom: '1px solid var(--border-muted)', whiteSpace: 'nowrap' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { key: 'clients (consultantStorage)',      table: 'clients',           status: 'local-demo',  note: 'isDemo flag separates demo/live records' },
+                { key: 'assessments (storage.js)',          table: 'assessments',       status: 'local-demo',  note: 'Linked to clientId' },
+                { key: 'reports (reportHistoryData)',       table: 'reports',           status: 'local-demo',  note: 'reportSchema.js defines structure' },
+                { key: 'evidence items (evidencePack)',     table: 'evidence_items',    status: 'local-demo',  note: 'File uploads require Supabase Storage / S3' },
+                { key: 'risk scores (riskModel)',           table: 'risk_scores',       status: 'local-demo',  note: 'Computed locally, backed up to table' },
+                { key: 'ai notes (aiAgentSessions)',        table: 'ai_notes',          status: 'local-demo',  note: 'Advisory only. Mock AI active.' },
+                { key: 'audit log (activityLog)',           table: 'audit_logs',        status: 'pending-run', note: 'Full audit trail requires Run 24+' },
+                { key: 'backend settings (backendConfig)',  table: 'backend_settings',  status: 'pending-run', note: 'Admin/config table in Run 24' },
+                { key: 'branding (consultantStorage)',      table: 'client_branding',   status: 'pending-run', note: 'White-label config in Run 24+' },
+                { key: 'users / team (not yet)',            table: 'users',             status: 'not-configured', note: 'Auth + team roles in Run 25+' },
+              ].map(({ key, table, status, note }) => {
+                const statusMeta = {
+                  'local-demo':      { label: 'Local / Demo only',    colour: '#f59e0b' },
+                  'pending-run':     { label: 'Pending Run 24+',       colour: '#6b7280' },
+                  'not-configured':  { label: 'Not yet implemented',   colour: '#6b7280' },
+                  'backend-ready':   { label: 'Backend-ready',         colour: '#00d4ff' },
+                  'connected':       { label: 'Connected',             colour: '#10b981' },
+                }[status] || { label: status, colour: '#6b7280' };
+                return (
+                  <tr key={key} style={{ borderBottom: '1px solid var(--border-muted)' }}>
+                    <td style={{ padding: '6px 12px', fontFamily: 'monospace', fontSize: 10, color: 'var(--text-secondary)' }}>{key}</td>
+                    <td style={{ padding: '6px 12px', fontFamily: 'monospace', fontSize: 10, color: 'var(--accent)' }}>{table}</td>
+                    <td style={{ padding: '6px 12px' }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, background: `${statusMeta.colour}18`, color: statusMeta.colour, border: `1px solid ${statusMeta.colour}30` }}>
+                        {statusMeta.label}
+                      </span>
+                    </td>
+                    <td style={{ padding: '6px 12px', color: 'var(--text-muted)', fontSize: 10, lineHeight: 1.5 }}>{note}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </SectionCard>
+
+      {/* ── Live Product Readiness Checklist ─────────────────────────────── */}
+      <SectionCard title="Live Product Readiness Checklist" icon="🚦">
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 10 }}>
+          Track what is ready, what needs configuration, and what is pending a future run.
+        </div>
+        {[
+          { item: 'Demo / Live toggle verified (workspaceMode SSOT)',              status: 'ready',     note: 'workspaceMode.js + storage.js — single source of truth' },
+          { item: 'Demo data hidden in Product Mode',                              status: 'ready',     note: 'isDemo flag on all records; filterRecordsByProductMode()' },
+          { item: 'Live-mode empty states present (clients/reports/evidence/AI)', status: 'ready',     note: 'Run 23 — empty states show backend CTA' },
+          { item: 'Backend provider selected',                                    status: !isDemo && summary.activeProvider && summary.activeProvider !== 'localOnly' ? 'ready' : 'needs-config', note: `Active: ${summary.activeProvider || 'localOnly'}` },
+          { item: 'Backend config saved',                                         status: summary.supabaseConfigured || summary.firebaseConfigured || summary.customRestConfigured ? 'ready' : 'needs-config', note: 'Configure a provider above and save' },
+          { item: 'Backend connection test passed',                               status: summary.connectionTests?.length > 0 ? 'needs-config' : 'needs-config', note: 'Test connection using a configured provider' },
+          { item: '4P3X API Config Guard™ active',                               status: 'ready',     note: 'backendConfigGuard.js — 15+ blocked secret patterns' },
+          { item: 'Service role / private keys blocked',                          status: 'ready',     note: 'Blocked on every keystroke before save' },
+          { item: 'Client records backend-ready',                                 status: 'ready',     note: 'isDemo flag + filterClientsByMode() in place' },
+          { item: 'Reports backend-ready',                                        status: 'ready',     note: 'reportSchema.js — structure ready for Run 24 tables' },
+          { item: 'Evidence storage backend-ready',                               status: 'needs-config', note: 'File uploads need Supabase Storage / S3 in Run 24+' },
+          { item: 'AI provider backend-safe',                                     status: 'ready',     note: 'detectBlockedAISecrets + mock-only in current run' },
+          { item: 'Supabase SQL schema',                                          status: 'pending',   note: 'Full schema + RLS policies in Run 24' },
+          { item: 'Audit trail / activity log backend table',                     status: 'pending',   note: 'audit_logs table in Run 24' },
+          { item: 'Auth / team roles / user management',                          status: 'pending',   note: 'Supabase Auth + Cognito / Firebase Auth in Run 25+' },
+          { item: 'Production QA + penetration readiness review',                 status: 'pending',   note: 'Run 26+ final QA and deployment hardening' },
+        ].map(({ item, status, note }) => {
+          const meta = {
+            ready:        { icon: '✅', colour: '#10b981', label: 'Ready' },
+            'needs-config': { icon: '⚠️', colour: '#f59e0b', label: 'Needs configuration' },
+            pending:      { icon: '🔮', colour: '#6b7280', label: 'Pending future run' },
+            failed:       { icon: '❌', colour: '#ef4444', label: 'Failed' },
+          }[status] || { icon: '⬜', colour: '#6b7280', label: String(status) };
+          return (
+            <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '6px 0', borderBottom: '1px solid var(--border-muted)' }}>
+              <span style={{ fontSize: 13, flexShrink: 0, marginTop: 1 }}>{meta.icon}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 11, color: status === 'ready' ? 'var(--text-secondary)' : 'var(--text-muted)' }}>{item}</div>
+                {note && <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 1 }}>{note}</div>}
+              </div>
+              <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, background: `${meta.colour}15`, color: meta.colour, border: `1px solid ${meta.colour}28`, whiteSpace: 'nowrap', flexShrink: 0 }}>
+                {meta.label}
+              </span>
+            </div>
+          );
+        })}
+        <div style={{ marginTop: 14, padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.15)', borderRadius: 'var(--radius-sm)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          <strong style={{ color: 'var(--accent)' }}>Next steps:</strong><br />
+          · <strong>Run 24</strong> — Full Supabase SQL schema + RLS policies + evidence storage<br />
+          · <strong>Run 25</strong> — Auth + team roles + row-level user management<br />
+          · <strong>Run 26</strong> — Production QA + deployment hardening
+        </div>
+      </SectionCard>
+
       {/* ── Disclaimer ────────────────────────────────────────────────────── */}
       <div style={{
         padding: '12px 16px', marginTop: 8,

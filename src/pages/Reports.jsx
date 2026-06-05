@@ -147,6 +147,7 @@ export default function Reports({ onNavigate, workspaceMode }) {
       />
 
       {/* Run 8.5 — Mode banner */}
+      {isProduct && <LiveModeEmptyNotice />}
       {isDemo && (
         <div style={{ padding: '8px 16px', marginBottom: '12px', background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 'var(--radius-md)', fontSize: '12px', color: 'var(--text-muted)', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <span>🎯</span>
@@ -744,6 +745,24 @@ function EvidencePackContent({ evidencePack }) {
 }
 
 // ─── AI Agent Observations Content — Run 21 ────────────────────────────────
+// ─── Run 24: Live Mode Empty State Message ──────────────────────────────────
+function LiveModeEmptyNotice() {
+  return (
+    <div style={{
+      padding: '12px 16px', marginBottom: 16,
+      background: 'rgba(0,212,255,0.05)', border: '1px solid rgba(0,212,255,0.2)',
+      borderRadius: 'var(--radius-md)', fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7,
+    }}>
+      <strong style={{ color: 'var(--accent)' }}>💾 Product Mode active</strong> — Demo reports are hidden.
+      Reports shown here are from real local records only.
+      No real reports yet? Complete an assessment and generate a report to begin.{' '}
+      <em>Evidence storage requires a configured backend storage provider
+      (Supabase Storage, Firebase Storage, S3-compatible, or another secure storage layer)
+      for real file uploads in a future run.</em>
+    </div>
+  );
+}
+
 function AIAgentObservationsContent({ secScore, qScore, riskCount, evidenceCount, allRecs, settings, workspaceMode }) {
   const isDemoMode = workspaceMode === 'demo';
   const critCount  = allRecs.filter(r => r.priority === 'critical' || r.priority === 'high').length;

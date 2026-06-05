@@ -138,6 +138,18 @@ export default function EvidencePack({ workspaceMode, onNavigate }) {
         File upload/storage requires a connected backend (Run 15 backend connector).
         <span style={{ display: 'block', marginTop: 4, color: '#f59e0b', fontWeight: 600 }}>⚠ Human review and qualified professional sign-off required before any compliance claim is made.</span>
       </div>
+      {isProduct && (
+        <div style={{
+          padding: '10px 14px', marginBottom: 14,
+          background: 'rgba(0,212,255,0.05)', border: '1px solid rgba(0,212,255,0.2)',
+          borderRadius: 'var(--radius-md)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7,
+        }}>
+          <strong style={{ color: 'var(--accent)' }}>💾 Product Mode</strong> — Demo evidence is hidden.
+          Real evidence items require a configured backend storage provider
+          (Supabase Storage, Firebase Storage, S3-compatible, or another secure storage layer)
+          for real file uploads. Evidence templates and structure can be previewed below.
+        </div>
+      )}
       {isDemo && items.length > 0 && (
         <div style={{ padding: '8px 16px', marginBottom: '12px', background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 'var(--radius-md)', fontSize: '12px', color: 'var(--text-muted)', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <span>🎯</span>
