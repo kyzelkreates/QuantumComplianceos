@@ -129,6 +129,15 @@ export default function EvidencePack({ workspaceMode, onNavigate }) {
       />
 
       {/* Run 8.5: Mode banner for evidence pack */}
+      {/* Run 21: Investor demo explanation */}
+      <div style={{ marginBottom: 12, padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-md)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+        <strong style={{ color: 'var(--accent)' }}>Evidence Pack — how it works: </strong>
+        In <strong>Demo Mode</strong>, fictional sample evidence is shown for investor/client demonstrations.
+        In <strong>Live Mode</strong>, only real evidence items you add are shown.
+        This platform supports evidence <em>preparation and tracking</em> only — it does not certify compliance, upload files to a server, or verify authenticity of documents.
+        File upload/storage requires a connected backend (Run 15 backend connector).
+        <span style={{ display: 'block', marginTop: 4, color: '#f59e0b', fontWeight: 600 }}>⚠ Human review and qualified professional sign-off required before any compliance claim is made.</span>
+      </div>
       {isDemo && items.length > 0 && (
         <div style={{ padding: '8px 16px', marginBottom: '12px', background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 'var(--radius-md)', fontSize: '12px', color: 'var(--text-muted)', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <span>🎯</span>
@@ -232,6 +241,9 @@ export default function EvidencePack({ workspaceMode, onNavigate }) {
                 <h3 style={{ marginBottom: '10px' }}>Build your evidence pack</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '14px', lineHeight: 1.7, maxWidth: '440px', margin: '0 auto 24px' }}>
                   Add evidence items manually, or scaffold a starting list automatically from your assessment results. Each item tracks control name, evidence type, status, owner, and framework mapping.
+                  <br /><br />
+                  <strong style={{ color: 'var(--text-secondary)' }}>Safe status values:</strong> "Not started", "In progress", "Collected", "Reviewed".
+                  File upload/storage requires a connected backend. Use notes to track document references, storage locations, or reviewer observations.
                 </p>
               </>
             )}

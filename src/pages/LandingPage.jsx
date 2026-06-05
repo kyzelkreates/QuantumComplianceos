@@ -3,7 +3,7 @@
  * Run 7: Polished sales landing page with demo launch path.
  * =========================================================
  * Shown before onboarding on first visit.
- * Includes PWA install, full feature overview, demo CTAs, and pricing placeholders.
+ * Includes PWA install, full feature overview, demo CTAs, architecture, AI agents, and creator/investor sections.
  *
  * DEFENSIVE USE ONLY. No tracking. No external requests. No fake certifications.
  */
@@ -62,13 +62,6 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
     { icon: '🔬', title: 'Security Practitioners', desc: 'Post-quantum cryptography exposure assessment. NIST PQC migration planning. Crypto-agility scoring.' },
     { icon: '🏢', title: 'SME IT/Security Teams', desc: 'Self-assess your organisation\'s defensive security posture without engaging an external consultant.' },
     { icon: '💼', title: 'Investors & Evaluators', desc: 'Load the demo portfolio for an immediate view of the platform\'s capabilities and commercial potential.' },
-  ];
-
-  const TIERS = [
-    { name: 'Starter',       icon: '🌱', max: '1 client',         features: ['All assessments', 'JSON/CSV export', 'Basic reports', 'Evidence pack'],            colour: '#10b981', price: 'Local use — free' },
-    { name: 'Pro Consultant',icon: '🚀', max: '10 clients',        features: ['Multi-client hub', 'Per-client branding', 'Report history', 'Risk comparison'],    colour: '#3b82f6', price: 'Coming soon',       badge: 'Popular' },
-    { name: 'Agency',        icon: '🏢', max: '50 clients',        features: ['White-label', 'Client archive', 'Portfolio analytics', 'Priority actions'],       colour: '#8b5cf6', price: 'Coming soon' },
-    { name: 'White Label',   icon: '🎨', max: 'Unlimited clients', features: ['Full white-label', 'Custom domain', 'Onboarding wizard', 'SLA support'],          colour: '#f59e0b', price: 'Enterprise — contact us' },
   ];
 
   const STEPS = [
@@ -253,47 +246,164 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
         </div>
       </section>
 
-      {/* ── Pricing Placeholders ─────────────────────────────────────────────── */}
-      <section style={{ padding: '0 32px 60px', maxWidth: '1040px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontWeight: 800, fontSize: 'clamp(18px, 3vw, 24px)', marginBottom: '8px' }}>
-          Built for every scale
-        </h2>
-        <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '6px' }}>
-          Full functionality is available in local-first mode today. Commercial SaaS tiers are coming soon.
-        </p>
-        <p style={{ textAlign: 'center', fontSize: '11px', color: 'var(--warning)', fontWeight: 700, marginBottom: '28px' }}>
-          Demo commercial model only — payments are not connected
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
-          {TIERS.map(({ name, icon, max, features, colour, price, badge }) => (
-            <div key={name} style={{
-              background: 'var(--bg-secondary)', border: `1px solid ${colour}33`,
-              borderRadius: 'var(--radius-lg)', padding: '24px', position: 'relative',
-            }}>
-              {badge && (
-                <div style={{
-                  position: 'absolute', top: '-10px', right: '16px',
-                  background: colour, color: '#0d1117', fontSize: '10px', fontWeight: 800,
-                  padding: '2px 10px', borderRadius: '999px',
-                }}>{badge}</div>
-              )}
-              <div style={{ fontSize: '28px', marginBottom: '8px' }}>{icon}</div>
-              <div style={{ fontWeight: 800, fontSize: '16px', color: colour, marginBottom: '4px' }}>{name}</div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px' }}>{max}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '16px' }}>
-                {features.map((f) => (
-                  <div key={f} style={{ display: 'flex', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                    <span style={{ color: colour, flexShrink: 0 }}>✓</span> {f}
-                  </div>
-                ))}
+      {/* ── Demo Mode vs Live Mode — Run 22 ─────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '860px', margin: '0 auto' }}>
+        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '32px 36px', textAlign: 'center' }}>
+          <div style={{ fontSize: 36, marginBottom: 12 }}>🔀</div>
+          <h2 style={{ fontWeight: 800, fontSize: 'clamp(17px, 3vw, 22px)', marginBottom: 10 }}>
+            Demo Mode shows the product.<br />
+            <span style={{ color: 'var(--accent)' }}>Live Mode runs the product.</span>
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: 580, margin: '0 auto 24px' }}>
+            Demo Mode uses safe sample data — perfect for investors, portfolio demos, client presentations, and product evaluation.
+            Live Mode turns demo data off. Real operation requires connecting a backend (Supabase, Firebase, custom REST API, or equivalent).
+            Switching modes does not delete any existing data.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 520, margin: '0 auto', textAlign: 'left' }}>
+            {[
+              { icon: '🎯', label: 'Demo Mode', desc: 'Sample clients, reports, scores. Show the product instantly.', colour: '#f59e0b' },
+              { icon: '💾', label: 'Live Local Mode', desc: 'Your real data. No backend needed to start.', colour: '#00d4ff' },
+              { icon: '⚙', label: 'Backend-Ready', desc: 'Connect Supabase, Firebase, or custom API when ready.', colour: '#8b5cf6' },
+              { icon: '📲', label: 'PWA-Ready', desc: 'Install locally where supported by your browser/device.', colour: '#10b981' },
+            ].map(({ icon, label, desc, colour }) => (
+              <div key={label} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', padding: '12px 14px' }}>
+                <div style={{ display: 'flex', gap: 7, alignItems: 'center', marginBottom: 4 }}>
+                  <span style={{ fontSize: 16 }}>{icon}</span>
+                  <span style={{ fontWeight: 700, fontSize: 12, color: colour }}>{label}</span>
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>{desc}</div>
               </div>
-              <div style={{
-                padding: '6px 12px', background: `${colour}15`, border: `1px solid ${colour}33`,
-                borderRadius: 'var(--radius-md)', fontSize: '11px', fontWeight: 700,
-                color: colour, textAlign: 'center',
-              }}>{price}</div>
+            ))}
+          </div>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 16, lineHeight: 1.6 }}>
+            Use your browser menu and choose <em>Add to Home Screen</em> or <em>Install App</em> where available.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Architecture Overview — Run 22 ────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontWeight: 800, fontSize: 'clamp(17px, 3vw, 22px)', marginBottom: 8 }}>
+          System Architecture
+        </h2>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginBottom: 28, maxWidth: 540, margin: '0 auto 28px' }}>
+          Eight modular layers working together — from local-first data to backend-ready live operation.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10 }}>
+          {[
+            { n: '01', title: 'Dashboard Layer',            desc: 'Central overview — scores, risk level, evidence status, quick-action cards.', colour: '#00d4ff' },
+            { n: '02', title: 'Client Hub',                 desc: 'Multi-client workspace — isolated records, risk history, per-client reports.', colour: '#3b82f6' },
+            { n: '03', title: 'Assessment Engine',          desc: '47-question security assessment + quantum readiness — guided, scored, advisory.', colour: '#8b5cf6' },
+            { n: '04', title: 'Risk Scoring Layer',         desc: 'Likelihood × impact model. Risk register populated from assessment results.', colour: '#f59e0b' },
+            { n: '05', title: 'Evidence Pack Layer',        desc: 'Framework-mapped evidence tracking — ISO 27001, NCSC, NIST, UK GDPR.', colour: '#D4AF37' },
+            { n: '06', title: 'Report & History Layer',     desc: 'Auto-generated executive + technical reports. Per-client history. Print/export.', colour: '#10b981' },
+            { n: '07', title: 'Demo/Live Mode Switch',      desc: 'Toggle sample vs real data globally — no data loss when switching.', colour: '#00d4ff' },
+            { n: '08', title: 'Backend/API Config Layer',   desc: 'Backend-ready config for Supabase, Firebase, or custom REST. No SDK required to start.', colour: '#8b5cf6' },
+            { n: '09', title: 'AI Agent Guidance Layer',    desc: '5 onboard advisory AI agents — compliance, quantum, evidence, risk, consultant support.', colour: '#D4AF37' },
+            { n: '10', title: 'PWA / Local-First Layer',    desc: 'Installable offline-capable PWA. localStorage SSOT. Works without internet.', colour: '#10b981' },
+          ].map(({ n, title, desc, colour }) => (
+            <div key={n} style={{ background: 'var(--bg-secondary)', border: `1px solid ${colour}22`, borderRadius: 'var(--radius-md)', padding: '14px 16px', borderTop: `2px solid ${colour}` }}>
+              <div style={{ fontSize: 10, fontWeight: 800, color: colour, letterSpacing: '0.08em', marginBottom: 4 }}>{n}</div>
+              <div style={{ fontWeight: 700, fontSize: 12, color: 'var(--text-primary)', marginBottom: 5 }}>{title}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>{desc}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── AI Agents — Run 22 ────────────────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '960px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontWeight: 800, fontSize: 'clamp(17px, 3vw, 22px)', marginBottom: 8 }}>
+          Onboard AI Guidance Agents
+        </h2>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginBottom: 8, maxWidth: 560, margin: '0 auto 8px' }}>
+          Powered by 4P3X Intelligent AI™
+        </p>
+        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginBottom: 28, maxWidth: 560, margin: '0 auto 28px', lineHeight: 1.6 }}>
+          Advisory guidance and explanation layers only. AI agent outputs support human decision-making and do not replace qualified legal, compliance, cybersecurity, or business professionals.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 12 }}>
+          {[
+            { icon: '📋', title: 'Compliance Readiness Agent',         colour: '#00d4ff', desc: 'Helps review assessment responses, compliance gaps, and priority actions. Turns scattered answers into structured observations.' },
+            { icon: '⚛',  title: 'Quantum Readiness Agent',            colour: '#8b5cf6', desc: 'Highlights future risks around encryption, long-life data, and post-quantum preparation. Flags HNDL exposure and migration priorities.' },
+            { icon: '🗂',  title: 'Evidence Pack Agent',                colour: '#10b981', desc: 'Checks what supporting evidence exists and what is missing. Identifies gaps before compliance reviews or audits.' },
+            { icon: '⚠',  title: 'Risk Explanation Agent',             colour: '#f59e0b', desc: 'Translates scoring and risk signals into clearer human-readable explanations — suitable for board-level and non-technical reviews.' },
+            { icon: '👥', title: 'Consultant Support Agent',            colour: '#D4AF37', desc: 'Helps consultants prepare client summaries, understand client status, and identify next steps across a portfolio of clients.' },
+            { icon: '💼', title: 'Portfolio / Investor Explanation Agent', colour: '#3b82f6', desc: 'Explains what the product does, why it matters, and how it can become a live operational compliance and security product.' },
+          ].map(({ icon, title, colour, desc }) => (
+            <div key={title} style={{ background: 'var(--bg-secondary)', border: `1px solid ${colour}28`, borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
+              <div style={{ display: 'flex', gap: 9, alignItems: 'center', marginBottom: 8 }}>
+                <span style={{ fontSize: 20 }}>{icon}</span>
+                <span style={{ fontWeight: 700, fontSize: 13, color: colour }}>{title}</span>
+              </div>
+              <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Investor Demo Section — Run 22 ────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '900px', margin: '0 auto' }}>
+        <div style={{ background: 'var(--bg-secondary)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 'var(--radius-xl)', padding: '32px 36px' }}>
+          <h2 style={{ fontWeight: 800, fontSize: 'clamp(17px, 3vw, 22px)', marginBottom: 8, color: '#D4AF37' }}>
+            🏆 Investor &amp; Portfolio Demo
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 20 }}>
+            Quantum Compliance OS™ is designed for investor demonstration, client presentation, and portfolio review.
+            It is structured for future commercialisation as a SaaS product, consultant tool, white-label platform, or internal compliance system.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 20 }}>
+            {[
+              { icon: '📈', label: 'Clear target markets',     desc: 'SMEs, consultants, agencies, compliance teams' },
+              { icon: '🔀', label: 'Demo → live pathway',      desc: 'Backend-ready config — no rebuild required' },
+              { icon: '🧩', label: 'Modular architecture',     desc: 'Reusable across 4P3X Verse™ products' },
+              { icon: '📲', label: 'PWA-ready',                desc: 'Installable, works offline, no app store needed' },
+              { icon: '⚛',  label: 'Quantum relevance',        desc: 'Growing future concern across every sector' },
+              { icon: '🏢', label: 'Multi-client scaling',     desc: 'Consultant/agency workflow built in from Run 11' },
+            ].map(({ icon, label, desc }) => (
+              <div key={label} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', padding: '12px 14px', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 12, color: 'var(--text-primary)', marginBottom: 2 }}>{label}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: '10px 14px', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 'var(--radius-md)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+            This project does not make unrealistic valuation claims. It is designed for investor demonstration and structured for future commercialisation. No guarantee of investment return is made or implied.
+          </div>
+        </div>
+      </section>
+
+      {/* ── About The Creator — Run 22 ────────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '32px 36px' }}>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>⬡</div>
+          <h2 style={{ fontWeight: 800, fontSize: 'clamp(16px, 2.5vw, 20px)', marginBottom: 6 }}>About the Creator</h2>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: 560, margin: '0 auto 12px' }}>
+            Quantum Compliance OS™ was created by <strong style={{ color: 'var(--text-primary)' }}>Ciaran / Kyzel Kreates™</strong> as part of the <strong style={{ color: '#D4AF37' }}>4P3X Verse™</strong> ecosystem — a modular collection of AI-assisted, demo/live-ready software products.
+            The project demonstrates rapid learning, systems thinking, reusable architecture, AI-assisted development, and the ability to turn complex ideas into structured working product demos.
+          </p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7, maxWidth: 540, margin: '0 auto 16px' }}>
+            The system is designed to show how one reusable architecture can support dashboards, reports, AI guidance, evidence capture, PWA-ready layouts, and backend-ready live operation across different sectors.
+          </p>
+          <div style={{ display: 'inline-block', padding: '6px 16px', background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.25)', borderRadius: 999, fontSize: 11, color: '#D4AF37', fontWeight: 700 }}>
+            Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4P3X Verse™ Ecosystem — Run 22 ───────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '860px', margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(139,92,246,0.06) 100%)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 'var(--radius-xl)', padding: '28px 32px' }}>
+          <div style={{ fontWeight: 800, fontSize: 'clamp(15px, 2.5vw, 19px)', marginBottom: 8, color: '#D4AF37' }}>
+            Part of the 4P3X Verse™
+          </div>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: 560, margin: '0 auto' }}>
+            Quantum Compliance OS™ is one product direction within the <strong style={{ color: '#D4AF37' }}>4P3X Verse™</strong> — a modular AI-assisted software ecosystem built around reusable dashboards, installable PWA-ready experiences, demo/live mode switching, onboard AI guidance, and backend-ready architecture.
+            Each product in the ecosystem shares core patterns — making new products faster to build, test, and commercialise.
+          </p>
         </div>
       </section>
 
@@ -451,7 +561,7 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
           <strong>This is not a security certification. No compliance guarantee is made or implied.</strong>
         </p>
         <p style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px' }}>
-          Quantum Compliance OS™ v20.0.0 · Run 20 — Final Production Polish · Local-First · No Backend · No Supabase · RLS Not Applicable
+          Quantum Compliance OS™ v22.0.0 · Run 20 — Final Production Polish · Local-First · No Backend · No Supabase · RLS Not Applicable
         </p>
       </footer>
     </div>

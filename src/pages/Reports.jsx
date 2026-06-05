@@ -167,8 +167,15 @@ export default function Reports({ onNavigate, workspaceMode }) {
         They do not constitute formal audit, certification, or legal compliance.
         All reports include the mandatory defensive use disclaimer and should be reviewed by qualified security professionals.
       </div>
+      {/* Run 21: Investor/demo explanation */}
+      <div style={{ marginBottom: '16px', padding: '12px 16px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.15)', borderRadius: 'var(--radius-md)', fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.7' }}>
+        <strong style={{ color: 'var(--accent)' }}>About this report: </strong>
+        This report is designed to demonstrate how Quantum Compliance OS™ can turn assessment data, evidence, risk scoring, and AI-assisted observations into a structured compliance-readiness output.
+        In <strong>Demo Mode</strong>, sample data is used for presentation.
+        In <strong>Live Mode</strong>, demo data can be turned off and replaced with real client data by connecting the relevant backend and APIs.
+      </div>
 
-      {/* Data readiness */}
+      {/* Data readiness */}}
       <DataReadinessBar secScore={secScore} qScore={qScore} riskCount={riskModel?.riskEntries?.length} evCount={evidencePack?.items?.length} />
 
       {/* Report type */}
@@ -349,6 +356,12 @@ function ReportView({ state, reportConfig, branding, settings, onBack, onPrint, 
               <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
                 {organisation?.name || 'Organisation Name Not Set'} · Generated {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}
               </div>
+              <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 999, background: settings?.workspaceMode === 'demo' ? 'rgba(245,158,11,0.12)' : 'rgba(0,212,255,0.1)', color: settings?.workspaceMode === 'demo' ? '#f59e0b' : '#00d4ff', border: settings?.workspaceMode === 'demo' ? '1px solid rgba(245,158,11,0.3)' : '1px solid rgba(0,212,255,0.25)' }}>
+                  {settings?.workspaceMode === 'demo' ? '🎯 Demo Mode' : '💾 Live Local Mode'}
+                </span>
+                <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™</span>
+              </div>
             </div>
             {/* Score summary */}
             {(secScore != null || qScore != null) && (
@@ -437,7 +450,13 @@ function ReportView({ state, reportConfig, branding, settings, onBack, onPrint, 
           </ReportSection>
         )}
 
-        {/* Mandatory disclaimer — always last */}
+        {sections.includes('ai_agent_observations') && (
+          <ReportSection title="AI Agent Observations" order={10} colour={accentColour}>
+            <AIAgentObservationsContent secScore={secScore} qScore={qScore} riskCount={riskModel?.riskEntries?.length || 0} evidenceCount={evidencePack?.items?.length || 0} allRecs={allRecs} settings={settings} workspaceMode={settings?.workspaceMode} />
+          </ReportSection>
+        )}
+
+        {/* Mandatory disclaimer — always last */}}
         <div style={{ marginTop: '40px', paddingTop: '24px', borderTop: '1px solid var(--border-default)' }}>
           <div style={{ fontWeight: 700, fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: '10px' }}>⚠ Mandatory Disclaimer</div>
           <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
@@ -720,6 +739,87 @@ function EvidencePackContent({ evidencePack }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ─── AI Agent Observations Content — Run 21 ────────────────────────────────
+function AIAgentObservationsContent({ secScore, qScore, riskCount, evidenceCount, allRecs, settings, workspaceMode }) {
+  const isDemoMode = workspaceMode === 'demo';
+  const critCount  = allRecs.filter(r => r.priority === 'critical' || r.priority === 'high').length;
+  const evStatus   = evidenceCount > 0 ? `${evidenceCount} item${evidenceCount === 1 ? '' : 's'} on record` : 'No evidence items recorded';
+
+  const AGENTS = [
+    {
+      id: 'complianceGapAgent',
+      icon: '📋',
+      title: 'Compliance Readiness Agent',
+      colour: '#00d4ff',
+      observation: secScore != null
+        ? `Security implementation score is ${secScore}%. ${critCount > 0 ? `${critCount} high/critical priority action${critCount > 1 ? 's' : ''} identified.` : 'No critical actions flagged.'} Assessment answers have been reviewed. Human validation of all findings is required before operational decisions are made.`
+        : 'Security assessment has not been completed. Complete the Security Assessment to generate observations.',
+    },
+    {
+      id: 'quantumReadinessAgent',
+      icon: '⚛',
+      title: 'Quantum Readiness Agent',
+      colour: '#8b5cf6',
+      observation: qScore != null
+        ? `Quantum readiness score is ${qScore}%. ${qScore < 40 ? 'Significant post-quantum migration planning recommended. Long-life data and encryption exposure should be reviewed.' : qScore < 70 ? 'Moderate quantum readiness. Review cryptographic asset inventory and plan post-quantum transitions.' : 'Reasonable quantum readiness posture noted. Continue monitoring post-quantum standards evolution.'}`
+        : 'Quantum Readiness Assessment has not been completed. Complete the assessment to generate observations.',
+    },
+    {
+      id: 'securityEvidenceAgent',
+      icon: '🗂',
+      title: 'Evidence Pack Agent',
+      colour: '#10b981',
+      observation: evidenceCount > 0
+        ? `${evStatus}. ${isDemoMode ? 'Demo evidence shown — switch to Live Mode and add real evidence items for live operation.' : 'Review evidence items for completeness and currency. Gaps in evidence may affect readiness posture.'}`
+        : `No evidence items recorded. ${isDemoMode ? 'Demo mode is active — demo evidence can be loaded.' : 'Add evidence items to support the compliance-readiness assessment.'}`,
+    },
+    {
+      id: 'riskSummaryAgent',
+      icon: '⚠',
+      title: 'Risk Summary Agent',
+      colour: '#f59e0b',
+      observation: riskCount > 0
+        ? `${riskCount} risk entr${riskCount === 1 ? 'y' : 'ies'} recorded. ${critCount > 0 ? `${critCount} require${critCount === 1 ? 's' : ''} priority attention.` : 'No critical risks flagged at this time.'} Risk register should be reviewed and updated regularly by qualified personnel.`
+        : 'No risk entries recorded. Complete the risk register to enable risk summary observations.',
+    },
+    {
+      id: 'consultantReportAgent',
+      icon: '👥',
+      title: 'Consultant Support Agent',
+      colour: '#D4AF37',
+      observation: isDemoMode
+        ? 'Demo Mode active — this report reflects sample client data. In Live Mode, consultant observations will reflect real client records, assessments, and evidence packs.'
+        : 'Live Local Mode active — report reflects current workspace data. Connect a backend for persistent multi-client audit trails.',
+    },
+  ];
+
+  return (
+    <div>
+      <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16, lineHeight: 1.7,
+        padding: '8px 12px', background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: 'var(--radius-sm)' }}>
+        <strong style={{ color: '#8b5cf6' }}>Advisory only.</strong>{' '}
+        AI agent observations are guidance and explanation layers. They support human decision-making and do not replace qualified legal, compliance, cybersecurity, or business professionals.
+        These agents are powered by 4P3X Intelligent AI™ — all outputs require human review before operational use.
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {AGENTS.map(({ id, icon, title, colour, observation }) => (
+          <div key={id} style={{ padding: '14px 16px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', borderLeft: `3px solid ${colour}` }}>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: 16 }}>{icon}</span>
+              <span style={{ fontWeight: 700, fontSize: 13, color: colour }}>{title}</span>
+            </div>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7 }}>{observation}</p>
+          </div>
+        ))}
+      </div>
+      <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 14, lineHeight: 1.6, fontStyle: 'italic' }}>
+        Quantum Compliance OS™ is advisory and assessment-support software. It does not guarantee legal, regulatory,
+        cybersecurity, or quantum-readiness compliance. Final decisions remain with qualified humans, organisations, and relevant professionals.
+      </p>
     </div>
   );
 }

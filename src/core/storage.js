@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run20',
-      buildRun: 'RUN_20_FINAL_PRODUCTION_POLISH',
-      latestCompletedRun: 20,
-      latestCompletedRunLabel: 'Run 20 — Final Production / Portfolio / Deployment Polish',
+      version: '1.0.0-run22',
+      buildRun: 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
+      latestCompletedRun: 22,
+      latestCompletedRunLabel: 'Run 22 — Public Landing Page + Investor Demo Site',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -234,6 +234,8 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_17_FINAL_COMMERCIAL_POLISH',
   'RUN_19_CONSULTANT_AGENCY_HARDENING',
   'RUN_20_FINAL_PRODUCTION_POLISH',
+  'RUN_21_PDF_REPORT_TEMPLATE_POLISH',
+  'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -257,7 +259,9 @@ const RUN_8_5_MODULE_STATUS = {
   builtInAIAgents:            'complete',
   finalCommercialPolish:      'complete',
   consultantAgencyHardening:  'complete',
-  finalProductionPolish:      'complete',
+ finalProductionPolish:      'complete',
+  pdfReportTemplatePolish:    'complete',
+  publicLandingInvestorDemo:  'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -281,6 +285,8 @@ const RUN_8_5_FEATURE_FLAGS = {
   finalCommercialPolish:      true,
   consultantAgencyHardening:  true,
   finalProductionPolish:      true,
+  pdfReportTemplatePolish:    true,
+  publicLandingInvestorDemo:  true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -297,14 +303,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 20 || existingMeta.buildRun !== 'RUN_20_FINAL_PRODUCTION_POLISH') {
+  if (storedRun < 22 || existingMeta.buildRun !== 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run20',
-      buildRun: 'RUN_20_FINAL_PRODUCTION_POLISH',
-      latestCompletedRun: 20,
-      latestCompletedRunLabel: 'Run 20 — Final Production / Portfolio / Deployment Polish',
+      version: '1.0.0-run22',
+      buildRun: 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
+      latestCompletedRun: 22,
+      latestCompletedRunLabel: 'Run 22 — Public Landing Page + Investor Demo Site',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

@@ -56,7 +56,11 @@ const RUNS_COMPLETE = [
   { run: 19,    label: 'Consultant / Agency / White-Label Readiness Hardening',
     desc: 'plans.js: planLimits config, BRANDING_SAFETY, isBrandingFieldAllowed, getClientBrandingLayer, getPlanGatingMessage. AgencySettings.jsx: White-Label Readiness Summary section (6 status tiles, branding safety note, custom domain/SLA/onboarding status), portfolio analytics hardened (demo mode label, med/low risk tiles, priority actions, clients needing review). ClientHub.jsx: risk movement indicators in ReportHistoryPanel (improved/worsened/unchanged). Settings.jsx: System Readiness panel (12 status rows). v19.0.0.' },
   { run: 20,    label: 'Final Production / Portfolio / Deployment Polish',
-    desc: 'LandingPage.jsx: Portfolio & Case Study section (4 cards: what it is, who it is for, demo vs live, architecture highlights, branding/advisory disclaimer). Reports.jsx: Handoff Readiness Summary section (10 metric tiles, advisory notice). storage.js: RUN_20, v1.0.0-run20. v20.0.0. No new major system.' },
+    desc: 'LandingPage.jsx: Portfolio & Case Study section (4 cards). Reports.jsx: Handoff Readiness Summary section (10 metric tiles). storage.js: RUN_20, v1.0.0-run20. v20.0.0. No new major system.' },
+  { run: 21,    label: 'PDF Report Template + Evidence Pack + Investor Report Polish',
+    desc: 'Reports.jsx: AIAgentObservationsContent (5 agent advisory observation cards), ai_agent_observations report section (optional toggle), demo/live mode badge + 4P3X branding in report header, investor/demo explanation panel. EvidencePack.jsx: investor demo explanation strip, safe status notes. reportSchema.js: ai_agent_observations section (futureRun 21). v21.0.0.' },
+  { run: 22,    label: 'Public Landing Page + Investor Demo Site',
+    desc: 'LandingPage.jsx: Pricing section replaced with 6 investor/demo sections — Demo/Live Mode explainer, Architecture Overview (10 layers), AI Agents (6 agents), Investor Demo section, About the Creator (Ciaran/Kyzel Kreates™), 4P3X Verse™ ecosystem. TIERS constant removed. v22.0.0.' },
 ];
 
 const FUTURE_RUNS = [

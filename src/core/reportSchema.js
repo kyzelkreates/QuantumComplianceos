@@ -116,6 +116,17 @@ export const REPORT_SECTIONS = [
     includeByDefault: false,
   },
   {
+    id: 'ai_agent_observations',
+    order: 10,
+    title: 'AI Agent Observations',
+    description:
+      'Advisory observations from onboard 4P3X Intelligent AI™ guidance agents. For human review only — not a compliance determination.',
+    futureRun: 21,
+    requiredData: [],
+    defensiveOnly: true,
+    includeByDefault: false,
+  },
+  {
     id: 'technical_remediation',
     order: 11,
     title: 'Technical Remediation Checklist',
