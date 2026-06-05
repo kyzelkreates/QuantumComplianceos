@@ -648,6 +648,20 @@ function ReportHistoryPanel({ reports = [], clientId, onStatusChange }) {
   const [expanded, setExpanded] = React.useState(null);
   const [statusMsg, setStatusMsg] = React.useState('');
   const clientReports = getReportsByClientId(reports, clientId);
+  // Sort by date descending for movement comparison
+  const sortedReports = [...clientReports].sort((a, b) => new Date(b.generatedAt || b.createdAt || 0) - new Date(a.generatedAt || a.createdAt || 0));
+
+  function getRiskMovement(idx) {
+    if (idx >= sortedReports.length - 1) return null;           // no previous
+    const curr = sortedReports[idx];
+    const prev = sortedReports[idx + 1];
+    const currScore = curr.securityScore ?? curr.overallScore ?? null;
+    const prevScore = prev.securityScore ?? prev.overallScore ?? null;
+    if (currScore == null || prevScore == null) return null;
+    if (currScore > prevScore) return { label: '↑ Improved',  colour: '#10b981' };
+    if (currScore < prevScore) return { label: '↓ Worsened',  colour: '#ef4444' };
+    return { label: '→ Unchanged', colour: '#6b7280' };
+  }
 
   function handleStatus(id, status) {
     onStatusChange(id, status);
@@ -705,6 +719,7 @@ function ReportHistoryPanel({ reports = [], clientId, onStatusChange }) {
                       <span>Updated: {r.updatedAt}</span>
                       {r.quantumReadinessScore != null && <span style={{ color:'#8b5cf6' }}>⚛ {r.quantumReadinessScore}%</span>}
                       {r.securityScore != null && <span style={{ color:'#3b82f6' }}>🛡 {r.securityScore}%</span>}
+                      {(() => { const idx = sortedReports.indexOf(r); const mv = getRiskMovement(idx); return mv ? <span style={{ fontSize:10, fontWeight:700, color: mv.colour }}>{mv.label}</span> : null; })()}
                     </div>
                   </div>
                   <span style={{ color:'var(--text-muted)', fontSize:12, flexShrink:0 }}>{isOpen ? '▲' : '▼'}</span>

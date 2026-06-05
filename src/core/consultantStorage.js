@@ -77,7 +77,7 @@ export const COMMERCIAL_TIERS = [
 // ─── Default Consultant Workspace ─────────────────────────────────────────────
 export function getInitialConsultantState() {
   return {
-    version:          '17.0.0',
+    version:          '20.0.0',
     createdAt:        new Date().toISOString(),
     lastUpdated:      new Date().toISOString(),
     consultantName:   '',

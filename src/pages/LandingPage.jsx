@@ -328,6 +328,94 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
         </div>
       </section>
 
+      {/* ── Portfolio / Case Study — Run 20 ────────────────────────────────── */}
+      <section style={{ padding: '0 32px 60px', maxWidth: '960px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <h2 style={{ fontWeight: 800, fontSize: 'clamp(17px, 3vw, 22px)', marginBottom: 6 }}>
+            Portfolio & Case Study Overview
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', maxWidth: 560, margin: '0 auto', lineHeight: 1.7 }}>
+            Quantum Compliance OS™ demonstrates a full consultant/agency workflow — from single-client
+            demo to multi-client portfolio management, white-label readiness, and advisory AI assistance.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
+          {[
+            {
+              icon: '🎯',
+              title: 'What It Is',
+              colour: '#00d4ff',
+              items: [
+                'Defensive quantum-readiness + security assessment platform',
+                'Multi-client consultant management dashboard',
+                'Report history, evidence archive, risk comparison',
+                'Advisory AI agents powered by 4P3X Intelligent AI™',
+                'Local-first PWA — no account, no backend required to start',
+              ],
+            },
+            {
+              icon: '👥',
+              title: 'Who It Is For',
+              colour: '#10b981',
+              items: [
+                'Independent security consultants and advisors',
+                'SME compliance and risk management teams',
+                'Agency teams managing multiple clients',
+                'Organisations preparing for post-quantum migration',
+                'Portfolio investors and technical evaluators',
+              ],
+            },
+            {
+              icon: '🔀',
+              title: 'Demo Mode vs Live Mode',
+              colour: '#f59e0b',
+              items: [
+                'Demo Mode: shows 5 realistic SME client profiles with scores',
+                'Live Mode: hides demo data — shows only real/local records',
+                'Backend-ready: Supabase/Firebase config layer (Run 15)',
+                'Switching mode does not delete any existing data',
+                '"Demo Mode shows the product. Live Mode runs the product."',
+              ],
+            },
+            {
+              icon: '🏗',
+              title: 'Architecture Highlights',
+              colour: '#8b5cf6',
+              items: [
+                'React + Vite PWA — installable, works fully offline',
+                'localStorage SSOT — zero backend dependency to start',
+                'Supabase SQL schema prepared with RLS enabled (Run 15)',
+                '4P3X API Config Guard™ — blocks backend-only secrets',
+                'Upgrade-ready: Starter → Pro → Agency → White Label tiers',
+              ],
+            },
+          ].map(({ icon, title, colour, items }) => (
+            <div key={title} style={{
+              background: 'var(--bg-secondary)', border: `1px solid ${colour}28`,
+              borderRadius: 'var(--radius-lg)', padding: '20px 22px',
+            }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 12 }}>
+                <span style={{ fontSize: 22 }}>{icon}</span>
+                <span style={{ fontWeight: 800, fontSize: 14, color: colour }}>{title}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                {items.map((item) => (
+                  <div key={item} style={{ display: 'flex', gap: 7, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                    <span style={{ color: colour, flexShrink: 0, marginTop: 1 }}>•</span>{item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 16, padding: '10px 16px', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 'var(--radius-md)', textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          <strong style={{ color: '#D4AF37' }}>Quantum Compliance OS™</strong>{' '}·{' '}
+          Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™{' '}·{' '}
+          Advisory and assessment-support software — not a guarantee of legal, regulatory, cybersecurity, or quantum-readiness compliance.
+          Final decisions remain with qualified humans, organisations, and relevant professionals.
+        </div>
+      </section>
+
       {/* ── Final CTA ─────────────────────────────────────────────────────────── */}
       <section style={{ padding: '0 32px 72px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
         <h2 style={{ fontWeight: 800, fontSize: 'clamp(18px, 3vw, 26px)', marginBottom: '12px' }}>
@@ -363,7 +451,7 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
           <strong>This is not a security certification. No compliance guarantee is made or implied.</strong>
         </p>
         <p style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', marginTop: '8px' }}>
-          Quantum Compliance OS™ v17.0.0 · Local-First · No Backend · No Supabase · RLS Not Applicable
+          Quantum Compliance OS™ v20.0.0 · Run 20 — Final Production Polish · Local-First · No Backend · No Supabase · RLS Not Applicable
         </p>
       </footer>
     </div>

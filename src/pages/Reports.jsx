@@ -235,6 +235,38 @@ export default function Reports({ onNavigate, workspaceMode }) {
           ))}
         </div>
       </SectionCard>
+      {/* ── Run 20: Handoff / Export Readiness Summary ──────────────────── */}
+      <SectionCard title="Handoff Readiness Summary" icon="📋">
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 12, lineHeight: 1.7 }}>
+          A quick handoff snapshot derived from current local records — no backend required.
+          Copy or include in a client handover package.
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 8 }}>
+          {[
+            { label: 'Client / Workspace',     value: state.branding?.logoText || state.branding?.productName || 'Current workspace' },
+            { label: 'Security Score',          value: state.securityAssessment?.overallScore != null ? `${state.securityAssessment.overallScore}%` : '—' },
+            { label: 'Quantum Readiness',       value: state.quantumReadiness?.overallScore   != null ? `${state.quantumReadiness.overallScore}%`   : '—' },
+            { label: 'Risk Level',              value: state.securityAssessment?.riskLevel || '—' },
+            { label: 'Evidence Items',          value: Array.isArray(state.evidenceItems) ? `${state.evidenceItems.length} items` : '—' },
+            { label: 'Report History',          value: Array.isArray(state.reports) ? `${state.reports.length} reports` : '—' },
+            { label: 'Product Mode',            value: state.settings?.workspaceMode === 'demo' ? '🎯 Demo Mode' : '💾 Live Local', colour: state.settings?.workspaceMode === 'demo' ? '#f59e0b' : '#00d4ff' },
+            { label: 'Backend Status',          value: state.backendSettings ? '⚙ Config saved' : 'LocalStorage active' },
+            { label: 'Date Generated',          value: new Date().toLocaleDateString('en-GB') },
+            { label: 'Advisory Notice',         value: 'Human review required', colour: '#f59e0b' },
+          ].map(({ label, value, colour }) => (
+            <div key={label} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)', padding: '9px 12px' }}>
+              <div style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 2, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{label}</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: colour || 'var(--accent)' }}>{String(value)}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 10, fontSize: 10, color: 'var(--text-muted)', lineHeight: 1.6, padding: '6px 10px', background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.15)', borderRadius: 'var(--radius-sm)' }}>
+          ⚠ Advisory only. Human review required. Full PDF export reserved for a future run.
+          JSON/CSV export is available via the export buttons above.
+        </div>
+      </SectionCard>
+
+
     </div>
   );
 }

@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run17',
-      buildRun: 'RUN_17_FINAL_COMMERCIAL_POLISH',
-      latestCompletedRun: 17,
-      latestCompletedRunLabel: 'Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness',
+      version: '1.0.0-run20',
+      buildRun: 'RUN_20_FINAL_PRODUCTION_POLISH',
+      latestCompletedRun: 20,
+      latestCompletedRunLabel: 'Run 20 — Final Production / Portfolio / Deployment Polish',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -232,6 +232,8 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
   'RUN_16_BUILT_IN_AI_AGENTS',
   'RUN_17_FINAL_COMMERCIAL_POLISH',
+  'RUN_19_CONSULTANT_AGENCY_HARDENING',
+  'RUN_20_FINAL_PRODUCTION_POLISH',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -254,6 +256,8 @@ const RUN_8_5_MODULE_STATUS = {
   backendConnectorsLiveSync:  'complete',
   builtInAIAgents:            'complete',
   finalCommercialPolish:      'complete',
+  consultantAgencyHardening:  'complete',
+  finalProductionPolish:      'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -275,6 +279,8 @@ const RUN_8_5_FEATURE_FLAGS = {
   backendConnectorsLiveSync:  true,
   builtInAIAgents:            true,
   finalCommercialPolish:      true,
+  consultantAgencyHardening:  true,
+  finalProductionPolish:      true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -291,14 +297,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 17 || existingMeta.buildRun !== 'RUN_17_FINAL_COMMERCIAL_POLISH') {
+  if (storedRun < 20 || existingMeta.buildRun !== 'RUN_20_FINAL_PRODUCTION_POLISH') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run17',
-      buildRun: 'RUN_17_FINAL_COMMERCIAL_POLISH',
-      latestCompletedRun: 17,
-      latestCompletedRunLabel: 'Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness',
+      version: '1.0.0-run20',
+      buildRun: 'RUN_20_FINAL_PRODUCTION_POLISH',
+      latestCompletedRun: 20,
+      latestCompletedRunLabel: 'Run 20 — Final Production / Portfolio / Deployment Polish',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

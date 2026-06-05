@@ -215,6 +215,29 @@ export const PLAN_ORDER = ['starter', 'proConsultant', 'agency', 'whiteLabel'];
 // ─── Default active plan ──────────────────────────────────────────────────────
 export const DEFAULT_PLAN_ID = 'starter';
 
+/**
+ * planLimits — alias config for Run 19 plan-gating logic.
+ * Maps planId → maxClients (null = unlimited, number = hard limit).
+ * Source of truth: PLANS[id].clientLimit — this is a convenience map.
+ */
+export const planLimits = {
+  starter:       { maxClients: 1 },
+  proConsultant: { maxClients: 10 },
+  agency:        { maxClients: 50 },
+  whiteLabel:    { maxClients: null },   // null = unlimited
+};
+
+/**
+ * Per-client branding safety rules (Run 19).
+ * Client branding is a client-facing LAYER only — never overwrites product identity.
+ */
+export const BRANDING_SAFETY = {
+  productNameLocked:    true,   // 'Quantum Compliance OS™' cannot be overwritten globally
+  ownershipLineLocked:  true,   // 'Powered by 4P3X Intelligent AI™ Created by Kyzel Kreates™'
+  clientBrandingLayer:  'client-only',   // logo/name/accent apply to client workspace, not app shell
+  fallbackToDefaultStyle: true, // missing client branding falls back to 4P3X Verse™ styling
+};
+
 // ─── Helper: safe plan lookup ─────────────────────────────────────────────────
 /**
  * Get plan config by ID. Returns starter if not found.
@@ -289,6 +312,41 @@ export function formatClientLimit(planId) {
  * clientCount: actual number of real (non-demo) clients in workspace.
  * Returns false if unlimited.
  */
+/**
+ * isBrandingFieldAllowed — checks whether a branding field is allowed to override
+ * the product identity. Always returns false for locked product fields.
+ */
+export function isBrandingFieldAllowed(fieldKey) {
+  const locked = ['productName', 'ownershipLine', 'poweredBy', 'createdBy'];
+  return !locked.includes(fieldKey);
+}
+
+/**
+ * getClientBrandingLayer — returns a safe branding overlay for a given client.
+ * Never allows overriding locked product identity fields.
+ * Falls back to null for missing/unsafe values.
+ */
+export function getClientBrandingLayer(client) {
+  if (!client) return null;
+  const branding = client.branding || client.clientBranding || null;
+  if (!branding) return null;
+  const safe = {};
+  ['logoUrl', 'clientName', 'accentColour', 'reportHeaderText'].forEach((key) => {
+    if (branding[key] && isBrandingFieldAllowed(key)) safe[key] = branding[key];
+  });
+  return Object.keys(safe).length ? safe : null;
+}
+
+/**
+ * getPlanGatingMessage — returns a safe locked-feature message for a given plan/feature.
+ * Never crashes if plan is missing.
+ */
+export function getPlanGatingMessage(planId, featureKey) {
+  const plan = getPlanById(planId || DEFAULT_PLAN_ID);
+  if (plan.status === 'active' && plan.features.includes(featureKey)) return null;
+  return 'This feature is part of a higher-tier upgrade path. Backend/payment integration required for live access.';
+}
+
 export function isAtClientLimit(planId, clientCount) {
   const limit = getClientLimitForPlan(planId);
   if (limit === null) return false;

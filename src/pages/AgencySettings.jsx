@@ -524,13 +524,22 @@ export default function AgencySettings({ workspaceMode }) {
             🔒 Full portfolio analytics are part of the Agency upgrade path and are prepared for a future run. Preview data shown below.
           </div>
         )}
+        {state.settings?.workspaceMode === 'demo' && (
+          <div style={{ marginBottom: 8, padding: '5px 10px', background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 'var(--radius-sm)', fontSize: 11, color: '#f59e0b', fontWeight: 600 }}>
+            🎯 Demo Mode — portfolio data reflects demo clients
+          </div>
+        )}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
           <MetricTile label="Total Clients"    value={portfolio.totalClients}            colour="var(--accent)" icon="👥" />
           <MetricTile label="Active"           value={portfolio.activeClients}           colour="#10b981"       icon="✅" />
           <MetricTile label="Archived"         value={portfolio.archivedClients}         colour="#6b7280"       icon="📦" />
           <MetricTile label="High Risk"        value={portfolio.highRiskClients}         colour="#ef4444"       icon="🔴" />
+          <MetricTile label="Med Risk"         value={portfolio.mediumRiskClients  ?? '—'} colour="#f59e0b"    icon="🟡" />
+          <MetricTile label="Low Risk"         value={portfolio.lowRiskClients     ?? '—'} colour="#10b981"    icon="🟢" />
           <MetricTile label="Avg Quantum"      value={portfolio.avgQuantumScore   != null ? `${portfolio.avgQuantumScore}%`   : '—'} colour="#8b5cf6" icon="⚛" />
           <MetricTile label="Avg Security"     value={portfolio.avgSecurityScore  != null ? `${portfolio.avgSecurityScore}%`  : '—'} colour="#3b82f6" icon="🛡" />
+          <MetricTile label="Priority Actions" value={portfolio.priorityActionCount ?? '—'}  colour="#f59e0b" icon="⚡" />
+          <MetricTile label="Clients Needing Review" value={portfolio.clientsNeedingReview ?? '—'} colour="#ef4444" icon="👁" />
           <MetricTile label="Avg Evidence"     value={portfolio.avgEvidenceCompletion != null ? `${portfolio.avgEvidenceCompletion}%` : '—'} colour="#f97316" icon="📂" />
           <MetricTile label="Total Reports"    value={portfolio.totalReports}            colour="#D4AF37"       icon="📄" />
           <MetricTile label="Missing Evidence" value={portfolio.missingEvidenceItems}    colour="#ef4444"       icon="❌" />
@@ -704,6 +713,38 @@ export default function AgencySettings({ workspaceMode }) {
       </SectionCard>
 
       {/* ──────────────────────────────────────────────────────────────────── */}
+      {/* ──────────────────────────────────────────────────────────────────── */}
+      {/* Run 19: White-Label Readiness Preview                                 */}
+      {/* ──────────────────────────────────────────────────────────────────── */}
+      <SectionCard title="White-Label Readiness Summary" icon="🌐">
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 12, lineHeight: 1.7 }}>
+          White-label readiness status overview. Full white-label mode, custom domain, onboarding wizard,
+          and SLA support are part of the White Label tier and require backend/payment integration for live access.
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 8, marginBottom: 12 }}>
+          {[
+            { label: 'White-Label Status',  value: tierStatus.hasFullWhiteLabel ? '✅ Active' : '⚙ Preview only',   colour: tierStatus.hasFullWhiteLabel ? '#10b981' : '#6b7280' },
+            { label: 'Custom Domain',       value: 'Config required',   colour: '#6b7280' },
+            { label: 'Brand Config',        value: (state.agencySettings?.agencyName || state.whiteLabelSettings?.platformName) ? '✅ Set' : '⚙ Not configured', colour: (state.agencySettings?.agencyName || state.whiteLabelSettings?.platformName) ? '#10b981' : '#6b7280' },
+            { label: 'Onboarding Wizard',   value: tierStatus.hasOnboardingWizard ? '✅ Active' : '⚙ Coming soon',   colour: '#6b7280' },
+            { label: 'SLA Support Layer',   value: tierStatus.hasSlaSupportLayer  ? '✅ Active' : '⚙ Coming soon',   colour: '#6b7280' },
+            { label: 'Live Billing',        value: 'Backend/payment required',   colour: '#f59e0b' },
+          ].map(({ label, value, colour }) => (
+            <div key={label} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
+              <div style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 3, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{label}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: colour }}>{value}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: '7px 11px', background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: 'var(--radius-sm)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          <strong style={{ color: '#D4AF37' }}>Branding Safety:</strong>{' '}
+          Client branding is a client-facing layer only. <strong>Quantum Compliance OS™</strong> global product identity
+          and "Powered by 4P3X Intelligent AI™ Created by Kyzel Kreates™" are always preserved.
+          Missing client branding falls back to default 4P3X Verse™ styling.
+          Custom domain support requires deployment/provider configuration.
+        </div>
+      </SectionCard>
+
       {/* 10. Agency Feature Gates summary                                     */}
       {/* ──────────────────────────────────────────────────────────────────── */}
       <SectionCard title="Agency Feature Gates" icon="🔑">
@@ -732,7 +773,7 @@ export default function AgencySettings({ workspaceMode }) {
         marginTop: 24, padding: '12px 16px', textAlign: 'center', fontSize: 11,
         color: 'var(--text-muted)', borderTop: '1px solid var(--border-muted)', lineHeight: 1.8,
       }}>
-        Quantum Compliance OS™ · Run 13 — Agency + White Label Settings ·
+        Quantum Compliance OS™ · Run 13–19 — Agency + White Label Settings · Run 19 Polish ·
         Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™ ·
         Local-first · No backend · No Supabase · RLS not applicable ·
         All agency/white-label settings are local/demo-safe in this run.
