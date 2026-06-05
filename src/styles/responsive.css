@@ -218,3 +218,76 @@
     box-shadow: none !important;
   }
 }
+
+/* ─── Run 15–17: Backend, AI, Deployment pages ───────────────────── */
+
+/* Provider cards / config fields — stack on mobile */
+@media (max-width: 768px) {
+
+  /* Backend connector + AI provider metric tiles */
+  .provider-tile-grid,
+  [style*="repeat(auto-fill,minmax(17"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Provider edit form grids */
+  [style*="repeat(auto-fill,minmax(28"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Agent cards in AI settings */
+  [style*="repeat(auto-fill,minmax(30"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Commercial tier cards in deployment readiness */
+  [style*="repeat(auto-fill,minmax(20"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* AI agent chat modal */
+  [style*="maxWidth:680"] {
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  /* Deployment checklist — reduce padding */
+  .page-content .section-card {
+    padding: var(--space-4) !important;
+  }
+
+  /* Pre/code blocks in deployment page — scroll */
+  pre {
+    overflow-x: auto;
+    white-space: pre;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Input fields full width on mobile */
+  .form-input {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Sync control rows — flex column on narrow */
+  [style*="display:'flex'"][style*="gap:10"] {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Tier cards — always single column on very small screens */
+  [style*="repeat(auto-fill,minmax(20"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Metric tiles — 2 columns on very small */
+  [style*="repeat(auto-fill,minmax(17"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Pill badges wrap */
+  [style*="display:'flex'"][style*="flexWrap:'wrap'"] {
+    gap: 4px !important;
+  }
+}

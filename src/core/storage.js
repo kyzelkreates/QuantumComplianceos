@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run16',
-      buildRun: 'RUN_16_BUILT_IN_AI_AGENTS',
-      latestCompletedRun: 16,
-      latestCompletedRunLabel: 'Run 16 — Built-In AI Agents + Open-Source AI Provider Options',
+      version: '1.0.0-run17',
+      buildRun: 'RUN_17_FINAL_COMMERCIAL_POLISH',
+      latestCompletedRun: 17,
+      latestCompletedRunLabel: 'Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -231,6 +231,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_14_DEMO_LIVE_TOGGLE_DATA_PROVIDER',
   'RUN_15_BACKEND_CONNECTORS_LIVE_SYNC',
   'RUN_16_BUILT_IN_AI_AGENTS',
+  'RUN_17_FINAL_COMMERCIAL_POLISH',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -252,6 +253,7 @@ const RUN_8_5_MODULE_STATUS = {
   demoLiveToggleDataProvider: 'complete',
   backendConnectorsLiveSync:  'complete',
   builtInAIAgents:            'complete',
+  finalCommercialPolish:      'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -272,6 +274,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   demoLiveToggleDataProvider: true,
   backendConnectorsLiveSync:  true,
   builtInAIAgents:            true,
+  finalCommercialPolish:      true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -288,14 +291,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 16 || existingMeta.buildRun !== 'RUN_16_BUILT_IN_AI_AGENTS') {
+  if (storedRun < 17 || existingMeta.buildRun !== 'RUN_17_FINAL_COMMERCIAL_POLISH') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run16',
-      buildRun: 'RUN_16_BUILT_IN_AI_AGENTS',
-      latestCompletedRun: 16,
-      latestCompletedRunLabel: 'Run 16 — Built-In AI Agents + Open-Source AI Provider Options',
+      version: '1.0.0-run17',
+      buildRun: 'RUN_17_FINAL_COMMERCIAL_POLISH',
+      latestCompletedRun: 17,
+      latestCompletedRunLabel: 'Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

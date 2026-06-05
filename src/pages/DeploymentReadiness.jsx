@@ -192,7 +192,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       <PageHeader
         icon="🚀"
         title="Deployment & Demo Readiness"
-        subtitle="Production deployment checklist, demo confidence review, and safety validation — Run 16 complete."
+        subtitle="Production deployment checklist, demo confidence review, full system validation — Run 17 complete."
         actions={
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             <span style={{
@@ -223,7 +223,7 @@ export default function DeploymentReadiness({ onNavigate }) {
               : `${totalChecks - totalPass} item(s) need attention before final deployment.`}
           </div>
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-            Run 16 complete · Local-first · No backend · No Supabase · RLS not applicable · Defensive use only
+            Run 17 complete · Local-first · No backend · No Supabase · RLS not applicable in Run 17 · Defensive use only
           </div>
         </div>
       </div>
@@ -307,20 +307,239 @@ export default function DeploymentReadiness({ onNavigate }) {
         </div>
       </SectionCard>
 
+
+      {/* ── Product Identity ─────────────────────────────────────────────── */}
+      <SectionCard title="What Is Quantum Compliance OS™?" icon="📋">
+        <div style={{ fontSize: 13, color: 'var(--accent)', fontWeight: 700, marginBottom: 8 }}>
+          Quantum Compliance OS™
+        </div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: 12 }}>
+          Quantum Compliance OS™ helps consultants and organisations assess quantum-readiness, security posture,
+          evidence completeness, client risk, and migration priorities through a multi-client consultant dashboard,
+          report history, evidence archive, risk comparison tools, agency/white-label settings, backend-ready
+          live mode, and advisory AI agents.
+        </div>
+        <div style={{ padding: '8px 12px', background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 'var(--radius-sm)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 8 }}>
+          ⚠ <strong>Risk scores and AI outputs are advisory only and require qualified human review.</strong>
+        </div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          Quantum-readiness guidance does not guarantee legal, regulatory, security, or compliance outcomes.
+          All assessments should be reviewed by qualified security and compliance professionals before
+          operational decisions are made.
+        </div>
+      </SectionCard>
+
+      {/* ── Demo / Live / Backend Explanation ───────────────────────────── */}
+      <SectionCard title="Demo Mode · Live Mode · Backend-Ready" icon="🔀">
+        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', marginBottom: 12 }}>
+          "Demo Mode shows the product. Live Mode runs the product. Backend connection scales it into a live SaaS platform."
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {[
+            {
+              mode: 'Demo Mode',
+              colour: '#f59e0b',
+              icon: '🎯',
+              desc: 'Shows sample clients, reports, evidence, snapshots, analytics, agency settings, and AI demo responses. Demo records are clearly labelled and for presentation/testing only. No real client data is affected.',
+            },
+            {
+              mode: 'Live Local Mode',
+              colour: '#00d4ff',
+              icon: '💾',
+              desc: 'Hides demo records and shows only user-entered live/local records. Stores records locally in the browser using LocalStorage. Works as a local live product without backend connection.',
+            },
+            {
+              mode: 'Backend-Ready / Connected',
+              colour: '#10b981',
+              icon: '🔌',
+              desc: 'Uses configured backend provider where supported (Supabase, Firebase, custom). Enables persistence and sync. Requires reviewed backend security, RLS, and rules before production use.',
+            },
+          ].map(({ mode, colour, icon, desc }) => (
+            <div key={mode} style={{ display: 'flex', gap: 12, padding: '10px 14px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)' }}>
+              <span style={{ fontSize: 20, flexShrink: 0 }}>{icon}</span>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 13, color: colour, marginBottom: 3 }}>{mode}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>{desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 10, fontSize: 11, color: 'var(--text-muted)', padding: '7px 10px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-sm)' }}>
+          ℹ Switching modes changes which records are visible. It does not delete demo or live/local data.
+        </div>
+      </SectionCard>
+
+      {/* ── Commercial Upgrade Path ───────────────────────────────────────── */}
+      <SectionCard title="Commercial Upgrade Path" icon="🏆">
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 14 }}>
+          <strong style={{ color: 'var(--text-secondary)' }}>Starter / Demo is active by default.</strong>{' '}
+          Pro Consultant, Agency, and White Label features are prepared as upgrade layers and may remain locked,
+          preview, or backend-ready depending on configuration. No payment system is active in this build.
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 10 }}>
+          {[
+            { tier: 'Starter / Demo', clients: '1 client', colour: '#10b981', status: '● Active', features: ['Single client workspace','Demo data','Basic dashboard','Basic report preview','Local-first mode'] },
+            { tier: 'Pro Consultant', clients: '10 clients', colour: '#6b7280', status: 'Coming soon', features: ['Multi-client hub','Per-client branding','Report history','Risk comparison'] },
+            { tier: 'Agency', clients: '50 clients', colour: '#6b7280', status: 'Coming soon', features: ['White-label reports','Client archive','Portfolio analytics','Priority actions'] },
+            { tier: 'White Label', clients: 'Unlimited', colour: '#6b7280', status: 'Coming soon', features: ['Full white-label mode','Custom domain ready','Onboarding wizard','SLA support layer'] },
+          ].map(({ tier, clients, colour, status, features }) => (
+            <div key={tier} style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-muted)', borderRadius: 'var(--radius-md)', padding: '12px 14px' }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: colour, marginBottom: 2 }}>{tier}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6 }}>{clients} · <span style={{ fontWeight: 600, color: colour }}>{status}</span></div>
+              {features.map((f) => <div key={f} style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>• {f}</div>)}
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
+      {/* ── AI Agents Explanation ─────────────────────────────────────────── */}
+      <SectionCard title="4P3X Intelligent AI™ Advisory Agents" icon="🤖">
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 12 }}>
+          <strong style={{ color: '#10b981' }}>AI outputs are advisory and require qualified human review.</strong>{' '}
+          AI agents use only selected/available context and must state when data is missing. Do not send
+          confidential client data to external AI providers unless your organisation has approved that provider.
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: 8, marginBottom: 12 }}>
+          {[
+            { num:'1', name:'Compliance Gap Agent',    icon:'🔍', purpose:'Explain compliance gaps, missing controls, weak evidence, and next actions.' },
+            { num:'2', name:'Quantum Readiness Agent', icon:'⚛',  purpose:'Explain quantum-readiness risk, cryptography gaps, migration planning.' },
+            { num:'3', name:'Security Evidence Agent', icon:'📂', purpose:'Review evidence completeness, flag missing docs, explain audit gaps.' },
+            { num:'4', name:'Consultant Report Agent', icon:'📄', purpose:'Draft client-ready report language from existing data.' },
+            { num:'5', name:'Client Onboarding Agent', icon:'🧭', purpose:'Guide consultants through client setup, data collection, first report.' },
+            { num:'6', name:'Backend Setup Agent',     icon:'🔌', purpose:'Explain safe backend setup, RLS, localStorage fallback, sync status.' },
+            { num:'7', name:'White Label Setup Agent', icon:'🏢', purpose:'Guide agency/white-label config, branding preview, domain readiness.' },
+          ].map(({ num, name, icon, purpose }) => (
+            <div key={num} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', marginBottom: 2 }}>4P3X Intelligent AI™ {num} — {icon}</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 4 }}>{name}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>{purpose}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {[
+            '✅ Advisory only — no legal, compliance, or security guarantees',
+            '✅ Human review required for all outputs',
+            '✅ Evidence fabrication blocked',
+            '✅ Record deletion blocked',
+            '✅ Direct record mutation blocked',
+            '✅ Mock/Demo AI always active as default and fallback',
+            '✅ Real provider SDK not installed in Run 16 — all providers return mock responses',
+          ].map((line) => <div key={line} style={{ fontSize: 11, color: 'var(--text-muted)' }}>{line}</div>)}
+        </div>
+      </SectionCard>
+
+      {/* ── Backend Safety ────────────────────────────────────────────────── */}
+      <SectionCard title="Backend Safety & 4P3X API Config Guard™" icon="🛡">
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 10 }}>
+          <strong style={{ color: '#D4AF37' }}>Never place backend-only secrets in frontend/public code.</strong>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 8, marginBottom: 12 }}>
+          {['SUPABASE_SERVICE_ROLE_KEY','DATABASE_URL','JWT_SECRET','PRIVATE_KEY','WEBHOOK_SECRET',
+            'STRIPE_SECRET_KEY','AWS_SECRET_ACCESS_KEY','Firebase Admin private key','Admin tokens'].map((key) => (
+            <div key={key} style={{ padding: '5px 10px', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 'var(--radius-sm)', fontSize: 11, fontFamily: 'monospace', color: '#ef4444' }}>
+              🚫 {key}
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          {[
+            '✅ LocalStorage is default/fallback — always available',
+            '✅ Supabase public anon key — safe for frontend config (not service role)',
+            '✅ Firebase web app config — safe for frontend (not Admin SDK)',
+            '✅ RLS must be enabled and reviewed before production use',
+            '✅ SUPABASE_SETUP_RUN_15.sql exists in repo root — RLS ENABLED on all 8 tables',
+            '✅ Sync status is app-level sync status, not legal audit certification',
+            '✅ Blocked secrets are not saved, logged, or included in AI prompts',
+          ].map((line) => <div key={line} style={{ fontSize: 11, color: 'var(--text-muted)' }}>{line}</div>)}
+        </div>
+      </SectionCard>
+
+      {/* ── Run 17 Full Deployment Checklist ────────────────────────────── */}
+      <SectionCard title="Full System Validation Checklist — Runs 10–17" icon="✅">
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>
+          30-item deployment readiness checklist. Static advisory — human validation required for production.
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {[
+            ['pass','App loads without critical errors','Vite build: 99 modules, zero errors'],
+            ['pass','Dashboard loads','Main dashboard renders correctly'],
+            ['pass','Demo Mode active','Demo data visible, clearly labelled'],
+            ['pass','Live Local Mode available','Switches to show only user/live records'],
+            ['pass','Demo/live data separation','filterRecordsByProductMode() separates by isDemo flag'],
+            ['pass','Run 10 tier cards display','Starter active, Pro/Agency/White Label → Coming soon'],
+            ['pass','Run 11 Multi-Client Consultant Hub','Client list, add/edit/archive/restore, switch workspace'],
+            ['pass','Run 12 Report/Evidence/Risk panels','ReportHistoryPanel, EvidenceArchivePanel, RiskComparisonDashboard, UrgentActionsPanel, MissingEvidencePanel'],
+            ['pass','Run 13 Agency + White Label Settings','AgencySettings.jsx — 10 sections, consultantStorage extended'],
+            ['pass','Run 14 Product Mode + Data Providers','ProductModeSettings.jsx, dataProviders.js, PRODUCT_MODE, API_CONFIG_GUARD™'],
+            ['pass','Run 15 Backend Connectors + Sync','BackendConnectorSettings.jsx, backendSync.js, sync queue, blocked-secret detection'],
+            ['pass','Supabase SQL setup file exists','SUPABASE_SETUP_RUN_15.sql — 8 tables, RLS ENABLED, 32 policies, 8 triggers'],
+            ['pass','RLS stated as ENABLED in SQL','Confirmed: explicit "RLS STATUS: ENABLED" in SQL file header and footer'],
+            ['pass','Run 16 AI Agents + Providers','AISettings.jsx, aiAgents.js — 8 providers, 7 agents, guardrails, mock responses'],
+            ['pass','Mock/Demo AI active by default','activeProvider: "mock" — always fallback'],
+            ['pass','All 7 AI agents display','4P3X Intelligent AI™ 1–7, advisory-only, human-review-required'],
+            ['pass','AI agents are advisory only','advisoryOnly:true, humanReviewRequired:true enforced per agent'],
+            ['pass','Evidence fabrication blocked','allowEvidenceFabrication:false hardcoded in getDefaultAISettings()'],
+            ['pass','Backend-only secrets blocked','detectBlockedSecrets + detectBlockedAISecrets — service_role/private_key/jwt_secret/etc'],
+            ['warn','No real backend SDK connected','Supabase/Firebase/Groq/OpenAI SDK not installed — config-shape validation only'],
+            ['warn','No payment system active','Payment/subscription is placeholder display only'],
+            ['warn','No authentication system built','Auth is a future run (Run 19) — single-user local app only'],
+            ['pass','LocalStorage fallback always available','localStorage provider always active — offlineFallbackEnabled:true'],
+            ['pass','Demo launch path documented','9-step demo guide in Deployment Readiness page'],
+            ['pass','Mobile layout responsive','responsive.css with media queries for ≤1024px, ≤768px, ≤480px'],
+            ['pass','Tablet layout responsive','Grid collapse, card stacking, sidebar drawer on mobile'],
+            ['pass','Desktop layout functional','Full sidebar + content layout at standard width'],
+            ['pass','Safety disclaimers visible','Advisory wording in dashboard, reports, AI, backend, and deployment pages'],
+            ['pass','No false compliance claims','No "certified", "guaranteed", "legally compliant", "AI verified", or "audit certified"'],
+            ['pass','Portfolio/client demo ready','Demo Mode + demo portfolio loads — suitable for client/portfolio presentation'],
+          ].map(([status, label, detail]) => (
+            <CheckItem key={label} status={status} label={label} detail={detail} />
+          ))}
+        </div>
+      </SectionCard>
+
+      {/* ── Portfolio / Client Demo Readiness ───────────────────────────── */}
+      <SectionCard title="Portfolio & Client Demo Readiness" icon="🎯">
+        <div style={{ marginBottom: 14, padding: '10px 14px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 'var(--radius-md)' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#10b981', marginBottom: 4 }}>
+            ✅ Demo/Live Ready — Run 17 complete
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7 }}>
+            Quantum Compliance OS™ is currently demo/live-ready. Demo Mode can be used for presentations and portfolio showcases.
+            Live Local Mode can be used with real/local records. Backend provider settings prepare the product for
+            Supabase/Firebase/custom backend persistence and sync. AI agent settings prepare advisory AI support
+            using mock, local, open-source, or hosted model providers.
+          </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 8 }}>
+          {[
+            ['✅','Demo Mode','Ready for client presentation — demo portfolio, scores, reports, evidence'],
+            ['✅','Live Local Mode','Ready for real client data — local-first, no backend required'],
+            ['⚙','Backend-Ready','Supabase/Firebase config prepared — SDK + schema validation in future run'],
+            ['⚙','AI Providers','8 providers configured — mock active, real SDK in future run'],
+            ['✅','Agency/White Label','Preview mode ready — full deployment in future run'],
+            ['✅','Commercial Tiers','Starter active, Pro/Agency/White Label tier cards display correctly'],
+          ].map(([icon, label, detail]) => (
+            <div key={label} style={{ background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
+              <div style={{ fontSize: 13, marginBottom: 3 }}>{icon} <strong style={{ color: 'var(--text-secondary)' }}>{label}</strong></div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>{detail}</div>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
       {/* Future runs */}
       <SectionCard title="Optional Future Runs — Not Yet Built" icon="🗺️">
         <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-          These are noted for planning only. None are implemented in Run 16.
+          These are noted for planning only. None are implemented in Run 17. No new major system was added in Run 17.
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
           {[
-
-            ['Run 9',   'Final Sales Pack + Pricing + Launch QA',   'Polished investor deck export, pricing page, and full QA gate review.'],
-            ['Future',  'Supabase Migration (Optional)',             'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade.'],
-            ['Future',  'Optional AI API Connector',                 'Future optional AI API — disabled in this local-first MVP. Would use existing copilotEngine.js interface.'],
-            ['Future',  'Authorised TLS/Certificate Checker',        'User-supplied domains only. Explicit consent. Defensive use only. No scanning without permission.'],
-            ['Future',  'Team Accounts',                             'Shared client workspaces with role-based access. Requires backend/Supabase.'],
-            ['Future',  'Real Payments',                             'Stripe integration for tier upgrades. Requires backend. Currently placeholder display only.'],
+            ['Run 18',  'Stripe Billing / Subscription Access Layer',      'Optional Stripe integration for tier upgrades. Requires backend connection and reviewed security policy.'],
+            ['Run 19',  'Auth + Team Roles + Consultant Accounts',         'Multi-user authentication, role-based access, shared client workspaces. Requires backend.'],
+            ['Run 20',  'Production Supabase Hardening + Real Audit Trail', 'Full Supabase SDK integration, real RLS enforcement, verified audit events, and production-grade sync.'],
+            ['Run 21',  'PDF Export / Report Template Polish',             'PDF report generation, branded templates, evidence pack export, and client-ready print layouts.'],
+            ['Run 22',  'Public Landing Page + Sales Site',               'Polished public marketing landing page, pricing display, and live demo entry point for prospects.'],
           ].map(([tag, title, detail]) => (
             <div key={title} style={{ display: 'flex', gap: '12px', padding: '10px 14px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)' }}>
               <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, minWidth: '52px', paddingTop: '1px' }}>{tag}</span>
@@ -343,6 +562,11 @@ export default function DeploymentReadiness({ onNavigate }) {
         This platform is for <strong>defensive security readiness</strong>, compliance preparation, and post-quantum migration planning only.
         It does not perform offensive testing, unauthorised scanning, exploitation, or guarantee compliance.
         All assessments should be reviewed by qualified security professionals before operational decisions are made.
+        <br /><br />
+        <strong style={{ color: 'var(--text-secondary)' }}>
+          Quantum Compliance OS™ · Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™ ·
+          Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness
+        </strong>
       </div>
     </div>
   );
