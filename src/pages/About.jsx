@@ -60,7 +60,9 @@ const RUNS_COMPLETE = [
   { run: 21,    label: 'PDF Report Template + Evidence Pack + Investor Report Polish',
     desc: 'Reports.jsx: AIAgentObservationsContent (5 agent advisory observation cards), ai_agent_observations report section (optional toggle), demo/live mode badge + 4P3X branding in report header, investor/demo explanation panel. EvidencePack.jsx: investor demo explanation strip, safe status notes. reportSchema.js: ai_agent_observations section (futureRun 21). v21.0.0.' },
   { run: 22,    label: 'Public Landing Page + Investor Demo Site',
-    desc: 'LandingPage.jsx: Pricing section replaced with 6 investor/demo sections — Demo/Live Mode explainer, Architecture Overview (10 layers), AI Agents (6 agents), Investor Demo section, About the Creator (Ciaran/Kyzel Kreates™), 4P3X Verse™ ecosystem. TIERS constant removed. v22.0.0.' },
+    desc: 'LandingPage.jsx: Pricing section replaced with Demo/Live Mode explainer, Architecture Overview (10 layers), AI Agents (6 agents), Investor Demo section, About the Creator, 4P3X Verse™ ecosystem. TIERS constant removed. v22.0.0.' },
+  { run: 23,    label: 'Product Mode Backend Provider Configuration (8.6)',
+    desc: 'backendConfigGuard.js: PROVIDER_IDS, secret scanning, all validation functions, maskSensitiveValue, getDefaultBackendConfig, buildConnectionTestResult, getProviderReadinessLabel. backendConnectionTester.js: per-provider test functions, unified testBackendConnection dispatcher. BackendConfiguration.jsx: full config UI — 5 providers (localOnly/supabase/firebase/customRest/aws), save/validate/clear/test per provider, readiness checklist, 4P3X API Config Guard™, sync status, connection test history, Product Mode gate. storage.js: backendConfig state + 8 new helpers + migration step 12. constants.js: BACKEND_CONFIG page + nav item. v23.0.0.' },
 ];
 
 const FUTURE_RUNS = [

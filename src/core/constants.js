@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '22.0.0';
-export const APP_RUN_LEVEL = 22;
+export const APP_VERSION = '23.0.0';
+export const APP_RUN_LEVEL = 23;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -19,6 +19,7 @@ export const PAGES = {
   AGENCY_SETTINGS:   'agency-settings',
   PRODUCT_MODE:          'product-mode',
   BACKEND_CONNECTORS:    'backend-connectors',
+  BACKEND_CONFIG:        'backend-config',
   AI_SETTINGS:           'ai-settings',
   CONSULTANT:       'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
@@ -127,6 +128,13 @@ export const NAV_ITEMS = [
     icon: '🔌',
     group: 'system',
     description: 'Supabase/Firebase config, sync control, and backend connection status',
+  },
+  {
+    id: PAGES.BACKEND_CONFIG,
+    label: 'Backend Config',
+    icon: '🔧',
+    group: 'system',
+    description: 'Product Mode backend provider configuration — configure, validate, save, and test providers',
   },
   {
     id: PAGES.AI_SETTINGS,

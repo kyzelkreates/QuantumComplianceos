@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run22',
-      buildRun: 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
-      latestCompletedRun: 22,
-      latestCompletedRunLabel: 'Run 22 — Public Landing Page + Investor Demo Site',
+      version: '1.0.0-run23',
+      buildRun: 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
+      latestCompletedRun: 23,
+      latestCompletedRunLabel: 'Run 23 (8.6) — Product Mode Backend Provider Configuration',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -177,6 +177,7 @@ export function getInitialState() {
     targetEvidence:     [],
     // ── Run 15: Backend Connector + Sync state ──────────────────────────────
     backendSettings: null,   // null = use getDefaultBackendSettings() from backendSync.js
+    backendConfig:   null,   // null = use getDefaultBackendConfig() from backendConfigGuard.js (Run 23)
     syncSettings:    null,   // null = use getDefaultSyncSettings() from backendSync.js
     syncQueue:       [],     // local sync queue — items waiting for backend push
     // ── Run 16: AI Agents + Provider state ───────────────────────────────────
@@ -236,6 +237,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_20_FINAL_PRODUCTION_POLISH',
   'RUN_21_PDF_REPORT_TEMPLATE_POLISH',
   'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
+  'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -262,6 +264,7 @@ const RUN_8_5_MODULE_STATUS = {
  finalProductionPolish:      'complete',
   pdfReportTemplatePolish:    'complete',
   publicLandingInvestorDemo:  'complete',
+  productModeBackendConfig:   'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -287,6 +290,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   finalProductionPolish:      true,
   pdfReportTemplatePolish:    true,
   publicLandingInvestorDemo:  true,
+  productModeBackendConfig:   true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -303,14 +307,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 22 || existingMeta.buildRun !== 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO') {
+  if (storedRun < 23 || existingMeta.buildRun !== 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run22',
-      buildRun: 'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
-      latestCompletedRun: 22,
-      latestCompletedRunLabel: 'Run 22 — Public Landing Page + Investor Demo Site',
+      version: '1.0.0-run23',
+      buildRun: 'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
+      latestCompletedRun: 23,
+      latestCompletedRunLabel: 'Run 23 (8.6) — Product Mode Backend Provider Configuration',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
@@ -437,6 +441,11 @@ export function migrateState(state) {
   }
   if (!Array.isArray(migrated.aiAgentSessions)) {
     migrated.aiAgentSessions = [];
+  }
+
+  // ── 12. Ensure backendConfig exists (Run 23 / 8.6) ──────────────────────
+  if (migrated.backendConfig === undefined || migrated.backendConfig === null) {
+    migrated.backendConfig = null;   // lazily initialised via getDefaultBackendConfig()
   }
 
   return migrated;
@@ -1665,3 +1674,150 @@ export function exportWorkspaceBackup(consultantState) {
     consultantState: consultantState || null,
   }, null, 2);
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RUN 23 (8.6) — BACKEND CONFIG HELPERS
+// Manage the backendConfig SSOT structure for provider configuration,
+// validation results, connection tests, and safety state.
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { getDefaultBackendConfig, scanForUnsafeSecrets as _scanSecrets, PROVIDER_IDS } from './backendConfigGuard.js';
+
+/** Return current backendConfig, initialising defaults if needed. */
+export function getBackendConfig() {
+  const s = getState();
+  return s.backendConfig || getDefaultBackendConfig();
+}
+
+/** Update a provider's config fields safely (blocks unsafe secrets). */
+export function updateBackendProviderConfig(providerId, payload) {
+  const scan = _scanSecrets(payload || {});
+  if (scan.blocked) {
+    addActivityLog(`⚠ Backend config not saved — blocked secret detected in provider "${providerId}": ${scan.reason}`);
+    return { success: false, blocked: true, reason: scan.reason, detectedIn: scan.detectedIn };
+  }
+  setState((s) => {
+    const cfg = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    cfg.providers = { ...(cfg.providers || {}) };
+    cfg.providers[providerId] = { ...(cfg.providers[providerId] || {}), ...payload };
+    cfg.lastUpdatedAt = new Date().toISOString();
+    // Mark configured if required fields are present
+    if (providerId === PROVIDER_IDS.SUPABASE && payload.projectUrl && payload.anonPublicKey) {
+      cfg.providers[providerId].configured = true;
+      cfg.providers[providerId].status     = 'configured';
+      cfg.providerStatus = { ...(cfg.providerStatus || {}), [providerId]: 'configured' };
+    } else if (providerId === PROVIDER_IDS.FIREBASE && payload.apiKey && payload.projectId) {
+      cfg.providers[providerId].configured = true;
+      cfg.providers[providerId].status     = 'configured';
+      cfg.providerStatus = { ...(cfg.providerStatus || {}), [providerId]: 'configured' };
+    } else if (providerId === PROVIDER_IDS.CUSTOM_REST && payload.baseUrl) {
+      cfg.providers[providerId].configured = true;
+      cfg.providers[providerId].status     = 'configured';
+      cfg.providerStatus = { ...(cfg.providerStatus || {}), [providerId]: 'configured' };
+    } else if (providerId === PROVIDER_IDS.AWS && payload.region) {
+      cfg.providers[providerId].configured = true;
+      cfg.providers[providerId].status     = 'configured';
+      cfg.providerStatus = { ...(cfg.providerStatus || {}), [providerId]: 'configured' };
+    }
+    return { ...s, backendConfig: cfg };
+  });
+  addActivityLog(`Backend provider config updated: "${providerId}"`);
+  return { success: true };
+}
+
+/** Set the active backend provider. */
+export function setActiveBackendProviderConfig(providerId) {
+  setState((s) => {
+    const cfg = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    cfg.activeProvider     = providerId;
+    cfg.lastUpdatedAt      = new Date().toISOString();
+    return { ...s, backendConfig: cfg };
+  });
+  addActivityLog(`Active backend provider set to: "${providerId}"`);
+}
+
+/** Enable or disable product mode backend. */
+export function setProductModeBackendEnabled(enabled) {
+  setState((s) => {
+    const cfg = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    cfg.productModeBackendEnabled = !!enabled;
+    cfg.lastUpdatedAt             = new Date().toISOString();
+    return { ...s, backendConfig: cfg };
+  });
+  addActivityLog(`Product Mode backend ${enabled ? 'enabled' : 'disabled'}`);
+}
+
+/** Save a connection test result to the backendConfig. */
+export function saveBackendConnectionTest(result) {
+  if (!result) return;
+  setState((s) => {
+    const cfg  = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    const tests = [...(cfg.connectionTests || [])];
+    tests.unshift(result);
+    cfg.connectionTests = tests.slice(0, 20); // keep last 20
+    cfg.lastTestedAt    = result.testedAt || new Date().toISOString();
+    // Update provider lastTestAt / lastTestResult
+    if (result.providerId && cfg.providers?.[result.providerId]) {
+      cfg.providers = { ...(cfg.providers || {}) };
+      cfg.providers[result.providerId] = {
+        ...cfg.providers[result.providerId],
+        lastTestedAt:    result.testedAt,
+        lastTestResult:  result.status,
+        lastTestMessage: result.message,
+      };
+    }
+    return { ...s, backendConfig: cfg };
+  });
+}
+
+/** Clear a provider's saved config fields (not connection test history). */
+export function clearBackendProviderConfig(providerId) {
+  const defaults = getDefaultBackendConfig();
+  setState((s) => {
+    const cfg = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    cfg.providers = { ...(cfg.providers || {}) };
+    cfg.providers[providerId] = { ...(defaults.providers[providerId] || { configured: false, status: 'not-configured' }) };
+    cfg.providerStatus = { ...(cfg.providerStatus || {}), [providerId]: 'not-configured' };
+    if (cfg.activeProvider === providerId && providerId !== PROVIDER_IDS.LOCAL_ONLY) {
+      cfg.activeProvider = PROVIDER_IDS.LOCAL_ONLY;
+    }
+    cfg.lastUpdatedAt = new Date().toISOString();
+    return { ...s, backendConfig: cfg };
+  });
+  addActivityLog(`Backend provider config cleared: "${providerId}"`);
+}
+
+/** Get a backend readiness summary across all providers. */
+export function getBackendReadinessSummary() {
+  const cfg = getBackendConfig();
+  const providers = cfg.providers || {};
+  return {
+    activeProvider:   cfg.activeProvider || PROVIDER_IDS.LOCAL_ONLY,
+    backendEnabled:   cfg.productModeBackendEnabled || false,
+    lastUpdatedAt:    cfg.lastUpdatedAt,
+    lastTestedAt:     cfg.lastTestedAt,
+    supabaseConfigured:   !!(providers[PROVIDER_IDS.SUPABASE]?.configured),
+    firebaseConfigured:   !!(providers[PROVIDER_IDS.FIREBASE]?.configured),
+    customRestConfigured: !!(providers[PROVIDER_IDS.CUSTOM_REST]?.configured),
+    awsConfigured:        !!(providers[PROVIDER_IDS.AWS]?.configured),
+    localOnlyActive:  cfg.activeProvider === PROVIDER_IDS.LOCAL_ONLY,
+    hasLiveProvider:  [PROVIDER_IDS.SUPABASE, PROVIDER_IDS.FIREBASE, PROVIDER_IDS.CUSTOM_REST, PROVIDER_IDS.AWS]
+                        .includes(cfg.activeProvider),
+    secretScanEnabled: cfg.safety?.secretScanEnabled !== false,
+    connectionTests:  cfg.connectionTests || [],
+  };
+}
+
+/** Accept the frontend-only warning. */
+export function markFrontendOnlyWarningAccepted() {
+  setState((s) => {
+    const cfg = { ...(s.backendConfig || getDefaultBackendConfig()) };
+    cfg.frontendOnlyWarningAccepted     = true;
+    cfg.safety = { ...(cfg.safety || {}), frontendOnlyWarningAccepted: true };
+    return { ...s, backendConfig: cfg };
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+

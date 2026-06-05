@@ -197,3 +197,44 @@ npm run dev
 ## Disclaimer
 
 This platform is for defensive security readiness, compliance preparation, and post-quantum migration planning only. It does not perform offensive testing, unauthorised scanning, exploitation, or guarantee compliance. All assessments should be reviewed by qualified security professionals before operational decisions are made.
+
+
+## Run 23 (8.6) — Product Mode Backend Provider Configuration
+
+### New Files
+| File | Purpose |
+|------|---------|
+| `src/core/backendConfigGuard.js` | PROVIDER_IDS, secret scanner, per-provider validators, maskSensitiveValue, buildConnectionTestResult, getProviderReadinessLabel |
+| `src/core/backendConnectionTester.js` | Per-provider async test functions + unified dispatcher. Timeboxed fetches, no SDKs |
+| `src/pages/BackendConfiguration.jsx` | Full configuration UI — 5 providers, save/validate/clear/test per provider |
+
+### Modified Files
+| File | Change |
+|------|--------|
+| `src/core/storage.js` | `backendConfig: null` initial state, migration step 12, 8 new exported helpers |
+| `src/core/constants.js` | `PAGES.BACKEND_CONFIG`, nav item, v23.0.0 |
+| `src/components/AppShell.jsx` | Import + route case for `BackendConfiguration` |
+| `src/core/consultantStorage.js` | Version bump v23.0.0 |
+| `src/pages/About.jsx` | Run 23 history entry |
+| `src/pages/Settings.jsx` | Run 23 label |
+
+### What Run 23 Adds
+- **5 configurable backend providers**: Local-only, Supabase, Firebase, Custom REST API, AWS/Enterprise
+- **Per-provider forms**: enter, validate, save, clear, and test each provider
+- **4P3X API Config Guard™ extended**: 15+ blocked secret types scanned on every keystroke
+- **Connection tests**: localStorage availability, Supabase HEAD fetch, Custom REST health GET, validation-only for Firebase/AWS
+- **Product Mode gate**: demo mode shows read-only preview; full config requires Product Mode
+- **Readiness checklist**: 21-item backend readiness tracking panel
+- **Sync status placeholder**: clear messaging that sync is NOT yet live
+- **Connection test history**: last 20 test results persisted in storage.js
+
+### Safety Statements
+- **RLS is NOT enabled** — must be configured in Supabase console using SQL policies in a future run
+- **Backend sync is NOT implemented** — config saved locally only
+- **Supabase schema is NOT created** — reserved for a future run
+- **No external AI APIs** — not included
+- **No payments** — not included
+- **No offensive scanning** — not included
+- **SUPABASE_SERVICE_ROLE_KEY, OPENAI_API_KEY, PRIVATE_KEY, DATABASE_URL, JWT_SECRET, STRIPE_SECRET_KEY** and 10+ more patterns are permanently blocked from frontend config
+
+---
