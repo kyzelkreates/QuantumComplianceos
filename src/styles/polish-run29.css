@@ -1,10 +1,14 @@
 /* ============================================================
    QUANTUM COMPLIANCE OS™ — polish-run29.css
-   Run 29: Final Polish + Responsive QA Pass
+   Run 29: Final Polish + Responsive QA Pass (v2 — safe rewrite)
    ============================================================
-   Scope: layout, spacing, typography, card grids, button groups,
-   homepage sections, dashboard shell, mobile/tablet breakpoints.
-   NO logic changes. CSS/layout only.
+   RULES FOR THIS FILE:
+   - NO overflow-x: hidden on .app-shell, section, main, or any
+     ancestor of position:sticky/fixed elements (breaks topbar + sidebar).
+   - NO [style*="auto-fill"] catch-all (too broad, breaks dashboard grids).
+   - NO attribute selectors on inline React styles where possible.
+   - All grid fixes use named class selectors or very specific attribute matches.
+   - CSS only. No logic. No state. No JS.
    Powered by 4P3X Intelligent AI™ — Created by Kyzel Kreates™
    ============================================================ */
 
@@ -13,18 +17,16 @@
   box-sizing: border-box;
 }
 
-/* Prevent horizontal overflow on any viewport */
-html, body {
+/* Safe: only body gets overflow-x hidden (body is never a
+   stacking context for fixed/sticky children in modern browsers) */
+body {
   overflow-x: hidden;
-  max-width: 100vw;
 }
 
-/* ─── 1. Topbar — mobile safe area + overflow prevention ─────── */
+/* ─── 1. Topbar — overflow prevention ────────────────────────── */
 .topbar {
-  padding: 0 var(--space-4);
   gap: var(--space-2);
-  flex-wrap: nowrap;          /* never wrap topbar row */
-  overflow: hidden;
+  overflow: hidden;          /* contains its own children only */
 }
 
 .topbar__breadcrumb {
@@ -36,10 +38,11 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 100%;
 }
 
 .topbar__right {
-  flex-shrink: 0;             /* right controls never shrink away */
+  flex-shrink: 0;            /* right controls never get squeezed away */
   gap: var(--space-2);
 }
 
@@ -49,13 +52,9 @@ html, body {
     width: min(240px, 85vw) !important;
     max-width: 85vw;
   }
-
-  .sidebar-overlay {
-    display: block !important;   /* ensure overlay shows on mobile when open */
-  }
 }
 
-/* Sidebar version string — prevent overflow on narrow collapsed state */
+/* Sidebar version string */
 .sidebar__version {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,12 +63,22 @@ html, body {
   font-size: 10px;
 }
 
-/* ─── 3. Main content — top padding compensates sticky topbar ── */
+/* Collapsed sidebar icon centred */
+.sidebar--collapsed .sidebar__nav-icon {
+  margin: 0 auto;
+}
+
+.sidebar--collapsed .sidebar__logo {
+  justify-content: center;
+  padding: var(--space-4) var(--space-2);
+}
+
+/* ─── 3. Page content — padding scales on mobile ─────────────── */
+/* Note: DO NOT add overflow-x:hidden here — breaks sticky topbar */
 .page-content {
-  padding: var(--space-6);
   box-sizing: border-box;
   width: 100%;
-  overflow-x: hidden;
+  max-width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -110,7 +119,7 @@ html, body {
   }
 }
 
-/* ─── 6. Stat cards — 2-up on mobile, safe minimum ──────────── */
+/* ─── 6. Stat cards — responsive ────────────────────────────── */
 @media (max-width: 420px) {
   .stat-cards-row {
     grid-template-columns: 1fr !important;
@@ -123,11 +132,11 @@ html, body {
   }
 }
 
-/* ─── 7. Page header — clamp title size, wrap actions safely ─── */
+/* ─── 7. Page header — responsive ───────────────────────────── */
 .page-header__title {
   font-size: clamp(16px, 3vw, var(--text-xl));
   flex-wrap: wrap;
-  overflow: hidden;
+  overflow-wrap: break-word;
   word-break: break-word;
 }
 
@@ -154,18 +163,9 @@ html, body {
   }
 }
 
-/* ─── 8. Buttons — min tap target, no overflow ───────────────── */
+/* ─── 8. Buttons — min tap target ────────────────────────────── */
 .btn {
-  min-height: 40px;           /* accessible tap area */
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Button groups inside cards — wrap safely */
-[class*="section-card"] .btn,
-[class*="section-card"] button {
-  flex-shrink: 0;
+  min-height: 40px;
 }
 
 @media (max-width: 480px) {
@@ -175,7 +175,7 @@ html, body {
   }
 }
 
-/* ─── 9. Forms — full width on mobile ───────────────────────── */
+/* ─── 9. Forms — 1-column on mobile ─────────────────────────── */
 @media (max-width: 640px) {
   .form-row,
   .form-row--3 {
@@ -190,135 +190,36 @@ html, body {
   box-sizing: border-box;
 }
 
-/* ─── 10. Tables — horizontal scroll everywhere ──────────────── */
+/* ─── 10. Tables — horizontal scroll ────────────────────────── */
 .table-wrap,
 .table-scroll-wrapper,
-[class*="table-container"] {
+.client-hub-table,
+.risk-compare-table {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 
-/* ─── 11. Pre/code blocks — scroll, no overflow ─────────────── */
-pre, code {
+/* ─── 11. Pre / code — scroll ───────────────────────────────── */
+pre {
   overflow-x: auto;
   max-width: 100%;
-  word-break: normal;
   -webkit-overflow-scrolling: touch;
   white-space: pre;
 }
 
-/* ─── 12. Images + media — safe scaling ─────────────────────── */
+code {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+/* ─── 12. Images / media ─────────────────────────────────────── */
 img, svg, video {
   max-width: 100%;
   height: auto;
 }
 
-/* ─── 13. Homepage (LandingPage) — Run 29 polish ─────────────── */
-
-/* Sticky nav — wrap safely on narrow screens */
-.qcos-hp-nav {
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Hero — clamp text, prevent overflow */
-.qcos-hp-hero h1 {
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  hyphens: auto;
-}
-
-/* Shortcut bar — horizontal scroll on very narrow screens */
-.qcos-hp-shortcuts {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  flex-wrap: wrap;
-  scroll-padding: 8px;
-}
-
-@media (max-width: 500px) {
-  .qcos-hp-shortcuts {
-    flex-wrap: nowrap;           /* force scroll rather than 2-line wrap */
-    padding-bottom: 4px;        /* room for scrollbar */
-  }
-}
-
-/* Section wrapper — safe horizontal padding */
-.qcos-hp-section {
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-/* HP cards grid — single column on mobile */
-@media (max-width: 540px) {
-  .qcos-hp-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Demo vs Live cards — stack on mobile */
-@media (max-width: 540px) {
-  .qcos-hp-mode-cards {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* AI agent cards — single column on small screens */
-@media (max-width: 420px) {
-  .qcos-hp-agent-cards {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* CTA grid — 2-up then 1-up */
-@media (max-width: 480px) {
-  .qcos-hp-cta-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-
-@media (max-width: 340px) {
-  .qcos-hp-cta-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Footer text — always wraps safely */
-.qcos-hp-footer p {
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
-
-/* ─── 14. LandingPage inline-style overrides via attribute ───── */
-
-/* Sticky nav on mobile — compress padding */
-@media (max-width: 480px) {
-  nav[style*="sticky"] {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-}
-
-/* Hero section — reduce top padding on very small screens */
-@media (max-width: 380px) {
-  section[style*="margin: 0 auto"] {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-}
-
-/* Shortcut bar — always wrap on mobile */
-@media (max-width: 600px) {
-  /* QUICK ACCESS strip — allow wrap */
-  div[style*="QUICK ACCESS"],
-  div[style*="flex-wrap: wrap"] {
-    flex-wrap: wrap !important;
-  }
-}
-
-/* ─── 15. BackendConfiguration / Settings — input safety ─────── */
+/* ─── 13. Input fields ───────────────────────────────────────── */
 input[type="text"],
 input[type="url"],
 input[type="password"],
@@ -327,139 +228,9 @@ textarea,
 select {
   max-width: 100%;
   box-sizing: border-box;
-  word-break: break-all;
-  overflow-wrap: anywhere;
 }
 
-/* Long URL/key fields */
-.backend-url-field,
-.api-key-field,
-[placeholder*="http"],
-[placeholder*="https"],
-[placeholder*="key"],
-[placeholder*="secret"] {
-  word-break: break-all;
-  overflow-wrap: anywhere;
-  min-width: 0;
-}
-
-/* ─── 16. Reports / Evidence — content overflow safety ───────── */
-.report-text-content,
-.evidence-description,
-.copilot-output {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  max-width: 100%;
-}
-
-/* AI agent response panels */
-[class*="agent-response"],
-[class*="copilot"] {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  max-width: 100%;
-}
-
-/* ─── 17. Onboarding — safe card layout ──────────────────────── */
-@media (max-width: 640px) {
-  .onboarding-card {
-    padding: var(--space-5) var(--space-4) !important;
-  }
-}
-
-@media (max-width: 400px) {
-  .onboarding-card {
-    padding: var(--space-4) var(--space-3) !important;
-  }
-}
-
-/* ─── 18. Modal / drawer — full width on mobile ──────────────── */
-@media (max-width: 600px) {
-  [role="dialog"],
-  [class*="modal"],
-  [style*="maxWidth:680"],
-  [style*="max-width: 680"] {
-    max-width: calc(100vw - 16px) !important;
-    width: 100% !important;
-    margin: 0 8px !important;
-  }
-}
-
-/* ─── 19. Plan / tier cards — stack on mobile ────────────────── */
-@media (max-width: 640px) {
-  .plan-cards,
-  .tier-cards,
-  [class*="plan-grid"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── 20. Consultant hub — client cards ──────────────────────── */
-@media (max-width: 540px) {
-  .client-card-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── 21. Target assessment cards ───────────────────────────── */
-@media (max-width: 640px) {
-  .target-assessment-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── 22. Quantum readiness / security assessment grids ──────── */
-@media (max-width: 640px) {
-  [style*="repeat(auto-fill,minmax(240"],
-  [style*="repeat(auto-fill,minmax(26"],
-  [style*="repeat(auto-fill,minmax(28"],
-  [style*="repeat(auto-fill,minmax(30"],
-  [style*="repeat(auto-fill,minmax(32"],
-  [style*="repeat(auto-fill,minmax(34"],
-  [style*="repeat(auto-fill,minmax(36"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 400px) {
-  [style*="repeat(auto-fill,minmax(16"],
-  [style*="repeat(auto-fill,minmax(17"],
-  [style*="repeat(auto-fill,minmax(18"],
-  [style*="repeat(auto-fill,minmax(20"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── 23. Risk badges — always readable ─────────────────────── */
-.risk-badge {
-  white-space: nowrap;
-  flex-shrink: 0;
-  max-width: none;
-}
-
-/* ─── 24. Topbar client pill — responsive max-width ─────────── */
-@media (max-width: 600px) {
-  /* Hide the client name pill label text on very small screens */
-  .topbar__right > div[style*="maxWidth"] {
-    max-width: 120px !important;
-  }
-}
-
-@media (max-width: 400px) {
-  .topbar__right > div[style*="maxWidth"] {
-    display: none !important;   /* hide client pill on very narrow screens */
-  }
-}
-
-/* ─── 25. Demo badge in topbar — readable at all sizes ───────── */
-@media (max-width: 480px) {
-  .topbar__demo-badge {
-    font-size: 10px;
-    padding: 2px 7px;
-  }
-}
-
-/* ─── 26. Typography — base line-height and readability ─────── */
+/* ─── 14. Typography ─────────────────────────────────────────── */
 p, li, dd, dt, blockquote {
   line-height: 1.65;
   overflow-wrap: break-word;
@@ -469,11 +240,10 @@ p, li, dd, dt, blockquote {
 h1, h2, h3, h4, h5 {
   overflow-wrap: break-word;
   word-break: break-word;
-  hyphens: auto;
   line-height: 1.15;
 }
 
-/* ─── 27. Focus rings — keyboard accessibility ───────────────── */
+/* ─── 15. Focus rings — keyboard accessibility ───────────────── */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -484,13 +254,13 @@ textarea:focus-visible {
   border-radius: var(--radius-sm);
 }
 
-/* ─── 28. Safe area — PWA / iPhone notch ────────────────────── */
+/* ─── 16. PWA safe-area support ──────────────────────────────── */
 @supports (padding: max(0px)) {
   .sidebar {
     padding-bottom: max(0px, env(safe-area-inset-bottom));
   }
   .topbar {
-    padding-left: max(var(--space-4), env(safe-area-inset-left));
+    padding-left:  max(var(--space-4), env(safe-area-inset-left));
     padding-right: max(var(--space-4), env(safe-area-inset-right));
   }
   .page-content {
@@ -498,177 +268,30 @@ textarea:focus-visible {
   }
 }
 
-/* ─── 29. LandingPage — section heading clamp on mobile ──────── */
-@media (max-width: 480px) {
-  /* SectionHeading h2 */
-  section h2 {
-    font-size: clamp(18px, 5vw, 26px) !important;
-    line-height: 1.25;
-  }
-  /* HP card icon */
-  section [style*="fontSize: 28"] {
-    font-size: 22px !important;
-  }
-}
-
-/* ─── 30. Deployment readiness — checklist grid ──────────────── */
-@media (max-width: 600px) {
-  [style*="repeat(auto-fill,minmax(200"] {
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-
-@media (max-width: 380px) {
-  [style*="repeat(auto-fill,minmax(200"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ─── 31. Client hub — table responsive ─────────────────────── */
-@media (max-width: 640px) {
-  .client-hub-table,
-  .risk-compare-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* ─── 32. ActionButton — safe overflow ───────────────────────── */
-.btn, button {
-  overflow: hidden;
-  max-width: 100%;
-  word-break: keep-all;
-}
-
-/* ─── 33. LandingPage — hero trust pills wrap cleanly ────────── */
-@media (max-width: 500px) {
-  /* trust pill row on homepage */
-  div[style*="gap: 20px"][style*="justify-content: center"] {
-    gap: 10px !important;
-    font-size: 11px !important;
-  }
-}
-
-/* ─── 34. LandingPage — QUICK ACCESS label hidden on ≤360 ───── */
-@media (max-width: 360px) {
-  span[style*="QUICK ACCESS"] {
-    display: none !important;
-  }
-}
-
-/* ─── 35. AI agent modal overlay safety ─────────────────────── */
-@media (max-width: 480px) {
-  [style*="position:'fixed'"][style*="inset:0"],
-  [style*="position: fixed"][style*="inset: 0"] {
-    padding: 0 !important;
-  }
-}
-
-/* ─── 36. Sidebar footer — always readable at bottom ────────── */
+/* ─── 17. Sidebar footer ─────────────────────────────────────── */
 .sidebar__footer {
   flex-shrink: 0;
   overflow: hidden;
 }
 
-/* ─── 37. Evidence pack — item cards ────────────────────────── */
-@media (max-width: 540px) {
-  .evidence-item-card {
-    padding: var(--space-3) !important;
+/* ─── 18. Topbar client pill — responsive ────────────────────── */
+@media (max-width: 600px) {
+  .topbar__right > div:first-child {
+    max-width: 120px !important;
   }
 }
 
-/* ─── 38. Recommendations — action cards ────────────────────── */
-@media (max-width: 540px) {
-  .recommendation-card {
-    padding: var(--space-3) var(--space-3) !important;
+@media (max-width: 400px) {
+  /* On very narrow screens, hide the client name pill so mode badge stays visible */
+  .topbar__right > div:first-child {
+    display: none !important;
   }
 }
 
-/* ─── 39. BackendConnector / AISettings — provider chips ─────── */
-@media (max-width: 480px) {
-  .provider-chip,
-  [style*="display:'flex'"][style*="flexWrap:'wrap'"] {
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-  }
-}
-
-/* ─── 40. Landing Hero badge — wrap on ≤360px ───────────────── */
-@media (max-width: 360px) {
-  div[style*="border-radius: 999px"][style*="padding: 5px 18px"] {
-    font-size: 10px !important;
-    padding: 4px 10px !important;
-    flex-wrap: wrap;
-    text-align: center;
-  }
-}
-
-/* ─── 41. Full-width utility — used in CTA buttons on mobile ─── */
-@media (max-width: 480px) {
-  .btn--full-mobile {
-    width: 100% !important;
-    justify-content: center;
-  }
-}
-
-/* ─── 42. Prevent any rogue horizontal scroll leaks ─────────── */
-.main-content,
-.app-shell,
-.page-content,
-main,
-section {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* ─── 43. Collapsed sidebar — icon centred cleanly ──────────── */
-.sidebar--collapsed .sidebar__nav-icon {
-  margin: 0 auto;
-}
-
-.sidebar--collapsed .sidebar__logo {
-  justify-content: center;
-  padding: var(--space-4) var(--space-2);
-}
-
-/* ─── 44. Run 29 — inline-grid auto-fill min-width clamps ────── */
-
-/* Inline auto-fill grids: force minimum 1-column on 480px */
-@media (max-width: 480px) {
-  [style*="auto-fill"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Inline auto-fill grids: 2-column on 481–768px for medium cards */
-@media (min-width: 481px) and (max-width: 768px) {
-  [style*="repeat(auto-fill,minmax(2"],
-  [style*="repeat(auto-fill,minmax(3"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-/* ─── 45. HP Section wrappers — safe padding ─────────────────── */
-@media (max-width: 480px) {
-  section[id] {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-  }
-}
-
-/* ─── 46. Investor/HP h3 headings — clamp ───────────────────── */
-@media (max-width: 480px) {
-  section[id] h3 {
-    font-size: clamp(14px, 4vw, 16px) !important;
-  }
-}
-
-/* ─── 47. Topbar title — prevent overflow on narrow ─────────── */
+/* ─── 19. Topbar breadcrumb — narrow screen ──────────────────── */
 @media (max-width: 640px) {
   .topbar__breadcrumb-item--current {
-    max-width: 180px;
+    max-width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -677,31 +300,262 @@ section {
 }
 
 @media (max-width: 400px) {
-  .topbar__breadcrumb-item:first-child {
-    display: none;   /* hide product name in breadcrumb on very narrow */
-  }
+  /* Hide product name in breadcrumb on very narrow screens */
+  .topbar__breadcrumb-item:first-child,
   .topbar__breadcrumb-sep {
     display: none;
   }
 }
 
-/* ─── 48. LandingPage footer — text safe ─────────────────────── */
+/* ─── 20. Section cards — safe title overflow ────────────────── */
+.section-card__title {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ─── 21. Plan / tier cards — stack on mobile ────────────────── */
+@media (max-width: 640px) {
+  .plan-cards,
+  .tier-cards {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── 22. Consultant tab bar — wrap on mobile ───────────────── */
+@media (max-width: 640px) {
+  .consultant-tabs {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+  .consultant-tab {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* ─── 23. Access restricted card — always centred ────────────── */
+.access-restricted-card {
+  padding: clamp(24px, 6vw, 48px) clamp(16px, 5vw, 32px);
+  max-width: min(520px, 92vw);
+  margin: 0 auto;
+}
+
+/* ─── 24. Long keys/URLs — wrap safely ───────────────────────── */
+.backend-config-key,
+.masked-secret {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+/* ─── 25. Role badge text safety ─────────────────────────────── */
+.role-badge {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+/* ─── 26. Permission table — scroll on mobile ───────────────── */
+@media (max-width: 700px) {
+  .team-table-wrap,
+  .permission-matrix-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ─── 27. Sidebar brand name — clamp on mobile ───────────────── */
+@media (max-width: 480px) {
+  .sidebar__brand-name {
+    font-size: clamp(11px, 3vw, 14px);
+    word-break: break-word;
+  }
+}
+
+/* ─── 28. Dashboard auth row — stack on very narrow ─────────── */
+@media (max-width: 400px) {
+  .auth-status-row,
+  .dashboard-auth-row {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+}
+
+/* ─── 29. Readiness checklist grid — responsive ─────────────── */
+@media (max-width: 480px) {
+  .readiness-checklist-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── 30. Onboarding card — padding on mobile ───────────────── */
+@media (max-width: 640px) {
+  .onboarding-card {
+    padding: var(--space-5) var(--space-4) !important;
+  }
+}
+@media (max-width: 400px) {
+  .onboarding-card {
+    padding: var(--space-4) var(--space-3) !important;
+  }
+}
+
+/* ─── 31. Tab nav — scroll on mobile ────────────────────────── */
+.tab-nav {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.tab-nav__item {
+  scroll-snap-align: start;
+}
+
+/* ─── 32. LandingPage sticky nav — wrap on narrow ────────────── */
+@media (max-width: 560px) {
+  /* HP nav right buttons wrap under logo */
+  nav > div:last-child {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* ─── 33. LandingPage hero trust pills ───────────────────────── */
+@media (max-width: 500px) {
+  /* Trust pill row — reduce gap, allow wrap */
+  .qcos-trust-pills {
+    gap: 8px !important;
+    font-size: 11px !important;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ─── 34. LandingPage section headings — clamp on mobile ─────── */
+@media (max-width: 480px) {
+  /* Section H2 headings on LP */
+  .qcos-section-heading h2 {
+    font-size: clamp(18px, 5vw, 26px) !important;
+    line-height: 1.25;
+  }
+}
+
+/* ─── 35. Footer text — always wraps ────────────────────────── */
 footer p {
   word-break: break-word;
   overflow-wrap: anywhere;
 }
 
-/* ─── 49. About / DeploymentReadiness — run history table ─────── */
-@media (max-width: 640px) {
-  [style*="display: 'flex', gap: '12px'"],
-  [style*="display:'flex',gap:'12px'"] {
-    flex-direction: column !important;
-    gap: 4px !important;
+/* ─── 36. Investor demo grid — single col on narrow ─────────── */
+@media (max-width: 480px) {
+  .investor-demo-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
-/* ─── 50. Scroll-to-top — every page start ───────────────────── */
-/* Handled in JS; CSS ensures no sticky element covers content */
-.main-content > .page-content:first-child {
+/* ─── 37. LandingPage — shortcut bar overflow scroll ─────────── */
+.qcos-shortcut-bar {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── 38. Report grid / evidence grid — single col on mobile ─── */
+@media (max-width: 640px) {
+  .report-section-grid,
+  .evidence-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── 39. Table display block on mobile (named tables only) ───── */
+@media (max-width: 640px) {
+  .team-table-wrap table,
+  .permission-matrix-wrap table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ─── 40. LandingPage — HP section safe horizontal padding ───── */
+@media (max-width: 480px) {
+  .qcos-section-wrap {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
+
+/* ─── 41. Stat card row — 2-up on tablet, 1-up on mobile ─────── */
+@media (max-width: 768px) {
+  .stat-cards-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .stat-cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── 42. Page content scroll margin — content below topbar ───── */
+.page-content {
   scroll-margin-top: var(--topbar-height);
+}
+
+/* ─── 43. Main content — safe max-width only (no overflow hidden) */
+.main-content {
+  max-width: 100%;
+  min-width: 0;      /* flex item shrink safety */
+}
+
+/* ─── 44. Agency / Tier card grids — mobile safety ──────────── */
+@media (max-width: 540px) {
+  .client-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── 45. Sidebar nav group Home button — tap area ───────────── */
+.sidebar__nav-group .sidebar__nav-item {
+  min-height: 40px;
+}
+
+/* ─── 46. Topbar padding — compressed on mobile ─────────────── */
+@media (max-width: 640px) {
+  .topbar {
+    padding: 0 var(--space-3);
+  }
+}
+@media (max-width: 400px) {
+  .topbar {
+    padding: 0 var(--space-2);
+  }
+}
+
+/* ─── 47. LandingPage — hero H1 text overflow safety ─────────── */
+.qcos-hero-heading {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* ─── 48. LandingPage — HP card title overflow ───────────────── */
+.qcos-hp-card-title {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ─── 49. Demo badge — readable on narrow screens ───────────── */
+@media (max-width: 480px) {
+  .topbar__demo-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+  }
+}
+
+/* ─── 50. Scroll-to-top safety — page starts at top ─────────── */
+.app-shell {
+  min-width: 0;      /* flex safety — do NOT add overflow-x:hidden here */
 }
