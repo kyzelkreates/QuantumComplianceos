@@ -124,11 +124,12 @@ function ShortcutButton({ children, page, onNavigateTo, onEnter, variant = 'seco
       onClick={handle}
       aria-label={typeof children === 'string' ? children : undefined}
       style={{
-        padding: '10px 20px',
+        padding: '10px 16px',
         fontSize: 13,
         fontWeight: 700,
         borderRadius: 8,
         cursor: 'pointer',
+        minHeight: 40,
         border: variant === 'primary'
           ? '1px solid var(--accent)'
           : '1px solid var(--border-default)',
@@ -314,7 +315,8 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
       {/* ── Sticky Nav ──────────────────────────────────────────────────────── */}
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '12px clamp(16px, 4vw, 32px)',
+        flexWrap: 'wrap',
+        padding: '10px clamp(12px, 3vw, 32px)',
         borderBottom: '1px solid var(--border-muted)',
         position: 'sticky', top: 0,
         background: scrolled ? 'rgba(13,17,23,0.97)' : 'rgba(13,17,23,0.85)',
@@ -428,8 +430,9 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
       }}>
         <div style={{
           maxWidth: 1040, margin: '0 auto',
-          padding: 'clamp(20px, 3vw, 28px) clamp(16px, 4vw, 32px)',
-          display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center',
+          padding: 'clamp(16px, 3vw, 28px) clamp(12px, 4vw, 32px)',
+          display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center',
+          overflowX: 'auto', WebkitOverflowScrolling: 'touch',
         }}>
           <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 700, marginRight: 4, whiteSpace: 'nowrap' }}>
             QUICK ACCESS:
@@ -471,7 +474,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
         />
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
           gap: 16,
         }}>
           {PLATFORM_MODULES.map((m) => (
@@ -494,7 +497,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: 16, marginBottom: 32,
         }}>
           {[
@@ -554,7 +557,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
         />
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))',
           gap: 14,
         }}>
           {WHO_CARDS.map((c) => (
@@ -591,7 +594,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))',
           gap: 14, marginBottom: 28,
         }}>
           {COST_ITEMS.map((c) => (
@@ -624,7 +627,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
         />
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(340px, 100%), 1fr))',
           gap: 20,
         }}>
           <div style={{
@@ -681,7 +684,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: 12, marginBottom: 28,
         }}>
           {STACK_ITEMS.map((s) => (
@@ -727,7 +730,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: 14, marginBottom: 28,
         }}>
           {AI_AGENT_CARDS.map((a) => (
@@ -803,7 +806,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
           gap: 20, marginBottom: 28,
         }}>
           {/* Demo Mode */}
@@ -930,7 +933,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
           gap: 16, marginBottom: 32,
         }}>
           {[
@@ -1017,7 +1020,7 @@ export default function LandingPage({ onEnter, onLoadDemo, onNavigateTo }) {
           {/* Main CTA grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))',
             gap: 12, maxWidth: 720, margin: '0 auto 28px',
           }}>
             {[

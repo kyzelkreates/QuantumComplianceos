@@ -22,6 +22,7 @@ import './styles/cards.css';
 import './styles/navigation.css';
 import './styles/dashboard.css';
 import './styles/responsive.css';
+import './styles/polish-run29.css';
 
 // ─── Initialise storage (loads or creates localStorage state) ─────────────────
 import { loadState } from './core/storage.js';

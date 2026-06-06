@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS™';
-export const APP_VERSION = '28.0.0';
-export const APP_RUN_LEVEL = 28;
+export const APP_VERSION = '29.0.0';
+export const APP_RUN_LEVEL = 29;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────

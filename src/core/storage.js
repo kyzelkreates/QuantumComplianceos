@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS™',
-      version: '1.0.0-run28',
-      buildRun: 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
-      latestCompletedRun: 28,
-      latestCompletedRunLabel: 'Run 28 — Homepage / Investor Explainer Page',
+      version: '1.0.0-run29',
+      buildRun: 'RUN_29_FINAL_POLISH_RESPONSIVE_QA',
+      latestCompletedRun: 29,
+      latestCompletedRunLabel: 'Run 29 — Final Polish + Responsive QA',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -243,6 +243,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN',
   'RUN_27_LIVE_URL_VERIFICATION_DEFECT_REPAIR',
   'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
+  'RUN_29_FINAL_POLISH_RESPONSIVE_QA',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -318,14 +319,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 28 || existingMeta.buildRun !== 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER') {
+  if (storedRun < 29 || existingMeta.buildRun !== 'RUN_29_FINAL_POLISH_RESPONSIVE_QA') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS™',
-      version: '1.0.0-run28',
-      buildRun: 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
-      latestCompletedRun: 28,
-      latestCompletedRunLabel: 'Run 28 — Homepage / Investor Explainer Page',
+      version: '1.0.0-run29',
+      buildRun: 'RUN_29_FINAL_POLISH_RESPONSIVE_QA',
+      latestCompletedRun: 29,
+      latestCompletedRunLabel: 'Run 29 — Final Polish + Responsive QA',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
