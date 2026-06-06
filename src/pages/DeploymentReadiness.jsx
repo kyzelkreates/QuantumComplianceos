@@ -1,8 +1,9 @@
 /**
  * QUANTUM COMPLIANCE OS™ — DeploymentReadiness.jsx
  * Run 8 Status Sync: Updated to reflect Run 8 completion.
+ * Run 27: Live URL Verification + Final Defect Repair Pass
  * Run 26: Final Production QA + Investor Demo Lockdown
- * Run 7 original + extended through Run 26
+ * Run 7 original + extended through Run 27
  * =============================================
  * Provides a visual checklist for deployment readiness, demo confidence,
  * and production review. Derived from live app state where possible.
@@ -506,6 +507,9 @@ export default function DeploymentReadiness({ onNavigate }) {
             ['pass','Safety disclaimers visible','Advisory wording in dashboard, reports, AI, backend, and deployment pages'],
             ['pass','No false compliance claims','No "certified", "guaranteed", "legally compliant", "AI verified", or "audit certified"'],
             ['pass','Portfolio/client demo ready','Demo Mode + demo portfolio loads — suitable for client/portfolio presentation'],
+            ['pass','Run 25 Auth + Team Roles Layer','authRoles.js (7 roles, 26 perms), TeamAccess.jsx, AccessRestricted guard, role-aware Sidebar, storage authConfig + migration 13'],
+            ['pass','Run 26 Final Production QA + Investor Demo Lockdown','Branding QA, landing page polish, dashboard QA, demo/live lockdown, 89/89 validation checks — 104 modules clean'],
+            ['pass','Run 27 Live URL Verification + Defect Repair','canAccessPage() wired in AppShell/Sidebar, role-filtered nav, version bump v27.0.0 — 105 modules clean'],
           ].map(([status, label, detail]) => (
             <CheckItem key={label} status={status} label={label} detail={detail} />
           ))}
@@ -516,7 +520,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       <SectionCard title="Portfolio & Client Demo Readiness" icon="🎯">
         <div style={{ marginBottom: 14, padding: '10px 14px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 'var(--radius-md)' }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: '#10b981', marginBottom: 4 }}>
-            ✅ Demo/Live Ready — Run 17 complete
+            ✅ Demo/Live Ready — Run 27 complete
           </div>
           <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.7 }}>
             Quantum Compliance OS™ is currently demo/live-ready. Demo Mode can be used for presentations and portfolio showcases.
@@ -545,7 +549,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       {/* Future runs */}
       <SectionCard title="Optional Future Runs — Not Yet Built" icon="🗺️">
         <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-          These are noted for planning only. None are implemented in Run 17. No new major system was added in Run 17.
+          These are noted for planning only. Runs 19–26 are complete. The items below represent possible future directions beyond Run 27.
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
           {[
@@ -579,7 +583,7 @@ export default function DeploymentReadiness({ onNavigate }) {
         <br /><br />
         <strong style={{ color: 'var(--text-secondary)' }}>
           Quantum Compliance OS™ · Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™ ·
-          Run 17 — Final Commercial Polish + Full System Validation + Deployment Readiness
+          Run 27 — Live URL Verification + Final Defect Repair Pass
         </strong>
       </div>
     </div>

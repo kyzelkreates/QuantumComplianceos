@@ -1,15 +1,21 @@
 /**
  * QUANTUM COMPLIANCE OS™ — Sidebar.jsx
+ * Run 27: activeRole prop wired — canAccessPage() filters nav items.
+ *         Version string pulled from APP_VERSION/APP_RUN_LEVEL constants.
  * Run 26: Version string pulled from APP_VERSION constant. unsub2 ghost ref fixed.
  * Defensive use only.
+ *
+ * SECURITY POSITION:
+ * Interface nav filtering helps guide users to the right areas.
+ * Production access control must be enforced by backend auth, RLS, and secure API rules.
+ *
+ * Powered by 4P3X Intelligent AI™ — Created by Kyzel Kreates™
  */
 import React, { useState, useEffect } from 'react';
 import '../styles/layout.css';
 import { subscribeConsultant, getConsultantState } from '../core/consultantStorage.js';
-import { getState, subscribe } from '../core/storage.js';
-import { NAV_ITEMS, APP_VERSION } from '../core/constants.js';
+import { NAV_ITEMS, APP_VERSION, APP_RUN_LEVEL } from '../core/constants.js';
 import { ROLE, canAccessPage } from '../core/authRoles.js';
-import { getAuthConfig } from '../core/storage.js';
 import { WORKSPACE_MODE } from '../core/workspaceMode.js';
 
 const NAV_GROUPS = [
@@ -19,7 +25,16 @@ const NAV_GROUPS = [
   { key: 'system',      label: 'System'      },
 ];
 
-export default function Sidebar({ currentPage, onNavigate, collapsed, branding, mobileOpen, onMobileClose }) {
+export default function Sidebar({
+  currentPage,
+  onNavigate,
+  collapsed,
+  branding,
+  mobileOpen,
+  onMobileClose,
+  workspaceMode,
+  activeRole,
+}) {
   const [cs, setCs] = useState(() => getConsultantState());
 
   useEffect(() => {
@@ -34,22 +49,29 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
   const logoText    = branding?.logoText    || 'QC-OS';
   const productName = branding?.productName || 'Quantum Compliance OS™';
 
-  // Build CSS class string — collapsed on desktop, drawer open on mobile
+  // In demo mode all nav items are always visible (unrestricted tour).
+  // In product mode, items are filtered by the active role via canAccessPage().
+  const isDemo = workspaceMode === WORKSPACE_MODE.DEMO || workspaceMode === 'demo';
+  const role   = activeRole || ROLE.OWNER;
+
+  // Build CSS class string
   const sidebarClass = [
     'sidebar',
-    collapsed   ? 'sidebar--collapsed'    : '',
-    mobileOpen  ? 'sidebar--mobile-open'  : '',
+    collapsed   ? 'sidebar--collapsed'   : '',
+    mobileOpen  ? 'sidebar--mobile-open' : '',
   ].filter(Boolean).join(' ');
 
   const handleNavClick = (id) => {
     onNavigate(id);
-    // Close mobile drawer after navigating
     if (onMobileClose) onMobileClose();
   };
 
+  // Filter nav items by role (demo always shows all)
+  const visibleItem = (item) => isDemo || canAccessPage(role, item.id);
+
   return (
     <>
-      {/* Mobile overlay — tap to close drawer */}
+      {/* Mobile overlay */}
       {mobileOpen && (
         <div
           className="sidebar-overlay"
@@ -69,8 +91,8 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
           <div
             className="sidebar__logo-mark"
             style={branding?.accentColour ? {
-              background:  `linear-gradient(135deg, ${branding.accentColour} 0%, #0066cc 100%)`,
-              boxShadow:   `0 0 12px ${branding.accentColour}44`,
+              background: `linear-gradient(135deg, ${branding.accentColour} 0%, #0066cc 100%)`,
+              boxShadow:  `0 0 12px ${branding.accentColour}44`,
             } : {}}
             aria-hidden="true"
           >
@@ -79,7 +101,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
           {!collapsed && (
             <div className="sidebar__logo-text">
               <span className="sidebar__logo-title">{productName}</span>
-              <span className="sidebar__logo-sub">v{APP_VERSION} · Run 26</span>
+              <span className="sidebar__logo-sub">v{APP_VERSION} · Run {APP_RUN_LEVEL}</span>
             </div>
           )}
         </div>
@@ -87,7 +109,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
         {/* Navigation */}
         <nav className="sidebar__nav">
           {NAV_GROUPS.map((group) => {
-            const items = NAV_ITEMS.filter((i) => i.group === group.key);
+            const items = NAV_ITEMS.filter((i) => i.group === group.key && visibleItem(i));
             if (items.length === 0) return null;
             return (
               <div key={group.key} className="sidebar__nav-group">
@@ -139,7 +161,9 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
                 🔵 {activeClient.name}
               </div>
             )}
-            <div className="sidebar__version">QCOS v{APP_VERSION} · Local-First · Run 26</div>
+            <div className="sidebar__version">
+              QCOS v{APP_VERSION} · Local-First · Run {APP_RUN_LEVEL}
+            </div>
           </div>
         )}
       </aside>

@@ -69,6 +69,8 @@ const RUNS_COMPLETE = [
     desc: 'authRoles.js: 7 roles, 26 perms, permission matrix, AUTH_STATE model, demo team. TeamAccess.jsx: auth status, demo role switcher, team members, roles, perms table, Supabase readiness, audit trail. AppShell: AccessRestricted guard. Sidebar: role-aware nav. storage.js: authConfig + migration 13. v25.0.0.' },
   { run: 26,    label: 'Final Production QA + Investor Demo Lockdown',
     desc: 'Branding ™ QA: APP_NAME, productName, Sidebar, TopBar, PlanCards, plans, consultantStorage, demoPortfolio, seedData, Onboarding, Reports all fixed. LandingPage: Run 26 header, Team & Access nav, final readiness checklist section (23 items: pass/needs/pending). Dashboard: auth/role/backend status row. DeploymentReadiness: auth/roles checklist section. storage.js + constants.js: v26.0.0. Responsive global.css/responsive.css patches. v26.0.0.' },
+  { run: 27,    label: 'Live URL Verification + Final Defect Repair Pass',
+    desc: 'Live URL verified (quantumcomplianceos.vercel.app). canAccessPage() wired in AppShell + Sidebar — role gate now active for restricted pages. Nav items role-filtered in product mode (unrestricted in demo mode). APP_VERSION → v27.0.0, APP_RUN_LEVEL → 27. storage.js + DeploymentReadiness updated. GitHub: github.com/kyzelkreates/QuantumComplianceos.' },
 ];
 
 const FUTURE_RUNS = [
@@ -76,10 +78,8 @@ const FUTURE_RUNS = [
 
   { run: '18',    label: 'Stripe Billing / Subscription Access Layer (Optional)',
     desc: 'Optional Stripe integration for tier upgrades. Requires backend connection and reviewed security policy.' },
-  { run: '19',    label: 'Auth + Team Roles + Consultant Accounts (Optional)',
-    desc: 'Multi-user authentication, role-based access, shared workspaces. Requires backend.' },
-  { run: '20',    label: 'Production Supabase Hardening + Real Audit Trail (Optional)',
-    desc: 'Full Supabase SDK, RLS enforcement, verified audit events, production-grade sync.' },
+  { run: 'Future', label: 'Production Supabase Auth + Real Audit Trail (Optional)',
+    desc: 'Full Supabase Auth SDK, real RLS enforcement, verified audit events, production-grade sync. Requires connected Supabase backend.' },
   { run: 'Future', label: 'Supabase Migration (Optional)',
     desc: 'Optional multi-device sync. RLS would be enabled at this point. Opt-in upgrade path.' },
   { run: 'Future', label: 'Optional AI API Connector',

@@ -176,7 +176,7 @@ export default function Reports({ onNavigate, workspaceMode }) {
         In <strong>Live Mode</strong>, demo data can be turned off and replaced with real client data by connecting the relevant backend and APIs.
       </div>
 
-      {/* Data readiness */}}
+      {/* Data readiness */}
       <DataReadinessBar secScore={secScore} qScore={qScore} riskCount={riskModel?.riskEntries?.length} evCount={evidencePack?.items?.length} />
 
       {/* Report type */}
@@ -457,7 +457,7 @@ function ReportView({ state, reportConfig, branding, settings, onBack, onPrint, 
           </ReportSection>
         )}
 
-        {/* Mandatory disclaimer — always last */}}
+        {/* Mandatory disclaimer — always last */}
         <div style={{ marginTop: '40px', paddingTop: '24px', borderTop: '1px solid var(--border-default)' }}>
           <div style={{ fontWeight: 700, fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.7px', marginBottom: '10px' }}>⚠ Mandatory Disclaimer</div>
           <p style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>
