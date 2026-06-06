@@ -10,6 +10,8 @@ import TopBar from './TopBar.jsx';
 import { getState, subscribe, getWorkspaceMode } from '../core/storage.js';
 import { PAGES } from '../core/constants.js';
 import { isDemoMode as checkDemoMode } from '../core/workspaceMode.js';
+import { ROLE, canAccessPage, ROLE_META } from '../core/authRoles.js';
+import { getAuthConfig } from '../core/storage.js';
 
 // Pages
 import Dashboard          from '../pages/Dashboard.jsx';
@@ -32,8 +34,41 @@ import ProductModeSettings    from '../pages/ProductModeSettings.jsx';
 import BackendConnectorSettings from '../pages/BackendConnectorSettings.jsx';
 import AISettings               from '../pages/AISettings.jsx';
 import BackendConfiguration     from '../pages/BackendConfiguration.jsx';
+import TeamAccess               from '../pages/TeamAccess.jsx';
 
-function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
+
+function AccessRestricted({ page, requiredPerm, onNavigate }) {
+  return (
+    <div style={{ padding: '48px 32px', maxWidth: 520, margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ fontSize: 48, marginBottom: 16 }}>⛔</div>
+      <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--text-secondary)', marginBottom: 8 }}>
+        Access Restricted
+      </div>
+      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 16, lineHeight: 1.7 }}>
+        Your current role does not have permission to access this area.
+        {requiredPerm && <><br />Required permission: <code>{requiredPerm}</code></>}
+      </div>
+      <div style={{
+        padding: '10px 14px', marginBottom: 20,
+        background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.25)',
+        borderRadius: 8, fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7,
+      }}>
+        Role-based access in the interface helps guide users to the right areas.
+        For live production use, access control is enforced by the backend using
+        Supabase Auth, Row Level Security, and secure API rules.
+      </div>
+      <button onClick={() => onNavigate && onNavigate('dashboard')} style={{
+        padding: '7px 18px', fontSize: 12, fontWeight: 700,
+        background: 'var(--bg-elevated)', color: 'var(--text-secondary)',
+        border: '1px solid var(--border-muted)', borderRadius: 8, cursor: 'pointer',
+      }}>
+        Back to Dashboard
+      </button>
+    </div>
+  );
+}
+
+function renderPage(page, onNavigate, onClientSwitch, workspaceMode, activeRole) {
   const modeProps = { workspaceMode, onNavigate };
   switch (page) {
     case PAGES.DASHBOARD:           return <Dashboard           {...modeProps} />;
@@ -56,6 +91,7 @@ function renderPage(page, onNavigate, onClientSwitch, workspaceMode) {
     case PAGES.BACKEND_CONNECTORS:     return <BackendConnectorSettings  />;
     case PAGES.AI_SETTINGS:            return <AISettings               />;
     case PAGES.BACKEND_CONFIG:         return <BackendConfiguration     />;
+    case PAGES.TEAM_ACCESS:            return <TeamAccess               workspaceMode={workspaceMode} />;
     default:                        return <Dashboard           {...modeProps} />;
   }
 }
@@ -89,6 +125,8 @@ export default function AppShell({ activeClientId, onClientSwitch }) {
 
   // Workspace mode — derived from settings.workspaceMode (Run 8.5) with legacy fallback
   const workspaceMode = settings?.workspaceMode || (clientMode?.isDemoMode ? 'demo' : 'product');
+  const authCfg    = getAuthConfig();
+  const activeRole = workspaceMode === 'demo' ? (authCfg?.demoPreviewRole || ROLE.OWNER) : (authCfg?.activeRole || ROLE.OWNER);
 
   useEffect(() => {
     if (branding?.accentColour) {
@@ -126,7 +164,7 @@ export default function AppShell({ activeClientId, onClientSwitch }) {
           branding={branding}
         />
         <main className="page-content" id="main-content" tabIndex={-1}>
-          {renderPage(currentPage, handleNavigate, onClientSwitch, workspaceMode)}
+          {renderPage(currentPage, handleNavigate, onClientSwitch, workspaceMode, activeRole)}
         </main>
       </div>
     </div>

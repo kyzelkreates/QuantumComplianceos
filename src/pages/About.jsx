@@ -64,7 +64,9 @@ const RUNS_COMPLETE = [
   { run: 23,    label: 'Product Mode Backend Provider Configuration (8.6)',
     desc: 'backendConfigGuard.js, backendConnectionTester.js, BackendConfiguration.jsx — 5 providers, save/validate/clear/test, 4P3X API Config Guard™, readiness checklist. v23.0.0.' },
   { run: 24,    label: 'Live Product Backend + API Readiness Hardening',
-    desc: 'ClientHub: live-mode empty state with backend CTA. Dashboard: product-mode banner improvement. Reports: LiveModeEmptyNotice with storage backend message. EvidencePack: live-mode storage provider notice. AISettings: product-mode AI disconnect state. BackendConfiguration: data-mapping panel + live product readiness checklist (16 items). Settings: Supabase recommendation + live-readiness copy. v24.0.0.' },
+    desc: 'ClientHub: live-mode empty state. Dashboard: product-mode banner. Reports/EvidencePack: live-mode notices. AISettings: live-mode disconnect. BackendConfiguration: data-mapping + readiness checklist. Settings: Supabase recommendation. v24.0.0.' },
+  { run: 25,    label: 'Auth + Team Roles + Client Permissions Layer',
+    desc: 'authRoles.js: 7 roles, 26 permissions, permission matrix, auth-state model, demo team, demo role presets, route restriction map, audit event model. TeamAccess.jsx: auth status, demo role switcher, team members, role definitions, permission matrix table, Supabase Auth readiness, audit trail readiness. AppShell: AccessRestricted guard + role-aware routing. Sidebar: role-aware nav. storage.js: authConfig state + migration step 13 + auth helpers. v25.0.0.' },
 ];
 
 const FUTURE_RUNS = [

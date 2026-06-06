@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run24',
-      buildRun: 'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
-      latestCompletedRun: 24,
-      latestCompletedRunLabel: 'Run 24 — Live Product Backend + API Readiness Hardening',
+      version: '1.0.0-run25',
+      buildRun: 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
+      latestCompletedRun: 25,
+      latestCompletedRunLabel: 'Run 25 — Auth + Team Roles + Client Permissions Layer',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -239,6 +239,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_22_PUBLIC_LANDING_INVESTOR_DEMO',
   'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
   'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
+  'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -267,6 +268,7 @@ const RUN_8_5_MODULE_STATUS = {
   publicLandingInvestorDemo:  'complete',
   productModeBackendConfig:   'complete',
   liveBackendReadinessHardening: 'complete',
+  authTeamRolesClientPermissions: 'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -294,6 +296,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   publicLandingInvestorDemo:  true,
   productModeBackendConfig:   true,
   liveBackendReadinessHardening: true,
+  authTeamRolesClientPermissions: true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -310,14 +313,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 24 || existingMeta.buildRun !== 'RUN_24_LIVE_BACKEND_READINESS_HARDENING') {
+  if (storedRun < 25 || existingMeta.buildRun !== 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS',
-      version: '1.0.0-run24',
-      buildRun: 'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
-      latestCompletedRun: 24,
-      latestCompletedRunLabel: 'Run 24 — Live Product Backend + API Readiness Hardening',
+      version: '1.0.0-run25',
+      buildRun: 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
+      latestCompletedRun: 25,
+      latestCompletedRunLabel: 'Run 25 — Auth + Team Roles + Client Permissions Layer',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,
@@ -449,6 +452,14 @@ export function migrateState(state) {
   // ── 12. Ensure backendConfig exists (Run 23 / 8.6) ──────────────────────
   if (migrated.backendConfig === undefined || migrated.backendConfig === null) {
     migrated.backendConfig = null;   // lazily initialised via getDefaultBackendConfig()
+  }
+
+  // ── 13. Ensure authConfig exists (Run 25) ────────────────────────────────
+  if (!migrated.authConfig || typeof migrated.authConfig !== 'object') {
+    migrated.authConfig = getDefaultAuthConfig();
+  } else {
+    const def = getDefaultAuthConfig();
+    migrated.authConfig = { ...def, ...migrated.authConfig };
   }
 
   return migrated;
@@ -1685,6 +1696,12 @@ export function exportWorkspaceBackup(consultantState) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { getDefaultBackendConfig, scanForUnsafeSecrets as _scanSecrets, PROVIDER_IDS } from './backendConfigGuard.js';
+import {
+  getDefaultAuthConfig,
+  ROLE,
+  buildAuditEvent,
+  AUDIT_EVENT,
+} from './authRoles.js';
 
 /** Return current backendConfig, initialising defaults if needed. */
 export function getBackendConfig() {
@@ -1823,4 +1840,59 @@ export function markFrontendOnlyWarningAccepted() {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Run 25: Auth Config Helpers
+// ─────────────────────────────────────────────────────────────────────────────
 
+/** Get current auth config, initialising defaults if not set. */
+export function getAuthConfig() {
+  const appState = getState();
+  if (!appState.authConfig || typeof appState.authConfig !== 'object') {
+    return getDefaultAuthConfig();
+  }
+  return appState.authConfig;
+}
+
+/** Update auth config fields safely. */
+export function updateAuthConfig(fields) {
+  if (!fields || typeof fields !== 'object') return;
+  setState((s) => ({
+    ...s,
+    authConfig: {
+      ...(s.authConfig || getDefaultAuthConfig()),
+      ...fields,
+      lastUpdatedAt: new Date().toISOString(),
+    },
+  }));
+}
+
+/** Set the active role (frontend only - no production security guarantee). */
+export function setActiveRole(roleId) {
+  updateAuthConfig({ activeRole: roleId });
+  addActivityLog('Active role set: "' + roleId + '"');
+}
+
+/** Set the demo preview role (demo mode only). */
+export function setDemoPreviewRole(roleId) {
+  updateAuthConfig({ demoPreviewRole: roleId });
+}
+
+/** Add a local audit event (live: backend-required; demo: local only). */
+export function addLocalAuditEvent(eventType, details) {
+  const safeDetails = details || {};
+  const event = {
+    id:        'audit_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+    type:      eventType,
+    details:   safeDetails,
+    timestamp: new Date().toISOString(),
+    isDemo:    safeDetails.isDemo || false,
+  };
+  setState((s) => {
+    const cfg    = s.authConfig || getDefaultAuthConfig();
+    const events = [...(cfg.localAuditEvents || [])];
+    events.unshift(event);
+    return { ...s, authConfig: { ...cfg, localAuditEvents: events.slice(0, 100) } };
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────

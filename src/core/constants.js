@@ -5,8 +5,8 @@
 
 // ─── App Identity ─────────────────────────────────────────────────────────────
 export const APP_NAME = 'Quantum Compliance OS';
-export const APP_VERSION = '24.0.0';
-export const APP_RUN_LEVEL = 24;
+export const APP_VERSION = '25.0.0';
+export const APP_RUN_LEVEL = 25;
 export const APP_TAGLINE = 'Defensive Quantum-Readiness & Security Implementation Assessment';
 
 // ─── Defensive Disclaimer ─────────────────────────────────────────────────────
@@ -20,6 +20,7 @@ export const PAGES = {
   PRODUCT_MODE:          'product-mode',
   BACKEND_CONNECTORS:    'backend-connectors',
   BACKEND_CONFIG:        'backend-config',
+  TEAM_ACCESS:           'team-access',
   AI_SETTINGS:           'ai-settings',
   CONSULTANT:       'consultant',
   TARGET_ASSESSMENTS: 'target-assessments',
@@ -135,6 +136,13 @@ export const NAV_ITEMS = [
     icon: '🔧',
     group: 'system',
     description: 'Product Mode backend provider configuration — configure, validate, save, and test providers',
+  },
+  {
+    id: PAGES.TEAM_ACCESS,
+    label: 'Team & Access',
+    icon: '👥',
+    group: 'system',
+    description: 'Auth status, team roles, permissions, Supabase Auth readiness, and audit trail',
   },
   {
     id: PAGES.AI_SETTINGS,

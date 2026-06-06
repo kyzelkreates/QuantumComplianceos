@@ -6,7 +6,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/layout.css';
 import { subscribeConsultant, getConsultantState } from '../core/consultantStorage.js';
+import { getState, subscribe } from '../core/storage.js';
 import { NAV_ITEMS } from '../core/constants.js';
+import { ROLE, canAccessPage } from '../core/authRoles.js';
+import { getAuthConfig } from '../core/storage.js';
+import { WORKSPACE_MODE } from '../core/workspaceMode.js';
 
 const NAV_GROUPS = [
   { key: 'main',        label: 'Overview'    },
@@ -20,7 +24,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
 
   useEffect(() => {
     const unsub = subscribeConsultant((s) => setCs({ ...s }));
-    return unsub;
+    return () => { unsub(); unsub2(); };
   }, []);
 
   const activeClient = cs.activeClientId
