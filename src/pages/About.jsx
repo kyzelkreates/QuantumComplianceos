@@ -66,7 +66,9 @@ const RUNS_COMPLETE = [
   { run: 24,    label: 'Live Product Backend + API Readiness Hardening',
     desc: 'ClientHub: live-mode empty state. Dashboard: product-mode banner. Reports/EvidencePack: live-mode notices. AISettings: live-mode disconnect. BackendConfiguration: data-mapping + readiness checklist. Settings: Supabase recommendation. v24.0.0.' },
   { run: 25,    label: 'Auth + Team Roles + Client Permissions Layer',
-    desc: 'authRoles.js: 7 roles, 26 permissions, permission matrix, auth-state model, demo team, demo role presets, route restriction map, audit event model. TeamAccess.jsx: auth status, demo role switcher, team members, role definitions, permission matrix table, Supabase Auth readiness, audit trail readiness. AppShell: AccessRestricted guard + role-aware routing. Sidebar: role-aware nav. storage.js: authConfig state + migration step 13 + auth helpers. v25.0.0.' },
+    desc: 'authRoles.js: 7 roles, 26 perms, permission matrix, AUTH_STATE model, demo team. TeamAccess.jsx: auth status, demo role switcher, team members, roles, perms table, Supabase readiness, audit trail. AppShell: AccessRestricted guard. Sidebar: role-aware nav. storage.js: authConfig + migration 13. v25.0.0.' },
+  { run: 26,    label: 'Final Production QA + Investor Demo Lockdown',
+    desc: 'Branding ™ QA: APP_NAME, productName, Sidebar, TopBar, PlanCards, plans, consultantStorage, demoPortfolio, seedData, Onboarding, Reports all fixed. LandingPage: Run 26 header, Team & Access nav, final readiness checklist section (23 items: pass/needs/pending). Dashboard: auth/role/backend status row. DeploymentReadiness: auth/roles checklist section. storage.js + constants.js: v26.0.0. Responsive global.css/responsive.css patches. v26.0.0.' },
 ];
 
 const FUTURE_RUNS = [

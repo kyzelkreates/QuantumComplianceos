@@ -110,7 +110,7 @@ export default function EvidencePack({ workspaceMode, onNavigate }) {
       <PageHeader
         icon="📁"
         title="Evidence Pack"
-        subtitle="Compliance evidence preparation and readiness tracking. This platform supports evidence preparation only — it does not certify formal compliance."
+        subtitle="Compliance evidence preparation and readiness tracking. Supports evidence capture, gap analysis, and readiness notes. Real file storage requires a configured backend. Does not certify formal compliance."
         actions={
           <div style={{ display: 'flex', gap: '8px' }}>
             {items.length === 0 && (

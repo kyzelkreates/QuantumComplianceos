@@ -216,7 +216,7 @@ export const STATE_MERIDIAN = {
     { id: 'log_mer_006', type: 'client_note', message: 'Client notified of critical MFA gap. Follow-up scheduled in 2 weeks.', timestamp: d(1), meta: null },
   ],
   clientMode: { isDemoMode: true, demoDataLoaded: true },
-  branding: { productName: 'Quantum Compliance OS', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
+  branding: { productName: 'Quantum Compliance OS™', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
   settings: { theme: 'dark', demoMode: true, autosave: true, language: 'en-GB', dateFormat: 'DD/MM/YYYY' },
 };
 
@@ -417,7 +417,7 @@ export const STATE_VANTAGE = {
     { id: 'log_van_005', type: 'evidence_update', message: 'PQC Migration Roadmap (Draft) evidence item added.', timestamp: d(7), meta: null },
   ],
   clientMode: { isDemoMode: true, demoDataLoaded: true },
-  branding: { productName: 'Quantum Compliance OS', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
+  branding: { productName: 'Quantum Compliance OS™', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
   settings: { theme: 'dark', demoMode: true, autosave: true, language: 'en-GB', dateFormat: 'DD/MM/YYYY' },
 };
 
@@ -624,7 +624,7 @@ export const STATE_APEX = {
     { id: 'log_apx_006', type: 'evidence_update', message: 'PQC Migration Roadmap evidence marked in_progress.', timestamp: d(4), meta: null },
   ],
   clientMode: { isDemoMode: true, demoDataLoaded: true },
-  branding: { productName: 'Quantum Compliance OS', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
+  branding: { productName: 'Quantum Compliance OS™', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
   settings: { theme: 'dark', demoMode: true, autosave: true, language: 'en-GB', dateFormat: 'DD/MM/YYYY' },
 };
 
@@ -803,7 +803,7 @@ export const STATE_HELIX = {
     { id: 'log_hlx_004', type: 'client_note', message: 'NHS DSP Toolkit deadline flagged — 8 weeks. DPO engaged.', timestamp: d(3), meta: null },
   ],
   clientMode: { isDemoMode: true, demoDataLoaded: true },
-  branding: { productName: 'Quantum Compliance OS', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
+  branding: { productName: 'Quantum Compliance OS™', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
   settings: { theme: 'dark', demoMode: true, autosave: true, language: 'en-GB', dateFormat: 'DD/MM/YYYY' },
 };
 
@@ -1001,7 +1001,7 @@ export const STATE_CLEARLINE = {
     { id: 'log_clr_007', type: 'client_note', message: 'Board HNDL briefing scheduled. ISO 27001 gap analysis booked for next month.', timestamp: d(0), meta: null },
   ],
   clientMode: { isDemoMode: true, demoDataLoaded: true },
-  branding: { productName: 'Quantum Compliance OS', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
+  branding: { productName: 'Quantum Compliance OS™', tagline: 'Defensive Security & Quantum-Readiness Assessment', logoText: 'QC-OS', accentColour: '#00d4ff', logoUrl: null },
   settings: { theme: 'dark', demoMode: true, autosave: true, language: 'en-GB', dateFormat: 'DD/MM/YYYY' },
 };
 

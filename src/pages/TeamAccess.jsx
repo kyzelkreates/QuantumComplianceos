@@ -163,7 +163,7 @@ function AuthStatusSection({ authState, authConfig, workspaceMode, backendConfig
           { label: 'Supabase Config',   value: supabaseConfigured ? 'Saved' : 'Not configured', colour: supabaseConfigured ? '#10b981' : '#6b7280' },
           { label: 'Connection Test',   value: testPassed ? 'Passed' : lastTest ? 'Failed / Pending' : 'Not run', colour: testPassed ? '#10b981' : '#f59e0b' },
           { label: 'Supabase Auth',     value: authConfig?.supabaseAuthEnabled ? 'Enabled' : 'Not enabled', colour: authConfig?.supabaseAuthEnabled ? '#10b981' : '#6b7280' },
-          { label: 'RLS Status',        value: 'Not verified from frontend', colour: '#f59e0b' },
+          { label: 'RLS Status',        value: 'Not verifiable from frontend', colour: '#f59e0b' },
           { label: 'Active Session',    value: authConfig?.activeSession ? 'Session active' : 'No session', colour: authConfig?.activeSession ? '#10b981' : '#6b7280' },
           { label: 'Frontend Role',     value: getRoleLabel(authConfig?.activeRole || ROLE.OWNER), colour: getRoleColour(authConfig?.activeRole || ROLE.OWNER) },
         ].map(({ label, value, colour }) => (

@@ -77,7 +77,7 @@ export const COMMERCIAL_TIERS = [
 // ─── Default Consultant Workspace ─────────────────────────────────────────────
 export function getInitialConsultantState() {
   return {
-    version:          '25.0.0',
+    version:          '26.0.0',
     createdAt:        new Date().toISOString(),
     lastUpdated:      new Date().toISOString(),
     consultantName:   '',
@@ -90,7 +90,7 @@ export function getInitialConsultantState() {
     onboardingStep:   0,
     deploymentChecklist: buildDeploymentChecklist(),
     branding: {
-      productName:  'Quantum Compliance OS',
+      productName:  'Quantum Compliance OS™',
       tagline:      'Defensive Quantum-Readiness & Security Assessment',
       logoText:     'QC-OS',
       accentColour: '#00d4ff',

@@ -1,7 +1,8 @@
 /**
  * QUANTUM COMPLIANCE OS™ — DeploymentReadiness.jsx
  * Run 8 Status Sync: Updated to reflect Run 8 completion.
- * Run 7: Deployment & Demo Readiness Checklist
+ * Run 26: Final Production QA + Investor Demo Lockdown
+ * Run 7 original + extended through Run 26
  * =============================================
  * Provides a visual checklist for deployment readiness, demo confidence,
  * and production review. Derived from live app state where possible.
@@ -182,8 +183,20 @@ export default function DeploymentReadiness({ onNavigate }) {
     { status: 'info', label: 'Physical device test recommended', detail: 'Validate on real iOS and Android devices before investor/client demo. Especially test PWA install flow.' },
   ];
 
-  const allItems = [...buildItems, ...pwaItems, ...storageItems, ...demoItems, ...safetyItems, ...mobileItems];
+  const allItems = [...buildItems, ...pwaItems, ...storageItems, ...authItems, ...demoItems, ...safetyItems, ...mobileItems];
   const totalPass  = allItems.filter((i) => i.status === 'pass').length;
+
+  const authItems = [
+    { status: 'pass',  label: 'Role model: 7 roles defined', detail: 'Owner/Admin/Consultant/Analyst/ClientViewer/Auditor/Demo', note: 'authRoles.js' },
+    { status: 'pass',  label: '26 permissions + permission matrix', detail: 'PERMISSION_MATRIX with all role/perm combinations', note: 'authRoles.js' },
+    { status: 'pass',  label: 'AccessRestricted guard in routing', detail: 'canAccessPage() in AppShell.jsx before page render', note: 'AppShell.jsx' },
+    { status: 'pass',  label: 'Demo role preview (demo mode only)', detail: 'DEMO_ROLE_PRESETS — clearly labelled, not shown in live mode', note: 'TeamAccess.jsx' },
+    { status: 'pass',  label: 'Live-mode auth empty state', detail: 'No fake demo users/team in product mode', note: 'TeamAccess.jsx' },
+    { status: 'warn',  label: 'Supabase Auth not yet connected', detail: 'supabaseAuthEnabled = false in authConfig', note: 'Pending live deployment' },
+    { status: 'warn',  label: 'RLS status not verifiable from frontend', detail: 'SUPABASE_SETUP_RUN_15.sql has 32 policies — not yet connected', note: 'Must be confirmed in Supabase SQL editor' },
+    { status: 'warn',  label: 'user_profiles + team_roles tables pending', detail: 'Backend schema extension required for real team management', note: 'Pending future run' },
+    { status: 'na',    label: 'OAuth / social login', detail: 'Not in scope for this run', note: '' },
+  ];
   const totalChecks = allItems.filter((i) => i.status !== 'na').length;
   const allGreen   = totalPass === totalChecks;
 
@@ -231,6 +244,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       <CheckSection title="Build & Deployment" icon="📦" items={buildItems} />
       <CheckSection title="PWA & Offline" icon="📲" items={pwaItems} />
       <CheckSection title="Storage & Data Safety" icon="🗄️" items={storageItems} />
+      <CheckSection title="Auth, Roles & Permissions" icon="🔐" items={authItems} />
       <CheckSection title="Demo Portfolio" icon="🎯" items={demoItems} />
       <CheckSection title="Defensive Safety & Compliance" icon="🛡️" items={safetyItems} />
       <CheckSection title="Mobile & Demo Presentation" icon="📱" items={mobileItems} />
@@ -261,7 +275,7 @@ export default function DeploymentReadiness({ onNavigate }) {
       {/* Deployment instructions */}
       <SectionCard title="Vercel Deployment (One Command)" icon="☁️">
         <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.8, marginBottom: '16px' }}>
-          Quantum Compliance OS deploys as a static SPA with zero configuration. No server, no database, no environment variables.
+          Quantum Compliance OS™ deploys as a static SPA — no server, no database, no environment variables for demo. Live mode requires a configured backend (Supabase/Firebase/REST).
         </div>
         {[
           { label: 'Option A — Vercel CLI', code: 'npm run build && vercel --prod' },

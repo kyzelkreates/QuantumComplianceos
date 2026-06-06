@@ -462,7 +462,7 @@ export default function Settings({ onNavigate }) {
       <SectionCard title="System Status" icon="📋">
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[
-            ['Build',                `Run ${APP_RUN_LEVEL} — Auth + Team Roles + Client Permissions Layer`],
+            ['Build',                `Run ${APP_RUN_LEVEL} — Final Production QA + Investor Demo Lockdown`],
             ['Version',              `v${APP_VERSION}`],
             ['Architecture',         'Local-First PWA (React + Vite)'],
             ['Storage',              'Browser localStorage — SSOT via storage.js'],
@@ -493,7 +493,7 @@ export default function Settings({ onNavigate }) {
           })}
         </div>
         <div style={{ marginTop: '14px', padding: '10px 14px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)', borderRadius: 'var(--radius-md)', fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 · 10 · 11 · 12 · 13 · 14–17 · 19–25
+          <strong style={{ color: 'var(--accent)' }}>Completed Runs:</strong> 1 · 2 · 3 · 4 · 5 · 5.5 · 6 · 7 · 8 · 8.5 · 9 · 10 · 11 · 12 · 13 · 14–17 · 19–26
           &nbsp;&nbsp;·&nbsp;&nbsp;
           <strong style={{ color: 'var(--text-secondary)' }}>Up next (optional):</strong> Run 18: Stripe Billing · Run 19: Auth + Team Roles · Run 20: Production Supabase · Run 21: PDF Export · Run 22: Public Landing
         </div>
@@ -505,7 +505,7 @@ export default function Settings({ onNavigate }) {
           <strong style={{ color: 'var(--text-secondary)' }}>Commercial tier foundation</strong> — Starter / Demo is active.
           Pro Consultant, Agency, and White Label are coming in future runs.
           No backend, payments, or external API has been added.
-                Live mode prepares Quantum Compliance OS™ for real client data. To run as a real product, connect a backend such as Supabase, configure authentication, storage, database tables, RLS policies, and any required APIs. Until a backend test passes, the app must not be treated as production-connected. Supabase is the recommended first backend — full SQL schema in Run 24.
+                Live mode prepares Quantum Compliance OS™ for real client data. To run as a real product, connect a backend such as Supabase, configure authentication, storage, database tables, RLS policies, and any required APIs. Until a backend test passes, the app must not be treated as production-connected. Interface role checks guide the user experience. Production access control must also be enforced by the backend using Supabase Auth, Row Level Security, database policies, and secure API rules. Supabase is the recommended first backend — full SQL schema in Run 24.
         </div>
         <PlanCards activePlanId={state.settings?.activePlanId || 'starter'} />
       </SectionCard>

@@ -85,7 +85,7 @@ export const SEED_DATA = {
     {
       id: 'log_demo_001',
       type: 'demo_loaded',
-      message: 'Quantum Compliance OS initialised with demo data.',
+      message: 'Quantum Compliance OS™ initialised with demo data.',
       timestamp: new Date().toISOString(),
       meta: null,
     },

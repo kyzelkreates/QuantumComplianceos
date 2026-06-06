@@ -12,7 +12,7 @@
  * - Safe to import anywhere — no side effects.
  *
  * Architecture: Local-first. Defensive use only.
- * Powered by 4P3X Intelligent AI — Created by Kyzel Kreates
+ * Powered by 4P3X Intelligent AI™ — Created by Kyzel Kreates™
  */
 
 // ─── Feature Keys ─────────────────────────────────────────────────────────────

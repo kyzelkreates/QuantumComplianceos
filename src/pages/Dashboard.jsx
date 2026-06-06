@@ -10,6 +10,8 @@ import { getSetupProgress, getActiveSystemCount, getCriticalSystemCount } from '
 import { timeAgo } from '../utils/date.js';
 import { getScoreThreshold } from '../core/scoringEngine.js';
 import { buildClientRiskSnapshot } from '../core/copilotEngine.js';
+import { getAuthConfig } from '../core/storage.js';
+import { ROLE_META, getRoleLabel, getRoleColour, computeAuthState, AUTH_STATE_META } from '../core/authRoles.js';
 import { WORKSPACE_MODE, isDemoMode as checkDemoMode } from '../core/workspaceMode.js';
 import { getQuantumScoreThreshold, computeOverallReadinessScore } from '../core/quantumScoringEngine.js';
 
@@ -194,6 +196,57 @@ export default function Dashboard({ onNavigate, workspaceMode }) {
 
       {/* Workspace Mode Banner */}
       <WorkspaceModeBanner workspaceMode={workspaceMode} isDemo={isDemo} onNavigate={onNavigate} />
+
+
+      {/* ── Run 26: Auth + Backend Status Row ─────────────────────────── */}
+      {(() => {
+        const _authCfg     = getAuthConfig();
+        const _authState   = computeAuthState(state);
+        const _authMeta    = AUTH_STATE_META[_authState] || {};
+        const _activeRole  = (isDemo ? _authCfg?.demoPreviewRole : _authCfg?.activeRole) || 'owner';
+        const _roleMeta    = ROLE_META[_activeRole] || {};
+        const _backendCfg  = state.backendConfig || {};
+        const _hasBackend  = _backendCfg.activeProvider && _backendCfg.activeProvider !== 'localOnly';
+        const _lastTest    = (_backendCfg.connectionTests || [])[0];
+        const _testPassed  = _lastTest?.status === 'success';
+        return (
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+            {/* Role tile */}
+            <div style={{ flex: 1, minWidth: 140, background: 'var(--bg-secondary)', border: `1px solid ${_roleMeta.colour || '#6b7280'}28`, borderRadius: 'var(--radius-md)', padding: '8px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 14 }}>{_roleMeta.icon || '👤'}</span>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  {isDemo ? 'Demo Preview Role' : 'Account Role'}
+                </div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: _roleMeta.colour || 'var(--text-secondary)' }}>
+                  {_roleMeta.label || 'Owner'}
+                  {isDemo && <span style={{ fontSize: 9, marginLeft: 4, color: '#f59e0b', fontWeight: 400 }}>(demo)</span>}
+                </div>
+              </div>
+            </div>
+            {/* Auth state tile */}
+            <div style={{ flex: 1, minWidth: 140, background: 'var(--bg-secondary)', border: `1px solid ${_authMeta.colour || '#6b7280'}28`, borderRadius: 'var(--radius-md)', padding: '8px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 14 }}>{_authMeta.icon || '🔑'}</span>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Auth Status</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: _authMeta.colour || 'var(--text-secondary)' }}>
+                  {_authMeta.label || 'Demo Mode'}
+                </div>
+              </div>
+            </div>
+            {/* Backend tile */}
+            <div style={{ flex: 1, minWidth: 140, background: 'var(--bg-secondary)', border: `1px solid ${_testPassed ? '#10b98128' : '#6b728028'}`, borderRadius: 'var(--radius-md)', padding: '8px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 14 }}>{_testPassed ? '🔗' : '💾'}</span>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Backend</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: _testPassed ? '#10b981' : '#6b7280' }}>
+                  {_testPassed ? 'Connected' : _hasBackend ? 'Config saved' : 'Local only'}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Stat Cards */}
       <div className="dashboard-grid">

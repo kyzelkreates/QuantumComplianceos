@@ -25,7 +25,7 @@ export default function Onboarding({ onComplete, workspaceMode }) {
     consultantName: '',
     firmName: '',
     firmEmail: '',
-    productName: 'Quantum Compliance OS',
+    productName: 'Quantum Compliance OS™',
     tagline: 'Defensive Quantum-Readiness & Security Assessment',
     accentColour: '#00d4ff',
   });

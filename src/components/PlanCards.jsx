@@ -14,7 +14,7 @@
  * - Safe fallback if plan config fails to load
  * - All coming-soon features clearly labelled
  *
- * Powered by 4P3X Intelligent AI — Created by Kyzel Kreates
+ * Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™
  */
 import React, { useState } from 'react';
 import {
@@ -287,7 +287,7 @@ export default function PlanCards({ activePlanId = 'starter' }) {
         <strong style={{ color: 'var(--text-secondary)' }}>Upgrade path: </strong>
         Pro Consultant (Run 11) → Agency (future) → White Label (future). All higher tiers require backend connection and are reserved for future runs.
         No backend, payments, or external API has been added in this version.
-        <span style={{ marginLeft: 8, opacity: 0.7 }}>· Powered by 4P3X Intelligent AI · Created by Kyzel Kreates</span>
+        <span style={{ marginLeft: 8, opacity: 0.7 }}>· Powered by 4P3X Intelligent AI™ · Created by Kyzel Kreates™</span>
       </div>
 
       {/* ── Locked toast ─────────────────────────────────────────────────── */}

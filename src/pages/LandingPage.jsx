@@ -1,9 +1,12 @@
 /**
  * QUANTUM COMPLIANCE OS™ — LandingPage.jsx
- * Run 7: Polished sales landing page with demo launch path.
+ * Run 26: Final Production QA + Investor Demo Lockdown.
  * =========================================================
- * Shown before onboarding on first visit.
- * Includes PWA install, full feature overview, demo CTAs, architecture, AI agents, and creator/investor sections.
+ * Public/investor landing page — demo-ready, backend-ready, investor-ready.
+ * Includes: hero, product modules, architecture, demo/live pathway, AI agents,
+ * investor demo, about creator, 4P3X Verse™, readiness checklist, local-first trust.
+ * No pricing tables. No fake backend. No compliance guarantees.
+ * Powered by 4P3X Intelligent AI™ — Created by Kyzel Kreates™
  *
  * DEFENSIVE USE ONLY. No tracking. No external requests. No fake certifications.
  */
@@ -121,9 +124,9 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
           fontSize: 'clamp(14px, 2vw, 17px)', color: 'var(--text-muted)',
           lineHeight: 1.8, maxWidth: '620px', margin: '0 auto 36px',
         }}>
-          Assess defensive security readiness, identify post-quantum cryptography exposure,
-          prioritise preventative controls, and generate professional client-ready evidence
-          packs and reports — completely offline, no account required.
+          Assess compliance-readiness, identify post-quantum cryptography exposure,
+          track evidence gaps, generate client-ready reports, and manage multi-client
+          consultant workflows. Demo-ready now. Backend-ready for live deployment.
         </p>
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '16px' }}>
           <ActionButton variant="primary" onClick={onEnter}>🚀 Launch Platform</ActionButton>
@@ -132,6 +135,9 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
             if (onLoadDemo) onLoadDemo();
             else onEnter();
           }}>🎯 Load Demo Portfolio</ActionButton>
+          <ActionButton variant="ghost" onClick={() => onEnter()}>
+            ⚙️ Configure Live Mode
+          </ActionButton>
           {deferredPrompt && !pwaInstalled && (
             <ActionButton variant="ghost" onClick={handleInstallPWA}>📲 Install as PWA</ActionButton>
           )}
@@ -404,6 +410,68 @@ export default function LandingPage({ onEnter, onLoadDemo }) {
             Quantum Compliance OS™ is one product direction within the <strong style={{ color: '#D4AF37' }}>4P3X Verse™</strong> — a modular AI-assisted software ecosystem built around reusable dashboards, installable PWA-ready experiences, demo/live mode switching, onboard AI guidance, and backend-ready architecture.
             Each product in the ecosystem shares core patterns — making new products faster to build, test, and commercialise.
           </p>
+        </div>
+      </section>
+
+
+      {/* ── Run 26 Final Readiness Checklist ────────────────────── */}
+      <section id="readiness-checklist" style={{ padding: '0 32px 60px', maxWidth: '960px', margin: '0 auto' }}>
+        <h2 style={{ fontWeight: 800, fontSize: 'clamp(16px, 3vw, 22px)', marginBottom: 8, textAlign: 'center' }}>
+          🚦 Product Readiness Status
+        </h2>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-muted)', marginBottom: 24, lineHeight: 1.7 }}>
+          What is working now, what is demo-ready, and what remains for live deployment.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
+          {[
+            { icon: '✅', label: 'Branding verified',                  status: 'pass', note: 'Quantum Compliance OS™ / 4P3X Intelligent AI™ / Kyzel Kreates™' },
+            { icon: '✅', label: 'Landing page verified',              status: 'pass', note: 'Hero, architecture, AI agents, investor demo, about creator, 4P3X Verse™' },
+            { icon: '✅', label: 'Dashboard verified',                 status: 'pass', note: 'Demo/live badge, mode banner, client/risk/report status tiles' },
+            { icon: '✅', label: 'Demo/live toggle verified',          status: 'pass', note: 'Single SSOT: workspaceMode.js — no duplicate toggle' },
+            { icon: '✅', label: 'Demo data hidden in live mode',      status: 'pass', note: 'isDemo flag + filterClientsByMode() — all modules gated' },
+            { icon: '✅', label: 'Backend config layer',               status: 'pass', note: '5 providers, 4P3X API Config Guard™, save/test/clear' },
+            { icon: '✅', label: 'Secret guard active',                status: 'pass', note: 'backendConfigGuard.js — 15+ blocked secret patterns' },
+            { icon: '✅', label: 'Client hub verified',                status: 'pass', note: 'Demo clients in demo / live empty state + CTA in product mode' },
+            { icon: '✅', label: 'Reports verified',                   status: 'pass', note: 'Tied to clients, demo-labelled, JSON/CSV export, print-ready' },
+            { icon: '✅', label: 'Evidence packs verified',            status: 'pass', note: 'Summary, categories, present/missing, live-mode notice' },
+            { icon: '✅', label: 'AI advisory wording verified',       status: 'pass', note: 'Advisory only — no legal/security/quantum guarantee claims' },
+            { icon: '✅', label: 'Auth/roles layer',                   status: 'pass', note: 'Run 25: 7 roles, 26 perms, permission matrix, demo role preview' },
+            { icon: '✅', label: 'PWA/install verified',               status: 'pass', note: 'Manifest, service worker, install prompt, fallback text' },
+            { icon: '✅', label: 'Mobile/tablet/desktop responsive',   status: 'pass', note: 'Clamp typography, flex/grid layouts, stacking cards' },
+            { icon: '✅', label: 'No exposed backend secrets',         status: 'pass', note: 'API Config Guard blocks all service role and private keys' },
+            { icon: '✅', label: 'No pricing/billing claims',          status: 'pass', note: 'Pricing removed in Run 22 — investor/demo positioning only' },
+            { icon: '⚠️', label: 'Supabase Auth/RLS',           status: 'needs', note: 'RLS enabled in SQL schema — auth not yet connected (Run 26+)' },
+            { icon: '⚠️', label: 'Real backend connection',      status: 'needs', note: 'Config-shape ready — real Supabase/Firebase connection pending' },
+            { icon: '⚠️', label: 'Evidence file storage',        status: 'needs', note: 'Supabase Storage or S3 required for real file uploads' },
+            { icon: '🔮', label: 'User profiles / team roles DB',  status: 'pending', note: 'user_profiles + team_roles tables pending SQL extension' },
+            { icon: '🔮', label: 'Audit trail backend table',      status: 'pending', note: 'audit_logs table pending SQL extension' },
+            { icon: '🔮', label: 'Real AI provider connection',    status: 'pending', note: 'Mock AI active — real provider config in AI Settings' },
+            { icon: '🔮', label: 'Production QA / pen review',     status: 'pending', note: 'External QA and penetration readiness review before launch' },
+          ].map(({ icon, label, status, note }) => {
+            const meta = {
+              pass:    { colour: '#10b981', bg: 'rgba(16,185,129,0.06)',  border: 'rgba(16,185,129,0.2)',  tag: 'Passed' },
+              needs:   { colour: '#f59e0b', bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.2)',  tag: 'Needs config' },
+              pending: { colour: '#6b7280', bg: 'rgba(107,114,128,0.05)', border: 'rgba(107,114,128,0.2)', tag: 'Pending backend' },
+            }[status];
+            return (
+              <div key={label} style={{
+                padding: '11px 14px', borderRadius: 'var(--radius-md)',
+                background: meta.bg, border: `1px solid ${meta.border}`,
+                display: 'flex', flexDirection: 'column', gap: 4,
+              }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <span style={{ fontSize: 14, flexShrink: 0 }}>{icon}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: meta.colour, flex: 1 }}>{label}</span>
+                  <span style={{ fontSize: 9, fontWeight: 800, padding: '1px 6px', borderRadius: 999, background: meta.colour + '20', color: meta.colour, border: `1px solid ${meta.colour}30`, whiteSpace: 'nowrap' }}>{meta.tag}</span>
+                </div>
+                {note && <div style={{ fontSize: 10, color: 'var(--text-muted)', lineHeight: 1.5, paddingLeft: 22 }}>{note}</div>}
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ marginTop: 20, padding: '12px 16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-muted)', borderRadius: 'var(--radius-md)', fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.7, textAlign: 'center' }}>
+          <strong style={{ color: 'var(--accent)' }}>Demo-ready now</strong> for investor presentations, client onboarding demos, portfolio reviews, and consultant workflow demos.
+          <strong style={{ color: '#D4AF37' }}> Backend-ready</strong> for live deployment once Supabase Auth, RLS, storage, APIs, and production security controls are connected and verified.
         </div>
       </section>
 

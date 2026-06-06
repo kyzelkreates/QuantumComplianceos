@@ -19,7 +19,7 @@ export default function TopBar({ currentPage, isDemoMode, workspaceMode, onToggl
   const activeClient  = cs.activeClientId ? cs.clients.find((c) => c.id === cs.activeClientId) : null;
   const navItem       = NAV_ITEMS.find((i) => i.id === currentPage);
   const pageLabel     = navItem?.label || 'Dashboard';
-  const productName   = branding?.productName || 'Quantum Compliance OS';
+  const productName   = branding?.productName || 'Quantum Compliance OS™';
 
   // Derive current workspace mode — prefer explicit prop, fallback to legacy isDemoMode
   const currentMode   = workspaceMode || (isDemoMode ? WORKSPACE_MODE.DEMO : WORKSPACE_MODE.PRODUCT);

@@ -32,7 +32,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
     : null;
 
   const logoText    = branding?.logoText    || 'QC-OS';
-  const productName = branding?.productName || 'Quantum Compliance OS';
+  const productName = branding?.productName || 'Quantum Compliance OS™';
 
   // Build CSS class string — collapsed on desktop, drawer open on mobile
   const sidebarClass = [

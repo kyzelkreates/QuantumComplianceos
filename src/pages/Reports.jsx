@@ -231,7 +231,7 @@ export default function Reports({ onNavigate, workspaceMode }) {
       <SectionCard title="Report Branding" icon="🎨">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '13px' }}>
           {[
-            ['Product Name', branding?.productName || 'Quantum Compliance OS'],
+            ['Product Name', branding?.productName || 'Quantum Compliance OS™'],
             ['Tagline', branding?.tagline || ''],
             ['Accent Colour', branding?.accentColour || '#00d4ff'],
             ['Organisation', organisation?.name || 'Not set'],

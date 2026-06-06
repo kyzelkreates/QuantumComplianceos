@@ -187,3 +187,14 @@ code, pre {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Run 26 — Global text safety */
+* {
+  box-sizing: border-box;
+}
+
+code, pre {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
+}

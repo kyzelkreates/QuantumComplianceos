@@ -23,11 +23,11 @@ export const APP_STORAGE_KEY = 'qcos_v1_state';
 export function getInitialState() {
   return {
     appMeta: {
-      appName: 'Quantum Compliance OS',
-      version: '1.0.0-run25',
-      buildRun: 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
-      latestCompletedRun: 25,
-      latestCompletedRunLabel: 'Run 25 — Auth + Team Roles + Client Permissions Layer',
+      appName: 'Quantum Compliance OS™',
+      version: '1.0.0-run26',
+      buildRun: 'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN',
+      latestCompletedRun: 26,
+      latestCompletedRunLabel: 'Run 26 — Final Production QA + Investor Demo Lockdown',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -146,7 +146,7 @@ export function getInitialState() {
       dateFormat: 'DD/MM/YYYY',
     },
     branding: {
-      productName: 'Quantum Compliance OS',
+      productName: 'Quantum Compliance OS™',
       tagline: 'Defensive Quantum-Readiness & Security Implementation Assessment',
       logoText: 'QC-OS',
       accentColour: '#00d4ff',
@@ -240,6 +240,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_23_PRODUCT_MODE_BACKEND_CONFIG',
   'RUN_24_LIVE_BACKEND_READINESS_HARDENING',
   'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
+  'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -269,6 +270,7 @@ const RUN_8_5_MODULE_STATUS = {
   productModeBackendConfig:   'complete',
   liveBackendReadinessHardening: 'complete',
   authTeamRolesClientPermissions: 'complete',
+  finalProductionQaLockdown: 'complete',
 };
 
 const RUN_8_5_FEATURE_FLAGS = {
@@ -297,6 +299,7 @@ const RUN_8_5_FEATURE_FLAGS = {
   productModeBackendConfig:   true,
   liveBackendReadinessHardening: true,
   authTeamRolesClientPermissions: true,
+  finalProductionQaLockdown: true,
   supabaseEnabled:           false,
   backendEnabled:            false,
   paymentsEnabled:           false,
@@ -313,14 +316,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 25 || existingMeta.buildRun !== 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS') {
+  if (storedRun < 26 || existingMeta.buildRun !== 'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN') {
     migrated.appMeta = {
       ...existingMeta,
-      appName: 'Quantum Compliance OS',
-      version: '1.0.0-run25',
-      buildRun: 'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
-      latestCompletedRun: 25,
-      latestCompletedRunLabel: 'Run 25 — Auth + Team Roles + Client Permissions Layer',
+      appName: 'Quantum Compliance OS™',
+      version: '1.0.0-run26',
+      buildRun: 'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN',
+      latestCompletedRun: 26,
+      latestCompletedRunLabel: 'Run 26 — Final Production QA + Investor Demo Lockdown',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

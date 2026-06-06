@@ -291,3 +291,123 @@
     gap: 4px !important;
   }
 }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Run 26 — Final Responsive Polish
+   Global mobile/tablet fixes: team table, permission matrix, role badges,
+   auth status tiles, readiness checklist, dashboard status row
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Team table — horizontal scroll on mobile */
+@media (max-width: 640px) {
+  .team-table-wrap,
+  [data-table="permission-matrix"] {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Auth/backend status tiles in Dashboard — stack on very small screens */
+@media (max-width: 400px) {
+  .auth-status-row {
+    flex-direction: column;
+  }
+}
+
+/* Readiness checklist — single column on mobile */
+@media (max-width: 480px) {
+  .readiness-checklist-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Role badges — prevent text overflow */
+.role-badge {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+/* Permission matrix table — force scroll, never overflow */
+@media (max-width: 700px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  table td:first-child,
+  table th:first-child {
+    position: static !important;
+    min-width: auto !important;
+  }
+}
+
+/* Access restricted card — centre on all screens */
+.access-restricted-card {
+  padding: clamp(24px, 6vw, 48px) clamp(16px, 5vw, 32px);
+  max-width: min(520px, 92vw);
+  margin: 0 auto;
+}
+
+/* Sidebar on mobile — ensure ™ symbols don't cause layout break */
+@media (max-width: 480px) {
+  .sidebar__brand-name {
+    font-size: clamp(11px, 3vw, 14px);
+    word-break: break-word;
+  }
+}
+
+/* LandingPage nav — wrap on small screens */
+@media (max-width: 560px) {
+  .landing-nav-links {
+    display: none;
+  }
+}
+
+/* LandingPage hero buttons — full width stack on mobile */
+@media (max-width: 480px) {
+  .landing-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-cta-group > * {
+    width: 100% !important;
+    text-align: center;
+  }
+}
+
+/* Long keys/URLs in backend config — wrap safely */
+.backend-config-key,
+.masked-secret {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+/* Investor demo section on mobile */
+@media (max-width: 480px) {
+  .investor-demo-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Dashboard auth status row — shrink gracefully */
+@media (max-width: 540px) {
+  .dashboard-auth-row {
+    flex-direction: column;
+    gap: 6px !important;
+  }
+}
+
+/* SectionCard title + icon — prevent overflow */
+.section-card__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
