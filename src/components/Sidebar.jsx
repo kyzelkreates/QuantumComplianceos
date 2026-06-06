@@ -1,13 +1,13 @@
 /**
  * QUANTUM COMPLIANCE OS™ — Sidebar.jsx
- * Run 5.5: Added mobileOpen prop + sidebar--mobile-open class for drawer behaviour.
+ * Run 26: Version string pulled from APP_VERSION constant. unsub2 ghost ref fixed.
  * Defensive use only.
  */
 import React, { useState, useEffect } from 'react';
 import '../styles/layout.css';
 import { subscribeConsultant, getConsultantState } from '../core/consultantStorage.js';
 import { getState, subscribe } from '../core/storage.js';
-import { NAV_ITEMS } from '../core/constants.js';
+import { NAV_ITEMS, APP_VERSION } from '../core/constants.js';
 import { ROLE, canAccessPage } from '../core/authRoles.js';
 import { getAuthConfig } from '../core/storage.js';
 import { WORKSPACE_MODE } from '../core/workspaceMode.js';
@@ -24,7 +24,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
 
   useEffect(() => {
     const unsub = subscribeConsultant((s) => setCs({ ...s }));
-    return () => { unsub(); unsub2(); };
+    return () => { unsub(); };
   }, []);
 
   const activeClient = cs.activeClientId
@@ -79,7 +79,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
           {!collapsed && (
             <div className="sidebar__logo-text">
               <span className="sidebar__logo-title">{productName}</span>
-              <span className="sidebar__logo-sub">v5.5 — MVP</span>
+              <span className="sidebar__logo-sub">v{APP_VERSION} · Run 26</span>
             </div>
           )}
         </div>
@@ -139,7 +139,7 @@ export default function Sidebar({ currentPage, onNavigate, collapsed, branding, 
                 🔵 {activeClient.name}
               </div>
             )}
-            <div className="sidebar__version">QCOS v5.5 · Local-First · MVP</div>
+            <div className="sidebar__version">QCOS v{APP_VERSION} · Local-First · Run 26</div>
           </div>
         )}
       </aside>
