@@ -128,8 +128,8 @@ function renderPage(page, onNavigate, onClientSwitch, workspaceMode, activeRole)
 
 // ─── AppShell ────────────────────────────────────────────────────────────────
 
-export default function AppShell({ onClientSwitch }) {
-  const [currentPage,       setCurrentPage]      = useState(PAGES.DASHBOARD);
+export default function AppShell({ onClientSwitch, initialPage, onBackToHome }) {
+  const [currentPage,       setCurrentPage]      = useState(initialPage || PAGES.DASHBOARD);
   const [sidebarCollapsed,  setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [appState,          setAppState]          = useState(() => getState());
@@ -191,6 +191,7 @@ export default function AppShell({ onClientSwitch }) {
         onMobileClose={() => setMobileSidebarOpen(false)}
         workspaceMode={workspaceMode}
         activeRole={activeRole}
+        onBackToHome={onBackToHome}
       />
 
       <div className={`main-content${sidebarCollapsed ? ' main-content--sidebar-collapsed' : ''}`}>

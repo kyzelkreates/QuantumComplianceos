@@ -24,10 +24,10 @@ export function getInitialState() {
   return {
     appMeta: {
       appName: 'Quantum Compliance OS™',
-      version: '1.0.0-run27',
-      buildRun: 'RUN_27_LIVE_URL_VERIFICATION_DEFECT_REPAIR',
-      latestCompletedRun: 27,
-      latestCompletedRunLabel: 'Run 27 — Live URL Verification + Final Defect Repair Pass',
+      version: '1.0.0-run28',
+      buildRun: 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
+      latestCompletedRun: 28,
+      latestCompletedRunLabel: 'Run 28 — Homepage / Investor Explainer Page',
       mode: 'local-first',
       defensiveOnly: true,
       createdAt: new Date().toISOString(),
@@ -242,6 +242,7 @@ const RUN_8_5_COMPLETED_RUNS = [
   'RUN_25_AUTH_TEAM_ROLES_CLIENT_PERMISSIONS',
   'RUN_26_FINAL_PRODUCTION_QA_LOCKDOWN',
   'RUN_27_LIVE_URL_VERIFICATION_DEFECT_REPAIR',
+  'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
 ];
 
 const RUN_8_5_MODULE_STATUS = {
@@ -317,14 +318,14 @@ export function migrateState(state) {
   const existingMeta = migrated.appMeta || {};
   const storedRun = existingMeta.latestCompletedRun || existingMeta.runLevel || 0;
 
-  if (storedRun < 27 || existingMeta.buildRun !== 'RUN_27_LIVE_URL_VERIFICATION_DEFECT_REPAIR') {
+  if (storedRun < 28 || existingMeta.buildRun !== 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER') {
     migrated.appMeta = {
       ...existingMeta,
       appName: 'Quantum Compliance OS™',
-      version: '1.0.0-run27',
-      buildRun: 'RUN_27_LIVE_URL_VERIFICATION_DEFECT_REPAIR',
-      latestCompletedRun: 27,
-      latestCompletedRunLabel: 'Run 27 — Live URL Verification + Final Defect Repair Pass',
+      version: '1.0.0-run28',
+      buildRun: 'RUN_28_HOMEPAGE_INVESTOR_EXPLAINER',
+      latestCompletedRun: 28,
+      latestCompletedRunLabel: 'Run 28 — Homepage / Investor Explainer Page',
       mode: 'local-first',
       defensiveOnly: true,
       runLevel: 13,

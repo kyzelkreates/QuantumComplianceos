@@ -34,6 +34,7 @@ export default function Sidebar({
   onMobileClose,
   workspaceMode,
   activeRole,
+  onBackToHome,
 }) {
   const [cs, setCs] = useState(() => getConsultantState());
 
@@ -108,6 +109,24 @@ export default function Sidebar({
 
         {/* Navigation */}
         <nav className="sidebar__nav">
+          {/* ── Back to Homepage ── */}
+          {onBackToHome && (
+            <div className="sidebar__nav-group" style={{ paddingBottom: 4, marginBottom: 4, borderBottom: '1px solid var(--border-muted)' }}>
+              <button
+                className="sidebar__nav-item"
+                onClick={onBackToHome}
+                title={collapsed ? 'Homepage' : 'Return to Homepage / Investor Explainer'}
+                aria-label="Return to Homepage"
+              >
+                <span className="sidebar__nav-icon" aria-hidden="true">🏠</span>
+                {!collapsed && (
+                  <span className="sidebar__nav-label" style={{ color: 'var(--text-muted)', fontSize: 12 }}>
+                    Homepage
+                  </span>
+                )}
+              </button>
+            </div>
+          )}
           {NAV_GROUPS.map((group) => {
             const items = NAV_ITEMS.filter((i) => i.group === group.key && visibleItem(i));
             if (items.length === 0) return null;
